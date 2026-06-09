@@ -36,8 +36,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         setAdded(true);
         setTimeout(() => setAdded(false), 2000);
         toast.success("Added to cart!", {
-          style: { background: "var(--primary-950)", color: "#fff", border: "1px solid var(--primary-600)" },
-          iconTheme: { primary: "var(--primary-300)", secondary: "var(--primary-950)" },
+          style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
+          iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
         });
       } else if (res.status === 403) {
         toast.error("Session expired. Please sign in again.");
@@ -94,21 +94,21 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link href={`/product/${product.id}`} className="group block h-full">
-      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary-100/60 hover:border-primary-200">
+      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-150 bg-[#f4f4f5] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-gray-200/40 hover:border-black">
         
         {/* Image area */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="relative overflow-hidden bg-[#ececed] border-b border-gray-150">
           {/* Discount badge */}
           {discount > 0 && (
-            <div className="absolute left-3 top-3 z-10 rounded-lg bg-gradient-to-r from-rose-500 to-pink-600 px-2.5 py-1 text-[11px] font-bold text-white shadow-sm">
+            <div className="absolute left-3 top-3 z-10 rounded-full bg-black px-2.5 py-0.5 text-[10px] font-black text-white uppercase tracking-wider shadow-sm">
               -{discount}%
             </div>
           )}
 
           {/* Out of stock overlay */}
           {product.stock === 0 && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70 backdrop-blur-sm">
-              <span className="rounded-lg bg-gray-800 px-3 py-1.5 text-xs font-bold text-white">Out of Stock</span>
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/85 backdrop-blur-xs">
+              <span className="rounded-lg bg-gray-200 border border-gray-300 px-3 py-1.5 text-xs font-bold text-gray-800 uppercase tracking-wider">Out of Stock</span>
             </div>
           )}
 
@@ -118,12 +118,12 @@ export default function ProductCard({ product }: ProductCardProps) {
               onClick={handleQuickAdd}
               disabled={adding || product.stock === 0}
               title="Add to cart"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 shadow-md transition-all hover:border-primary-500 hover:bg-primary-600 hover:text-white disabled:opacity-50 cursor-pointer"
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-700 shadow-sm transition-all hover:border-black hover:bg-black hover:text-white disabled:opacity-50 cursor-pointer"
             >
               {adding ? (
-                <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary-300 border-t-primary-700" />
+                <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-gray-300 border-t-black" />
               ) : added ? (
-                <span className="text-emerald-600 text-xs font-bold">✓</span>
+                <span className="text-black text-xs font-bold">✓</span>
               ) : (
                 <ShoppingCart size={14} />
               )}
@@ -132,7 +132,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               onClick={handleBuyNow}
               disabled={product.stock === 0}
               title="Buy now"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200 bg-white text-amber-500 shadow-md transition-all hover:bg-amber-500 hover:text-white disabled:opacity-50 cursor-pointer"
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-orange-650 shadow-sm transition-all hover:border-orange-600 hover:bg-orange-650 hover:text-white disabled:opacity-50 cursor-pointer"
             >
               <Zap size={14} />
             </button>
@@ -143,7 +143,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               src={images[0]}
               alt={product.title}
               fill
-              className="object-contain p-5 transition-transform duration-500 group-hover:scale-110"
+              className="object-contain p-5 transition-all duration-500 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             />
           </div>
@@ -153,16 +153,16 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex flex-1 flex-col p-4">
           {/* Brand + Category */}
           <div className="mb-2 flex items-center justify-between gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-600">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-650">
               {product.brand}
             </span>
-            <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[10px] font-semibold text-gray-500">
+            <span className="rounded-full bg-white border border-gray-200 px-2.5 py-0.5 text-[9px] font-bold text-gray-500 uppercase tracking-wider">
               {product.category}
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="line-clamp-2 flex-1 text-sm font-semibold leading-5 text-gray-900 transition-colors group-hover:text-primary-700">
+          <h3 className="line-clamp-2 flex-1 text-sm font-semibold leading-5 text-black transition-colors group-hover:text-orange-650">
             {product.title}
           </h3>
 
@@ -177,25 +177,25 @@ export default function ProductCard({ product }: ProductCardProps) {
                 />
               ))}
             </div>
-            <span className="text-xs font-semibold text-gray-700">{product.rating.toFixed(1)}</span>
-            <span className="text-[11px] text-gray-400">({product.reviewCount?.toLocaleString()})</span>
+            <span className="text-xs font-bold text-gray-700">{product.rating.toFixed(1)}</span>
+            <span className="text-[10px] text-gray-400">({product.reviewCount?.toLocaleString()})</span>
           </div>
 
           {/* Price row */}
           <div className="mt-3 flex items-end justify-between">
             <div>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-lg font-extrabold text-gray-900">
+                <span className="text-lg font-black text-black">
                   ₹{product.price.toLocaleString("en-IN")}
                 </span>
                 {product.originalPrice > product.price && (
-                  <span className="text-sm text-gray-400 line-through">
+                  <span className="text-xs text-gray-400 line-through">
                     ₹{product.originalPrice.toLocaleString("en-IN")}
                   </span>
                 )}
               </div>
               {product.stock > 0 && product.stock <= 5 && (
-                <p className="mt-0.5 text-[11px] font-semibold text-amber-600">
+                <p className="mt-0.5 text-[10px] font-bold text-orange-600 uppercase tracking-wide">
                   Only {product.stock} left!
                 </p>
               )}
@@ -203,7 +203,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
             {/* Free delivery chip */}
             {product.price >= 499 && (
-              <span className="rounded-lg bg-emerald-50 px-2 py-1 text-[10px] font-bold text-emerald-700">
+              <span className="rounded-lg bg-orange-50 border border-orange-200 px-2 py-0.5 text-[9px] font-bold text-orange-600 uppercase tracking-wider">
                 FREE delivery
               </span>
             )}
@@ -211,7 +211,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Hover bottom bar */}
-        <div className="h-0.5 w-full bg-gradient-to-r from-primary-500 via-secondary-500 to-cyan-500 opacity-0 transition-all duration-300 group-hover:opacity-100" />
+        <div className="h-0.5 w-full bg-black opacity-0 transition-all duration-300 group-hover:opacity-100" />
       </article>
     </Link>
   );

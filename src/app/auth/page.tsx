@@ -143,15 +143,15 @@ function AuthForm() {
   return (
     <div className="mx-auto grid min-h-[calc(100vh-5rem)] w-full items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
       <div className="space-y-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 cursor-pointer">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gray-500 transition-colors hover:text-black cursor-pointer">
           <ArrowLeft size={16} /> Back to shop
         </Link>
 
         <div className="space-y-5">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-primary-700">
-            <Zap size={14} /> ShopWave account
+          <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-orange-700">
+            <Zap size={14} /> LOCO account
           </div>
-          <h1 className="max-w-xl text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
+          <h1 className="max-w-xl text-4xl font-black uppercase tracking-tight text-gray-900 sm:text-5xl">
             Sign in faster. Check out faster. Keep everything in one place.
           </h1>
           <p className="max-w-xl text-base leading-7 text-gray-600">
@@ -166,10 +166,10 @@ function AuthForm() {
             { icon: CreditCard, title: "Quick checkout", text: "Save time at payment" },
           ].map(({ icon: Icon, title, text }) => (
             <div key={title} className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-600 border border-primary-100">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-50 text-orange-600 border border-orange-100">
                 <Icon size={18} />
               </div>
-              <p className="mt-3 text-sm font-semibold text-gray-900">{title}</p>
+              <p className="mt-3 text-sm font-bold uppercase tracking-wide text-gray-900">{title}</p>
               <p className="mt-1 text-sm leading-6 text-gray-500">{text}</p>
             </div>
           ))}
@@ -177,17 +177,16 @@ function AuthForm() {
       </div>
 
       <div className="rounded-2xl border border-gray-200 bg-white shadow-md">
-        <div className="h-1.5 rounded-t-2xl bg-primary-600" />
+        <div className="h-1.5 rounded-t-2xl bg-black" />
         <div className="p-6 sm:p-8">
           <Link href="/" className="mb-8 inline-flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary-100 bg-primary-50 text-primary-600">
-              <Zap size={18} />
-            </div>
-            <span className="text-lg font-semibold text-gray-900">ShopWave</span>
+            <span className="text-2xl font-black tracking-tighter text-black uppercase font-sans">
+              LOCO
+            </span>
           </Link>
 
-          <h2 className="text-2xl font-bold text-gray-950">
-            {tab === "login" ? "Sign in to your account" : "Create a new account"}
+          <h2 className="text-2xl font-black uppercase tracking-tight text-gray-950">
+            {tab === "login" ? "Welcome back" : "Create account"}
           </h2>
           <p className="mt-2 text-sm text-gray-500">
             {tab === "login" ? "No account yet? " : "Already have an account? "}
@@ -196,13 +195,13 @@ function AuthForm() {
                 setTab(tab === "login" ? "register" : "login");
                 setError("");
               }}
-              className="font-semibold text-primary-600 transition-colors hover:text-primary-750 cursor-pointer"
+              className="font-semibold text-orange-600 transition-colors hover:text-orange-750 cursor-pointer"
             >
               {tab === "login" ? "Sign up" : "Sign in"}
             </button>
           </p>
 
-          <div className="mt-6 flex bg-gray-100 rounded-xl p-1">
+          <div className="mt-6 flex bg-gray-100 border border-gray-200/50 rounded-xl p-1">
             {(["login", "register"] as const).map((t) => (
               <button
                 key={t}
@@ -210,10 +209,10 @@ function AuthForm() {
                   setTab(t);
                   setError("");
                 }}
-                className={`flex-1 rounded-md px-4 py-2 text-sm font-semibold transition-colors cursor-pointer ${
+                className={`flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   tab === t
-                    ? "bg-primary-600 text-white shadow-xs"
-                    : "text-gray-500 hover:text-gray-900"
+                    ? "bg-black text-white shadow-xs"
+                    : "text-gray-500 hover:text-black"
                 }`}
               >
                 {t === "login" ? "Sign In" : "Sign Up"}
@@ -222,7 +221,7 @@ function AuthForm() {
           </div>
 
           {error && (
-            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-semibold">
+            <div className="mt-4 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-700 font-semibold uppercase tracking-wide">
               {error}
             </div>
           )}
@@ -238,7 +237,7 @@ function AuthForm() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
+                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black focus:ring-1 focus:ring-black transition-colors"
                 />
               </div>
             )}
@@ -251,7 +250,7 @@ function AuthForm() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
+                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black focus:ring-1 focus:ring-black transition-colors"
               />
             </div>
             <div className="relative">
@@ -263,7 +262,7 @@ function AuthForm() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-450 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
+                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black focus:ring-1 focus:ring-black transition-colors"
               />
               <button
                 type="button"
@@ -277,21 +276,25 @@ function AuthForm() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary-600 px-5 py-3.5 text-sm font-semibold text-white transition-all hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer shadow-xs"
+              className="w-full flex items-center justify-center gap-2 bg-black text-white font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-zinc-800 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-md"
             >
               {loading ? (
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/25 border-t-white" />
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  {tab === "login" ? "Sign In" : "Create Account"} <ArrowRight size={18} />
+                  {tab === "login" ? "Sign In" : "Create Account"}
+                  <ArrowRight size={18} />
                 </>
               )}
             </button>
           </form>
 
           {tab === "login" && (
-            <div className="mt-5 rounded-xl border border-primary-200 bg-primary-50 px-4 py-3 text-center text-xs text-primary-700 font-semibold">
-              <span className="font-bold">Demo credentials:</span> demo@shopwave.com / demo1234
+            <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-xl">
+              <p className="text-orange-600 text-xs text-center font-medium">
+                <span className="font-bold">Demo: </span>
+                demo@shopwave.com / demo1234
+              </p>
             </div>
           )}
         </div>

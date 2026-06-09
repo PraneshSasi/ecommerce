@@ -17,7 +17,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
 
   return (
     <div className="space-y-3 group">
-      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xs">
+      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-[#f4f4f5] shadow-xs">
         <div className="relative aspect-square">
           <Image
             src={images[activeIndex]}
@@ -33,13 +33,13 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
           <>
             <button
               onClick={prev}
-              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-gray-200 bg-white/95 text-gray-700 opacity-0 transition-all hover:border-primary-600 hover:bg-primary-50 hover:text-primary-600 group-hover:opacity-100 shadow-sm cursor-pointer"
+              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-gray-200 bg-white/95 text-gray-700 opacity-0 transition-all hover:border-black hover:bg-black hover:text-white group-hover:opacity-100 shadow-sm cursor-pointer"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={next}
-              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-gray-200 bg-white/95 text-gray-700 opacity-0 transition-all hover:border-primary-600 hover:bg-primary-50 hover:text-primary-600 group-hover:opacity-100 shadow-sm cursor-pointer"
+              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-gray-200 bg-white/95 text-gray-700 opacity-0 transition-all hover:border-black hover:bg-black hover:text-white group-hover:opacity-100 shadow-sm cursor-pointer"
             >
               <ChevronRight size={18} />
             </button>
@@ -51,7 +51,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
             <button
               key={i}
               onClick={() => setActiveIndex(i)}
-              className={`h-2 rounded-full transition-all cursor-pointer ${i === activeIndex ? "w-5 bg-primary-600" : "w-2 bg-gray-300 hover:bg-gray-400"}`}
+              className={`h-2 rounded-full transition-all cursor-pointer ${i === activeIndex ? "w-5 bg-black" : "w-2 bg-gray-300 hover:bg-gray-400"}`}
             />
           ))}
         </div>
@@ -65,7 +65,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
               onClick={() => setActiveIndex(i)}
               className={`relative aspect-square overflow-hidden rounded-md border transition-all cursor-pointer ${
                 i === activeIndex
-                  ? "border-primary-600 ring-1 ring-primary-600/20"
+                  ? "border-black ring-1 ring-black/10"
                   : "border-gray-200 hover:border-gray-300"
               }`}
             >
@@ -73,7 +73,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                 src={img}
                 alt={`${title} thumbnail ${i + 1}`}
                 fill
-                className="object-contain bg-gray-50 p-2"
+                className="object-contain bg-[#ececed] p-2"
                 sizes="100px"
               />
             </button>

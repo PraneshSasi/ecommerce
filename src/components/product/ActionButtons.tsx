@@ -65,8 +65,8 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
         }
         setAddedToCart(true);
         toast.success("Added to cart!", {
-          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
-          iconTheme: { primary: "var(--primary-600)", secondary: "#fff" },
+          style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
+          iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
         });
         setTimeout(() => setAddedToCart(false), 2500);
       } else if (result.status === 403) {
@@ -128,15 +128,15 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
       <button
         onClick={handleAddToCart}
         disabled={disabled || addingToCart}
-        className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary-600 bg-white px-6 py-3.5 text-sm font-semibold text-primary-600 transition-all hover:bg-primary-50 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+        className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-250 bg-white px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-black transition-all hover:border-black hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer shadow-sm"
       >
         {addedToCart ? (
           <>
-            <Check size={18} className="text-green-600" /> Added
+            <Check size={18} className="text-orange-655" /> Added
           </>
         ) : addingToCart ? (
           <>
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-600/25 border-t-primary-600" /> Adding...
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-200 border-t-black" /> Adding...
           </>
         ) : (
           <>
@@ -148,7 +148,7 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
       <button
         onClick={handleBuyNow}
         disabled={disabled || buyingNow}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-amber-600 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer shadow-xs"
+        className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-650 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer shadow-md shadow-orange-650/20"
       >
         {buyingNow ? (
           <>

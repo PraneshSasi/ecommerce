@@ -70,7 +70,7 @@ export default function HomePage() {
         <HeroBanner />
 
         {/* Promo strip */}
-        <div className="mt-5 flex items-center gap-4 overflow-x-auto rounded-2xl bg-gradient-to-r from-primary-600 via-secondary-600 to-secondary-800 px-6 py-3.5 scrollbar-hide">
+        <div className="mt-5 flex items-center gap-4 overflow-x-auto rounded-full bg-black px-6 py-3.5 scrollbar-hide">
           {[
             "🚀 Free shipping on orders above ₹499",
             "🎉 New arrivals every week",
@@ -78,39 +78,39 @@ export default function HomePage() {
             "↩️  Easy 30-day returns",
             "⚡ Lightning-fast delivery",
           ].map((text) => (
-            <span key={text} className="shrink-0 text-sm font-medium text-white/90">
+            <span key={text} className="shrink-0 text-sm font-semibold text-white/90">
               {text}
             </span>
           ))}
         </div>
 
         {/* Products section */}
-        <section id="products" className="mt-8 space-y-5">
+        <section id="products" className="relative z-10 mt-12 space-y-6">
           {/* Section header */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <TrendingUp size={16} className="text-primary-600" />
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary-600">Catalog</p>
+                <TrendingUp size={16} className="text-orange-600" />
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-orange-600">Catalog</p>
               </div>
-              <h2 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">{sectionTitle}</h2>
+              <h2 className="text-3xl font-black text-black sm:text-4xl tracking-tight uppercase">{sectionTitle}</h2>
               {!loading && (
                 <p className="mt-1 text-sm text-gray-500">
-                  <span className="font-semibold text-gray-800">{products.length}</span>{" "}
+                  <span className="font-bold text-gray-900">{products.length}</span>{" "}
                   {products.length === 1 ? "product" : "products"} found
                 </p>
               )}
             </div>
 
             {/* Sort control */}
-            <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 shadow-xs">
-              <ArrowUpDown size={15} className="text-gray-400 shrink-0" />
+            <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 shadow-xs">
+              <ArrowUpDown size={15} className="text-gray-500 shrink-0" />
               <label htmlFor="sort-filter" className="sr-only">Sort</label>
               <select
                 id="sort-filter"
                 value={filterSort}
                 onChange={(e) => setFilterSort(e.target.value)}
-                className="bg-transparent text-sm font-semibold text-gray-700 focus:outline-none cursor-pointer"
+                className="bg-transparent text-sm font-semibold text-gray-800 focus:outline-none cursor-pointer [&>option]:bg-white [&>option]:text-black"
               >
                 {SORT_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>{o.label}</option>
@@ -125,22 +125,22 @@ export default function HomePage() {
           {/* Filter info pill */}
           {(searchQuery || selectedCategory !== "All" || filterSort !== "featured") && (
             <div className="flex flex-wrap items-center gap-2">
-              <div className="flex items-center gap-1.5 rounded-full border border-primary-200 bg-primary-50 px-3 py-1">
-                <SlidersHorizontal size={12} className="text-primary-600" />
-                <span className="text-xs font-semibold text-primary-700">Active filters:</span>
+              <div className="flex items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-3 py-1">
+                <SlidersHorizontal size={12} className="text-orange-600" />
+                <span className="text-xs font-bold uppercase tracking-wider text-orange-600">Active filters:</span>
               </div>
               {searchQuery && (
-                <span className="rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary-800">
+                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-800 border border-gray-200 uppercase tracking-wide">
                   Search: {searchQuery}
                 </span>
               )}
               {selectedCategory !== "All" && (
-                <span className="rounded-full bg-secondary-100 px-3 py-1 text-xs font-medium text-secondary-800">
+                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-800 border border-gray-200 uppercase tracking-wide">
                   {selectedCategory}
                 </span>
               )}
               {filterSort !== "featured" && (
-                <span className="rounded-full bg-cyan-100 px-3 py-1 text-xs font-medium text-cyan-800">
+                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-800 border border-gray-200 uppercase tracking-wide">
                   {SORT_OPTIONS.find((o) => o.value === filterSort)?.label}
                 </span>
               )}
@@ -149,16 +149,16 @@ export default function HomePage() {
 
           {/* Product grid */}
           {loading ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white py-32 shadow-xs">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 py-32 shadow-xs">
               <Spinner size={40} />
-              <p className="mt-4 text-sm font-medium text-gray-500">Loading products...</p>
+              <p className="mt-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">Loading products...</p>
             </div>
           ) : products.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white py-32 text-center shadow-xs">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
-                <PackageSearch size={36} className="text-gray-400" />
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 py-32 text-center shadow-xs">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-gray-400">
+                <PackageSearch size={36} />
               </div>
-              <h3 className="mt-5 text-xl font-bold text-gray-900">No products found</h3>
+              <h3 className="mt-5 text-xl font-bold text-black uppercase tracking-tight">No products found</h3>
               <p className="mt-2 max-w-sm text-sm leading-6 text-gray-500">
                 Try a different search term or switch categories to find what you&apos;re looking for.
               </p>
@@ -173,7 +173,7 @@ export default function HomePage() {
 
           {/* Bottom padding */}
           {!loading && products.length > 0 && (
-            <p className="pt-4 text-center text-sm text-gray-400">
+            <p className="pt-4 text-center text-xs uppercase tracking-widest text-gray-400 font-semibold">
               Showing all {products.length} products · More arriving soon
             </p>
           )}

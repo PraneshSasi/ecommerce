@@ -36,9 +36,9 @@ export default function ProductPage() {
   if (loading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
-        <div className="rounded-xl border border-gray-200 bg-white px-6 py-10 text-center shadow-xs">
+        <div className="rounded-xl border border-gray-200 bg-gray-50 px-6 py-10 text-center shadow-xs">
           <Spinner size={40} />
-          <p className="mt-4 text-sm text-gray-500">Loading product details...</p>
+          <p className="mt-4 text-sm text-gray-500 uppercase tracking-wider">Loading product details...</p>
         </div>
       </div>
     );
@@ -47,14 +47,14 @@ export default function ProductPage() {
   if (notFound || !product) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
-        <div className="max-w-md rounded-xl border border-gray-200 bg-white px-6 py-10 text-center shadow-xs">
-          <h2 className="text-2xl font-bold text-gray-900">Product not found</h2>
+        <div className="max-w-md rounded-xl border border-gray-200 bg-gray-50 px-6 py-10 text-center shadow-xs">
+          <h2 className="text-2xl font-bold text-black uppercase tracking-tight">Product not found</h2>
           <p className="mt-3 text-sm leading-6 text-gray-500">
             The product you are looking for does not exist or is no longer available.
           </p>
           <button
             onClick={() => router.push("/")}
-            className="mt-6 inline-flex items-center justify-center rounded-lg bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 cursor-pointer shadow-sm"
+            className="mt-6 inline-flex items-center justify-center rounded-lg bg-black px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-zinc-800 cursor-pointer shadow-sm uppercase tracking-wider"
           >
             Back to shop
           </button>
@@ -69,14 +69,14 @@ export default function ProductPage() {
     <div className="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <button
         onClick={() => router.back()}
-        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 cursor-pointer"
+        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-black cursor-pointer"
       >
         <ArrowLeft size={16} /> Back to products
       </button>
 
       <div className="mb-6 flex flex-col gap-2">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary-600">Product details</p>
-        <h1 className="text-2xl font-bold text-gray-950 md:text-3xl">{product.title}</h1>
+        <p className="text-xs font-black uppercase tracking-[0.24em] text-orange-650">Product details</p>
+        <h1 className="text-2xl font-black text-black md:text-3xl uppercase tracking-tight">{product.title}</h1>
       </div>
 
       <div className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr]">
@@ -88,12 +88,12 @@ export default function ProductPage() {
               { icon: RotateCcw, title: "Easy returns", sub: "30-day return policy" },
               { icon: ShieldCheck, title: "Secure pay", sub: "Protected checkout" },
             ].map(({ icon: Icon, title, sub }) => (
-              <div key={title} className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-xs">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600 border border-primary-100">
+              <div key={title} className="flex items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4 shadow-xs">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-orange-650 border border-orange-100">
                   <Icon size={18} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">{title}</p>
+                  <p className="text-sm font-bold text-black">{title}</p>
                   <p className="mt-1 text-xs leading-5 text-gray-500">{sub}</p>
                 </div>
               </div>
@@ -103,7 +103,7 @@ export default function ProductPage() {
 
         <div className="space-y-5 rounded-xl border border-gray-200 bg-white p-5 lg:p-6 shadow-xs">
           <ProductMeta product={product} />
-          <div className="border-t border-gray-200 pt-5">
+          <div className="border-t border-gray-150 pt-5">
             <ActionButtons productId={product.id} disabled={product.stock === 0} />
           </div>
         </div>

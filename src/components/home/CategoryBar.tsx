@@ -17,7 +17,7 @@ export default function CategoryBar() {
 
   return (
     <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
-      {categories.map(({ name, icon: Icon, color }) => {
+      {categories.map(({ name, icon: Icon }) => {
         const isActive = selectedCategory === name;
         return (
           <button
@@ -25,12 +25,14 @@ export default function CategoryBar() {
             onClick={() => setSelectedCategory(name)}
             className={`group flex shrink-0 items-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 cursor-pointer border ${
               isActive
-                ? "border-primary-600 bg-primary-600 text-white shadow-md shadow-primary-500/25 -translate-y-0.5"
-                : "border-gray-200 bg-white text-gray-600 hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700 hover:-translate-y-0.5"
+                ? "border-black bg-black text-white shadow-xs"
+                : "border-gray-200 bg-white text-gray-750 hover:border-black hover:text-black"
             }`}
           >
-            <div className={`flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br ${color} shrink-0`}>
-              <Icon size={12} className="text-white" />
+            <div className={`flex h-6 w-6 items-center justify-center rounded-lg shrink-0 transition-colors ${
+              isActive ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500 group-hover:bg-black group-hover:text-white"
+            }`}>
+              <Icon size={12} />
             </div>
             {name}
           </button>

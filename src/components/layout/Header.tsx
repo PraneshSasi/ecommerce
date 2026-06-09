@@ -8,12 +8,12 @@ import {
   User,
   LogOut,
   Package,
-  Zap,
   Menu,
   X,
   ChevronDown,
   Home,
   Sparkles,
+  Heart,
 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useStore } from "@/store/useStore";
@@ -89,78 +89,79 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-gray-200/80 bg-white/95 backdrop-blur-xl transition-shadow duration-200 ${
-        scrolled ? "shadow-md shadow-primary-900/5" : "shadow-none"
+      className={`sticky top-0 z-50 border-b border-gray-100 bg-white transition-shadow duration-200 ${
+        scrolled ? "shadow-md shadow-gray-200/30" : "shadow-none"
       }`}
     >
       <div ref={headerRef} className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center gap-4">
+        <div className="flex h-20 items-center justify-between gap-4">
 
           {/* Logo */}
           <Link
             href="/"
             onClick={handleLogoClick}
-            className="flex shrink-0 items-center gap-3 group"
+            className="flex shrink-0 items-center gap-2 group select-none"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 shadow-md shadow-primary-500/30 transition-transform group-hover:scale-105">
-              <Zap size={20} className="text-white" />
-            </div>
-            <div className="leading-tight hidden sm:block">
-              <span className="block text-lg font-extrabold text-gray-900 tracking-tight">ShopWave</span>
-              <span className="block text-[10px] uppercase tracking-[0.22em] text-primary-500 font-semibold">Premium Retail</span>
-            </div>
+            <span className="text-3xl font-black text-black tracking-tighter uppercase font-sans">
+              LOCO
+            </span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1 ml-2">
+          <nav className="hidden lg:flex items-center gap-6">
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-primary-50 hover:text-primary-700"
+              className="text-sm font-semibold text-gray-700 hover:text-black transition-colors"
             >
-              <Home size={16} /> Home
+              Home
             </Link>
             <Link
               href="/cart"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-primary-50 hover:text-primary-700"
+              className="text-sm font-semibold text-gray-700 hover:text-black transition-colors"
             >
-              <ShoppingCart size={16} /> Cart
+              Cart
             </Link>
             <Link
               href="/checkout"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-primary-50 hover:text-primary-700"
+              className="text-sm font-semibold text-gray-700 hover:text-black transition-colors"
             >
-              <Sparkles size={16} /> Checkout
+              Checkout
             </Link>
           </nav>
 
-          {/* Search */}
-          <form onSubmit={handleSearch} className="hidden md:block flex-1 max-w-2xl lg:mx-4">
-            <div className="relative">
-              <Search size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search products, brands, categories…"
-                value={searchQuery}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                className="w-full rounded-2xl border-2 border-gray-200 bg-gray-50 py-3.5 pl-12 pr-5 text-base text-gray-900 placeholder:text-gray-400 outline-none transition-all focus:border-primary-500 focus:bg-white focus:ring-4 focus:ring-primary-500/15 hover:border-gray-300"
-              />
-            </div>
-          </form>
+          {/* Search bar, heart, and bag */}
+          <div className="flex items-center gap-4 flex-1 max-w-md md:max-w-xs lg:max-w-sm justify-end md:justify-start">
+            <form onSubmit={handleSearch} className="hidden md:block w-full">
+              <div className="relative">
+                <Search size={16} className="pointer-events-none absolute left-4.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  className="w-full rounded-full border border-gray-200 bg-gray-50 py-2.5 pl-11 pr-5 text-sm text-black placeholder:text-gray-400 outline-none transition-all focus:border-gray-450 focus:bg-white"
+                />
+              </div>
+            </form>
+          </div>
 
-          {/* Right actions */}
-          <div className="ml-auto flex items-center gap-2">
-
+          {/* Actions */}
+          <div className="flex items-center gap-3">
+            {/* Wishlist Heart Icon (Decorative matching the mockup) */}
+            <button className="hidden sm:inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black hover:text-black transition-all cursor-pointer">
+              <Heart size={18} />
+            </button>
 
             {/* Cart button */}
             <Link
               href="/cart"
-              className="relative inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-primary-500 hover:bg-primary-50 hover:text-primary-600 hover:shadow-md"
+              className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black hover:text-black transition-all"
               aria-label="Cart"
             >
-              <ShoppingCart size={22} />
+              <ShoppingCart size={18} />
               {cartCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-6 min-w-6 animate-fade-in items-center justify-center rounded-full bg-gradient-to-br from-primary-600 to-secondary-600 px-1.5 text-[11px] font-bold text-white shadow-sm">
+                <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1.5 text-[9px] font-black text-white shadow-sm">
                   {cartCount > 9 ? "9+" : cartCount}
                 </span>
               )}
@@ -171,54 +172,45 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setProfileOpen((o) => !o)}
-                  className="hidden sm:inline-flex h-12 items-center gap-3 rounded-2xl border-2 border-gray-200 bg-white pl-1.5 pr-4 text-[15px] font-semibold text-gray-700 transition-all hover:border-primary-300 hover:bg-primary-50 hover:shadow-sm"
+                  className="inline-flex h-11 items-center gap-2 rounded-full border border-gray-200 bg-transparent pl-1.5 pr-3 text-sm font-semibold text-black hover:border-black transition-all cursor-pointer"
                 >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 text-sm font-bold text-white shadow-sm">
+                  <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-black text-xs font-black text-white">
                     {session.user?.name?.[0]?.toUpperCase() || "U"}
                   </div>
-                  <span className="max-w-28 truncate">{session.user?.name?.split(" ")[0]}</span>
                   <ChevronDown
-                    size={16}
-                    className={`text-gray-400 transition-transform duration-200 ${profileOpen ? "rotate-180" : ""}`}
+                    size={14}
+                    className="text-gray-500"
                   />
                 </button>
 
                 {profileOpen && (
-                  <div className="animate-slide-down absolute right-0 top-full mt-2 w-64 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl shadow-gray-900/10 z-50">
-                    {/* User info */}
-                    <div className="bg-gradient-to-br from-primary-50 to-secondary-50 border-b border-gray-100 px-4 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 text-sm font-bold text-white shadow-sm">
-                          {session.user?.name?.[0]?.toUpperCase() || "U"}
-                        </div>
-                        <div className="min-w-0">
-                          <p className="truncate text-sm font-bold text-gray-900">{session.user?.name}</p>
-                          <p className="truncate text-xs text-gray-500">{session.user?.email}</p>
-                        </div>
-                      </div>
+                  <div className="animate-slide-down absolute right-0 top-full mt-2 w-60 overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 shadow-lg z-50">
+                    <div className="bg-gray-50 rounded-xl px-3 py-3 mb-1.5">
+                      <p className="truncate text-xs font-black text-black">{session.user?.name}</p>
+                      <p className="truncate text-[10px] text-gray-500">{session.user?.email}</p>
                     </div>
 
-                    <div className="p-2">
+                    <div className="space-y-0.5">
                       <Link
                         href="/cart"
                         onClick={() => setProfileOpen(false)}
-                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                        className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-gray-700 hover:bg-gray-50 hover:text-black"
                       >
-                        <Package size={16} className="text-primary-500" /> My Orders
+                        <Package size={14} className="text-gray-500" /> My Orders
                       </Link>
                       <Link
                         href="/checkout"
                         onClick={() => setProfileOpen(false)}
-                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                        className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-gray-700 hover:bg-gray-50 hover:text-black"
                       >
-                        <Sparkles size={16} className="text-secondary-500" /> Checkout
+                        <Sparkles size={14} className="text-gray-500" /> Checkout
                       </Link>
-                      <div className="my-1 border-t border-gray-100" />
+                      <div className="my-1 border-t border-gray-150" />
                       <button
                         onClick={() => { signOut({ callbackUrl: "/" }); setProfileOpen(false); }}
-                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-rose-600 transition-colors hover:bg-rose-50 cursor-pointer"
+                        className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-red-600 hover:bg-red-50 cursor-pointer"
                       >
-                        <LogOut size={16} /> Sign Out
+                        <LogOut size={14} /> Sign Out
                       </button>
                     </div>
                   </div>
@@ -227,19 +219,19 @@ export default function Header() {
             ) : (
               <Link
                 href="/auth"
-                className="hidden sm:inline-flex h-12 items-center gap-2.5 rounded-2xl bg-gradient-to-r from-primary-600 to-secondary-600 px-5 text-[15px] font-bold text-white shadow-md shadow-primary-500/30 transition-all hover:shadow-lg hover:shadow-primary-500/40 hover:-translate-y-0.5"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-black px-5 text-sm font-bold text-white transition-all hover:bg-zinc-800"
               >
-                <User size={17} /> Sign In
+                <User size={15} /> Sign In
               </Link>
             )}
 
             {/* Mobile menu toggle */}
             <button
-              className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-primary-300 hover:bg-primary-50 md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black md:hidden"
               onClick={() => setMenuOpen((o) => !o)}
               aria-label="Toggle menu"
             >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              {menuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
@@ -247,17 +239,17 @@ export default function Header() {
         {/* Mobile menu */}
         {menuOpen && (
           <div className="animate-slide-down md:hidden pb-4">
-            <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-xl shadow-gray-900/10">
+            <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-lg">
               {/* Mobile search */}
               <form onSubmit={handleSearch} className="mb-4">
                 <div className="relative">
-                  <Search size={15} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Search size={14} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
-                    placeholder="Search products…"
+                    placeholder="Search products..."
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-primary-500 focus:bg-white"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-xs text-black outline-none"
                   />
                 </div>
               </form>
@@ -272,9 +264,9 @@ export default function Header() {
                     key={label}
                     href={href}
                     onClick={onClick}
-                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-primary-50 hover:text-primary-700"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-black"
                   >
-                    <Icon size={16} className="text-primary-500" /> {label}
+                    <Icon size={15} className="text-gray-500" /> {label}
                   </Link>
                 ))}
 
@@ -282,16 +274,16 @@ export default function Header() {
                   <Link
                     href="/auth"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-primary-600 transition-colors hover:bg-primary-50"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-black hover:bg-gray-50"
                   >
-                    <User size={16} /> Sign In
+                    <User size={15} /> Sign In
                   </Link>
                 ) : (
                   <button
                     onClick={() => { signOut({ callbackUrl: "/" }); setMenuOpen(false); }}
-                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-50 cursor-pointer"
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50 cursor-pointer"
                   >
-                    <LogOut size={16} /> Sign Out
+                    <LogOut size={15} /> Sign Out
                   </button>
                 )}
               </div>
@@ -302,3 +294,4 @@ export default function Header() {
     </header>
   );
 }
+

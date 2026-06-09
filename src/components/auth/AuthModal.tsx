@@ -47,14 +47,15 @@ export default function AuthModal() {
       if (res?.error) {
         setError("Invalid email or password.");
         toast.error("Invalid email or password.", {
-          style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+          style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
         });
         setTimeout(() => {
           window.location.reload();
         }, 1500);
       } else {
         toast.success("Welcome back!", {
-          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+          style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
+          iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
         });
         handleClose();
         if (pendingAction) {
@@ -71,7 +72,7 @@ export default function AuthModal() {
     } catch {
       setError("Something went wrong. Please try again.");
       toast.error("Something went wrong. Please try again.", {
-        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
       });
       setTimeout(() => {
         window.location.reload();
@@ -86,7 +87,7 @@ export default function AuthModal() {
     if (form.password.length < 6) {
       setError("Password must be at least 6 characters.");
       toast.error("Password must be at least 6 characters.", {
-        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
       });
       setTimeout(() => {
         window.location.reload();
@@ -105,7 +106,7 @@ export default function AuthModal() {
       if (!res.ok) {
         setError(data.error || "Registration failed.");
         toast.error(data.error || "Registration failed.", {
-          style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+          style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
         });
         setTimeout(() => {
           window.location.reload();
@@ -121,15 +122,17 @@ export default function AuthModal() {
       if (signInRes?.error) {
         setError("Account created! Please log in.");
         toast.success("Account created! Please log in.", {
-          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+          style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
+          iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
         });
         setTab("login");
         setTimeout(() => {
           window.location.reload();
         }, 1500);
       } else {
-        toast.success("Account created! Welcome to ShopWave 🎉", {
-          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+        toast.success("Account created! Welcome to LOCO 🎉", {
+          style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
+          iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
         });
         handleClose();
         if (pendingAction) {
@@ -144,7 +147,7 @@ export default function AuthModal() {
     } catch {
       setError("Something went wrong. Please try again.");
       toast.error("Something went wrong. Please try again.", {
-        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
       });
       setTimeout(() => {
         window.location.reload();
@@ -158,53 +161,48 @@ export default function AuthModal() {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-xs"
+        className="absolute inset-0 bg-black/45 backdrop-blur-xs"
         onClick={handleClose}
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-3xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-black">
         {/* Top bar */}
-        <div className="h-1.5 bg-primary-600" />
+        <div className="h-1.5 bg-black" />
 
         <div className="p-8">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary-50 border border-primary-100 rounded-lg flex items-center justify-center">
-                <Zap size={16} className="text-primary-600" />
-              </div>
-              <span className="text-gray-900 font-extrabold text-lg">
-                Shop<span className="text-primary-600">Wave</span>
-              </span>
-            </div>
+            <span className="text-2xl font-black tracking-tighter text-black uppercase font-sans">
+              LOCO
+            </span>
             <button
               onClick={handleClose}
-              className="w-8 h-8 bg-gray-155 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+              className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:text-black transition-colors cursor-pointer"
             >
               <X size={16} />
             </button>
           </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 mb-1">
+          <h2 className="text-2xl font-black uppercase tracking-tight text-black mb-1">
             {tab === "login" ? "Welcome back" : "Create account"}
           </h2>
           <p className="text-gray-500 text-sm mb-6">
             {tab === "login"
               ? "Sign in to continue shopping"
-              : "Join millions of happy shoppers"}
+              : "Join millions of shoppers"}
           </p>
 
           {/* Tabs */}
-          <div className="flex bg-gray-100 rounded-xl p-1 mb-6">
+          <div className="flex bg-gray-100 border border-gray-200/50 rounded-xl p-1 mb-6">
             {(["login", "register"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => { setTab(t); setError(""); }}
                 className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
                   tab === t
-                    ? "bg-primary-600 text-white shadow-xs"
-                    : "text-gray-500 hover:text-gray-900"
+                    ? "bg-black text-white shadow-xs"
+                    : "text-gray-500 hover:text-black"
                 }`}
               >
                 {t === "login" ? "Sign In" : "Sign Up"}
@@ -214,7 +212,7 @@ export default function AuthModal() {
 
           {/* Error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl mb-4 font-medium">
+            <div className="bg-orange-50 border border-orange-200 text-orange-600 text-sm px-4 py-3 rounded-xl mb-4 font-semibold uppercase tracking-wide">
               {error}
             </div>
           )}
@@ -231,7 +229,7 @@ export default function AuthModal() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
+                  className="w-full bg-gray-50 border border-gray-200 text-black placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black transition-colors shadow-2xs"
                 />
               </div>
             )}
@@ -245,7 +243,7 @@ export default function AuthModal() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
+                className="w-full bg-gray-50 border border-gray-200 text-black placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black transition-colors shadow-2xs"
               />
             </div>
 
@@ -258,12 +256,12 @@ export default function AuthModal() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
+                className="w-full bg-gray-50 border border-gray-200 text-black placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black transition-colors shadow-2xs"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors cursor-pointer"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -272,7 +270,7 @@ export default function AuthModal() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-primary-600 text-white font-semibold py-3.5 rounded-xl hover:bg-primary-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
+              className="w-full flex items-center justify-center gap-2 bg-black text-white font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-zinc-800 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-md"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -287,8 +285,8 @@ export default function AuthModal() {
 
           {/* Demo credentials hint */}
           {tab === "login" && (
-            <div className="mt-4 p-3 bg-primary-50 border border-primary-100 rounded-xl">
-              <p className="text-primary-700 text-xs text-center font-medium">
+            <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-xl">
+              <p className="text-orange-600 text-xs text-center font-medium">
                 <span className="font-bold">Demo: </span>
                 demo@shopwave.com / demo1234
               </p>
