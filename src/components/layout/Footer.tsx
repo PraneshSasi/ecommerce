@@ -6,15 +6,33 @@ import { ArrowUpRight, Zap } from "lucide-react";
 const columns = [
   {
     title: "Shop",
-    links: ["Electronics", "Fashion", "Home & Living", "Sports"],
+    links: [
+      { name: "Electronics", href: "/?category=Electronics#products" },
+      { name: "Fashion", href: "/?category=Fashion#products" },
+      { name: "Home & Living", href: "/?category=Home#products" },
+      { name: "Sports", href: "/?category=Sports#products" },
+    ],
   },
   {
     title: "Support",
-    links: ["Help Center", "Track Order", "Returns", "Contact Us"],
+    links: [
+      { name: "Help Center", href: "/info/help" },
+      { name: "Track Order", href: "/info/help" },
+      { name: "Returns", href: "/info/returns" },
+      { name: "Contact Us", href: "mailto:support@shopwave.com" },
+    ],
   },
   {
     title: "Company",
-    links: ["About Us", "Our Story", "Careers", "Press", "Privacy Policy", "Terms of Service"],
+    links: [
+      { name: "ShopWave India Corp", href: "/info/about" },
+      { name: "Bangalore Headquarters", href: "/info/about" },
+      { name: "corp@shopwave.com", href: "mailto:corp@shopwave.com" },
+      { name: "Our Story", href: "/info/story" },
+      { name: "Careers", href: "/info/careers" },
+      { name: "Privacy Policy", href: "/info/privacy" },
+      { name: "Terms of Service", href: "/info/terms" },
+    ],
   },
 ];
 
@@ -45,24 +63,14 @@ export default function Footer() {
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-gray-900">{col.title}</h3>
               <ul className="space-y-3">
                 {col.links.map((link) => (
-                  <li key={link}>
-                    <Link href="#" className="inline-flex items-center gap-1 text-sm text-gray-500 transition-colors hover:text-indigo-600">
-                      {link}
+                  <li key={link.name}>
+                    <Link href={link.href} className="inline-flex items-center gap-1 text-sm text-gray-500 transition-colors hover:text-indigo-600">
+                      {link.name}
                       <ArrowUpRight size={14} />
                     </Link>
                   </li>
                 ))}
               </ul>
-              {col.title === "Company" && (
-                <div className="mt-6 border-t border-gray-150 pt-4 space-y-1.5 text-xs text-gray-500">
-                  <p className="font-semibold text-gray-800">ShopWave India Corp</p>
-                  <p>123 Indigo Way, Sector 4</p>
-                  <p>Bangalore, KA 560001</p>
-                  <p className="pt-1 font-medium text-indigo-600 hover:text-indigo-755 transition-colors">
-                    <a href="mailto:corp@shopwave.com">corp@shopwave.com</a>
-                  </p>
-                </div>
-              )}
             </div>
           ))}
         </div>
