@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const query = searchParams.get("q") || "";
+    const query = (searchParams.get("q") || "").trim();
     const category = searchParams.get("category") || "";
     const sort = searchParams.get("sort") || "featured";
     const priceRange = searchParams.get("priceRange") || "all";
@@ -16,15 +16,16 @@ export async function GET(req: NextRequest) {
               OR: [
                 { title: { contains: query } },
                 { brand: { contains: query } },
-                { description: { contains: query } },
               ],
             }
           : {},
-        category && category !== "All"
-          ? { category: { equals: category } }
-          : {},
       ],
     };
+
+    // Only filter by category if no search query is active
+    if (!query && category && category !== "All") {
+      whereClause.AND.push({ category: { equals: category } });
+    }
 
     // Apply price range filtering
     if (priceRange === "budget") {
