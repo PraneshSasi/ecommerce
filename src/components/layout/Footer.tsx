@@ -5,15 +5,6 @@ import { ArrowUpRight, Zap } from "lucide-react";
 
 const columns = [
   {
-    title: "Shop",
-    links: [
-      { name: "Electronics", href: "/?category=Electronics#products" },
-      { name: "Fashion", href: "/?category=Fashion#products" },
-      { name: "Home & Living", href: "/?category=Home#products" },
-      { name: "Sports", href: "/?category=Sports#products" },
-    ],
-  },
-  {
     title: "Support",
     links: [
       { name: "Help Center", href: "/info/help" },
@@ -40,7 +31,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-gray-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
           <div className="space-y-4">
             <Link href="/" className="inline-flex items-center gap-2">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-100 bg-indigo-50 text-indigo-600">
