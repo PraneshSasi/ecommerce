@@ -131,8 +131,8 @@ const products = [
     brand: "Adidas",
     stock: 80,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80",
       "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800&q=80",
+      "https://images.unsplash.com/photo-1518049360754-cf4125b6079c?w=800&q=80",
       "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80",
       "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=800&q=80",
     ]),
@@ -207,7 +207,7 @@ const products = [
     brand: "Dyson",
     stock: 42,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+      "https://images.unsplash.com/photo-1558317374-067fb5f30001?w=800&q=80",
       "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80",
       "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80",
       "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=800&q=80",
@@ -321,7 +321,7 @@ const products = [
     brand: "Atomberg",
     stock: 75,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
       "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80",
       "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80",
       "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80",
@@ -432,7 +432,7 @@ const products = [
     brand: "Nespresso",
     stock: 22,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&q=80",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80",
       "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80",
       "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80",
       "https://images.unsplash.com/photo-1558562805-4bf1e2a724eb?w=800&q=80",
@@ -522,7 +522,7 @@ const products = [
     brand: "Vitamix",
     stock: 15,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&q=80",
+      "https://images.unsplash.com/photo-1578643463396-0997cb5328c1?w=800&q=80",
       "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
       "https://images.unsplash.com/photo-1556909172-8c2f041fca1e?w=800&q=80",
       "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=800&q=80",
@@ -576,8 +576,8 @@ const products = [
     brand: "TP-Link",
     stock: 150,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
+      "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=800&q=80",
+      "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=800&q=80",
     ]),
   },
   {
@@ -824,7 +824,7 @@ const products = [
     brand: "Philips",
     stock: 90,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1621972750749-0fbb1abb7736?w=800&q=80",
+      "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&q=80",
       "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&q=80",
     ]),
   },
@@ -841,7 +841,7 @@ const products = [
     brand: "Roborock",
     stock: 12,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1618172193763-c511deb635ca?w=800&q=80",
+      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=800&q=80",
       "https://images.unsplash.com/photo-1562408590-e32931084e23?w=800&q=80",
     ]),
   },
@@ -1161,7 +1161,7 @@ function generateMoreProducts() {
       stock: 110,
       category: "Fashion",
       brand: "Puma",
-      images: JSON.stringify(["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&q=80"])
     },
     {
       title: "Zara Men's Regular Fit Denim Shirt",
@@ -1226,7 +1226,7 @@ function generateMoreProducts() {
       stock: 250,
       category: "Fashion",
       brand: "Roadster",
-      images: JSON.stringify(["https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800&q=80"])
     },
     {
       title: "Nike Air Force 1 Sneakers",
