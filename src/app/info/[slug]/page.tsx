@@ -156,10 +156,10 @@ export default async function InfoPage({ params }: InfoPageProps) {
 
       <div className="rounded-3xl border border-gray-200 bg-white p-6 sm:p-10 shadow-xs space-y-6">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-650">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary-100 bg-primary-50 text-primary-600">
             <IconComponent size={20} />
           </div>
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600">ShopWave Info</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-primary-600">ShopWave Info</span>
         </div>
 
         <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">{content.title}</h1>

@@ -33,13 +33,13 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
           <>
             <button
               onClick={prev}
-              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-gray-200 bg-white/95 text-gray-700 opacity-0 transition-all hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-600 group-hover:opacity-100 shadow-sm cursor-pointer"
+              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-gray-200 bg-white/95 text-gray-700 opacity-0 transition-all hover:border-primary-600 hover:bg-primary-50 hover:text-primary-600 group-hover:opacity-100 shadow-sm cursor-pointer"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={next}
-              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-gray-200 bg-white/95 text-gray-700 opacity-0 transition-all hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-600 group-hover:opacity-100 shadow-sm cursor-pointer"
+              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-gray-200 bg-white/95 text-gray-700 opacity-0 transition-all hover:border-primary-600 hover:bg-primary-50 hover:text-primary-600 group-hover:opacity-100 shadow-sm cursor-pointer"
             >
               <ChevronRight size={18} />
             </button>
@@ -51,7 +51,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
             <button
               key={i}
               onClick={() => setActiveIndex(i)}
-              className={`h-2 rounded-full transition-all cursor-pointer ${i === activeIndex ? "w-5 bg-indigo-600" : "w-2 bg-gray-300 hover:bg-gray-400"}`}
+              className={`h-2 rounded-full transition-all cursor-pointer ${i === activeIndex ? "w-5 bg-primary-600" : "w-2 bg-gray-300 hover:bg-gray-400"}`}
             />
           ))}
         </div>
@@ -65,7 +65,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
               onClick={() => setActiveIndex(i)}
               className={`relative aspect-square overflow-hidden rounded-md border transition-all cursor-pointer ${
                 i === activeIndex
-                  ? "border-indigo-600 ring-1 ring-indigo-600/20"
+                  ? "border-primary-600 ring-1 ring-primary-600/20"
                   : "border-gray-200 hover:border-gray-300"
               }`}
             >

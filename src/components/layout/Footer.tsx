@@ -35,7 +35,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
           <div className="space-y-4">
             <Link href="/" className="inline-flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-100 bg-indigo-50 text-indigo-600">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary-100 bg-primary-50 text-primary-600">
                 <Zap size={16} />
               </div>
               <span className="text-lg font-semibold text-gray-900">ShopWave</span>
@@ -56,7 +56,7 @@ export default function Footer() {
               <ul className="space-y-3">
                 {col.links.map((link) => (
                   <li key={link.name}>
-                    <Link href={link.href} className="inline-flex items-center gap-1 text-sm text-gray-500 transition-colors hover:text-indigo-600">
+                    <Link href={link.href} className="inline-flex items-center gap-1 text-sm text-gray-500 transition-colors hover:text-primary-600">
                       {link.name}
                       <ArrowUpRight size={14} />
                     </Link>

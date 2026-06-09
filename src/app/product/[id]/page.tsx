@@ -54,7 +54,7 @@ export default function ProductPage() {
           </p>
           <button
             onClick={() => router.push("/")}
-            className="mt-6 inline-flex items-center justify-center rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm"
+            className="mt-6 inline-flex items-center justify-center rounded-lg bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 cursor-pointer shadow-sm"
           >
             Back to shop
           </button>
@@ -75,7 +75,7 @@ export default function ProductPage() {
       </button>
 
       <div className="mb-6 flex flex-col gap-2">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">Product details</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary-600">Product details</p>
         <h1 className="text-2xl font-bold text-gray-950 md:text-3xl">{product.title}</h1>
       </div>
 
@@ -89,7 +89,7 @@ export default function ProductPage() {
               { icon: ShieldCheck, title: "Secure pay", sub: "Protected checkout" },
             ].map(({ icon: Icon, title, sub }) => (
               <div key={title} className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-xs">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600 border border-primary-100">
                   <Icon size={18} />
                 </div>
                 <div>

@@ -14,7 +14,7 @@ export default function ProductMeta({ product }: ProductMetaProps) {
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full border border-indigo-150 bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-indigo-700">
+        <span className="rounded-full border border-primary-200 bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary-700">
           {product.brand}
         </span>
         <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium text-gray-600">
@@ -72,7 +72,7 @@ export default function ProductMeta({ product }: ProductMetaProps) {
 
       <div className="space-y-3">
         <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.22em] text-gray-900">
-          <Award size={16} className="text-indigo-600" /> About this product
+          <Award size={16} className="text-primary-600" /> About this product
         </h2>
         <p className="text-sm leading-7 text-gray-700">{product.description}</p>
       </div>
