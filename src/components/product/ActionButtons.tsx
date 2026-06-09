@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ShoppingCart, Zap, Check } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/store/useStore";
 import toast from "react-hot-toast";
@@ -20,27 +20,62 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
   const [buyingNow, setBuyingNow] = useState(false);
   const router = useRouter();
 
+  /** Shared: call /api/cart POST and return { ok, cartCount, errorMsg, status } */
+  const postToCart = async (): Promise<{ ok: boolean; cartCount?: number; errorMsg?: string; status?: number }> => {
+    const res = await fetch("/api/cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      return { ok: true, cartCount: data.cartCount };
+    }
+
+    // Parse error message from server
+    let errorMsg = "Failed to add to cart";
+    try {
+      const data = await res.json();
+      errorMsg = data.error || errorMsg;
+    } catch {
+      // ignore parse failure
+    }
+    return { ok: false, errorMsg, status: res.status };
+  };
+
+  /** Handle stale session (403): sign out and re-open auth modal */
+  const handleStaleSession = (pendingAction: () => void) => {
+    toast.error("Your session expired. Please sign in again.", { duration: 4000 });
+    signOut({ redirect: false }).then(() => {
+      // Re-open auth modal which will re-run the pending action after login
+      setTimeout(() => openAuthModal(pendingAction), 500);
+    });
+  };
+
   const doAddToCart = async () => {
     setAddingToCart(true);
     try {
-      const res = await fetch("/api/cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId }),
-      });
-      if (res.ok) {
-        incrementCart();
+      const result = await postToCart();
+      if (result.ok) {
+        if (result.cartCount !== undefined) {
+          useStore.getState().setCartCount(result.cartCount);
+        } else {
+          incrementCart();
+        }
         setAddedToCart(true);
         toast.success("Added to cart!", {
           style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
           iconTheme: { primary: "#4f46e5", secondary: "#fff" },
         });
         setTimeout(() => setAddedToCart(false), 2500);
+      } else if (result.status === 403) {
+        handleStaleSession(doAddToCart);
       } else {
-        throw new Error("Failed");
+        toast.error(result.errorMsg || "Failed to add to cart. Please try again.");
       }
     } catch {
-      toast.error("Failed to add to cart. Please try again.");
+      toast.error("Network error. Please check your connection.");
     } finally {
       setAddingToCart(false);
     }
@@ -49,19 +84,25 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
   const doBuyNow = async () => {
     setBuyingNow(true);
     try {
-      const res = await fetch("/api/cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId }),
-      });
-      if (res.ok) {
-        incrementCart();
-        router.push("/cart");
+      const result = await postToCart();
+      if (result.ok) {
+        if (result.cartCount !== undefined) {
+          useStore.getState().setCartCount(result.cartCount);
+        } else {
+          incrementCart();
+        }
+        // Store the product ID so checkout page can highlight it
+        useStore.getState().setBuyNowItem(productId);
+        router.push("/checkout");
+      } else if (result.status === 403) {
+        setBuyingNow(false);
+        handleStaleSession(doBuyNow);
       } else {
-        throw new Error("Failed");
+        toast.error(result.errorMsg || "Something went wrong. Please try again.");
+        setBuyingNow(false);
       }
     } catch {
-      toast.error("Failed. Please try again.");
+      toast.error("Network error. Please check your connection.");
       setBuyingNow(false);
     }
   };

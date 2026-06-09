@@ -26,7 +26,18 @@ export async function POST(req: NextRequest) {
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const { productId, quantity = 1 } = await req.json();
+
+    // Verify the user actually exists in the DB (JWT may contain stale ID after re-seed)
+    const userExists = await prisma.user.findUnique({ where: { id: session.user.id }, select: { id: true } });
+    if (!userExists) {
+      return NextResponse.json(
+        { error: "Session expired. Please sign out and sign back in." },
+        { status: 403 }
+      );
+    }
+
+    const body = await req.json();
+    const { productId, quantity = 1 } = body;
     if (!productId) {
       return NextResponse.json({ error: "Product ID required" }, { status: 400 });
     }
@@ -53,7 +64,7 @@ export async function POST(req: NextRequest) {
     const cartCount = await prisma.cartItem.count({ where: { userId: session.user.id } });
     return NextResponse.json({ cartItem, cartCount }, { status: 201 });
   } catch (error) {
-    console.error("Cart add error:", error);
+    console.error("[CART POST] Error:", error);
     return NextResponse.json({ error: "Failed to add to cart" }, { status: 500 });
   }
 }

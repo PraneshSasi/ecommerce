@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "./Providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
   title: "ShopWave | Premium Shopping",
   description:
-    "A polished storefront for premium products, fast checkout, and a streamlined shopping experience.",
-  keywords: "online shopping, ecommerce, electronics, fashion, deals",
+    "Discover thousands of premium products — electronics, fashion, home & more. Fast delivery, secure checkout, easy returns.",
+  keywords: "online shopping, ecommerce, electronics, fashion, deals, india",
   openGraph: {
     title: "ShopWave | Premium Shopping",
     description: "Browse premium products with a clean, fast shopping experience.",
@@ -26,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${jakarta.variable} font-sans antialiased`}>
         <Providers>
           <div className="relative min-h-screen overflow-x-hidden">
             <Header />

@@ -1,0 +1,446 @@
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  ShieldCheck,
+  Truck,
+  CreditCard,
+  Smartphone,
+  Building2,
+  Wallet,
+  Banknote,
+  CheckCircle2,
+  Package,
+  MapPin,
+  ChevronRight,
+  Zap,
+} from "lucide-react";
+import { CartItem } from "@/types";
+import Spinner from "@/components/ui/Spinner";
+import { useStore } from "@/store/useStore";
+import toast from "react-hot-toast";
+
+const paymentMethods = [
+  { id: "card", label: "Credit / Debit Card", icon: CreditCard, sub: "Visa, Mastercard, RuPay" },
+  { id: "upi", label: "UPI", icon: Smartphone, sub: "Google Pay, PhonePe, Paytm" },
+  { id: "netbanking", label: "Net Banking", icon: Building2, sub: "All major banks" },
+  { id: "wallet", label: "Wallets", icon: Wallet, sub: "Amazon Pay, Mobikwik" },
+  { id: "cod", label: "Cash on Delivery", icon: Banknote, sub: "Pay when you receive" },
+];
+
+export default function CheckoutPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPayment, setSelectedPayment] = useState("upi");
+  const [placingOrder, setPlacingOrder] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
+
+  const { setCartCount } = useStore();
+
+  const [address, setAddress] = useState({
+    fullName: "",
+    phone: "",
+    addressLine: "",
+    city: "",
+    state: "",
+    pincode: "",
+  });
+
+  const fetchCart = useCallback(async () => {
+    try {
+      const res = await fetch("/api/cart");
+      if (res.ok) {
+        const data = await res.json();
+        setCartItems(Array.isArray(data) ? data : []);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/auth?callbackUrl=/checkout");
+      return;
+    }
+    if (status === "authenticated") {
+      // Pre-fill name from session
+      if (session?.user?.name) {
+        setAddress((prev) => ({ ...prev, fullName: prev.fullName || session.user.name || "" }));
+      }
+      void fetchCart();
+    }
+  }, [status, session, fetchCart, router]);
+
+  const subtotal = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const savings = cartItems.reduce(
+    (sum, item) => sum + (item.product.originalPrice - item.product.price) * item.quantity,
+    0
+  );
+  const delivery = subtotal >= 499 ? 0 : 49;
+  const total = subtotal + delivery;
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handlePlaceOrder = async () => {
+    // Validate address
+    if (!address.fullName || !address.phone || !address.addressLine || !address.city || !address.state || !address.pincode) {
+      toast.error("Please fill in all delivery details.", {
+        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+      });
+      return;
+    }
+    if (address.phone.length < 10) {
+      toast.error("Please enter a valid phone number.", {
+        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+      });
+      return;
+    }
+
+    setPlacingOrder(true);
+
+    // Simulate order placement delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    setOrderPlaced(true);
+    toast.success("Order placed successfully! 🎉", {
+      style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+      iconTheme: { primary: "#16a34a", secondary: "#fff" },
+      duration: 5000,
+    });
+
+    // Clear all cart items on server
+    for (const item of cartItems) {
+      await fetch("/api/cart", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cartItemId: item.id }),
+      }).catch(() => {});
+    }
+
+    // Reset header cart badge to 0
+    setCartCount(0);
+    setPlacingOrder(false);
+  };
+
+  if (status === "loading" || loading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <div className="rounded-xl border border-gray-200 bg-white px-6 py-10 text-center shadow-xs">
+          <Spinner size={40} />
+          <p className="mt-4 text-sm text-gray-500">Preparing checkout...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (orderPlaced) {
+    return (
+      <div className="flex min-h-[70vh] items-center justify-center px-4">
+        <div className="max-w-lg rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50 border border-emerald-200">
+            <CheckCircle2 size={40} className="text-emerald-600" />
+          </div>
+          <h2 className="mt-6 text-2xl font-bold text-gray-900">Order Placed!</h2>
+          <p className="mt-3 text-sm leading-6 text-gray-500">
+            Your order has been confirmed and will be shipped soon. Thank you for shopping with ShopWave!
+          </p>
+          <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50/50 px-4 py-3">
+            <p className="text-sm font-semibold text-emerald-700">
+              Order Total: ₹{total.toLocaleString("en-IN")}
+            </p>
+            <p className="mt-1 text-xs text-emerald-600">
+              {totalItems} {totalItems === 1 ? "item" : "items"} • {selectedPayment === "cod" ? "Cash on Delivery" : "Paid Online"}
+            </p>
+          </div>
+          <div className="mt-6 flex gap-3">
+            <Link
+              href="/"
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm"
+            >
+              Continue Shopping
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <div className="max-w-md rounded-xl border border-gray-200 bg-white px-6 py-12 text-center shadow-xs">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-gray-400">
+            <Package size={36} />
+          </div>
+          <h2 className="mt-5 text-2xl font-bold text-gray-900">Nothing to checkout</h2>
+          <p className="mt-3 text-sm leading-6 text-gray-500">Add some products to your cart first, then come back to checkout.</p>
+          <Link
+            href="/"
+            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm"
+          >
+            Start Shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+      {/* Header */}
+      <div className="mb-8 flex flex-wrap items-center gap-4">
+        <button
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 cursor-pointer"
+        >
+          <ArrowLeft size={16} /> Back
+        </button>
+        <div className="h-5 w-px bg-gray-200" />
+        <div className="inline-flex items-center gap-2 text-gray-900">
+          <ShieldCheck size={18} className="text-indigo-600" />
+          <h1 className="text-xl font-bold">Secure Checkout</h1>
+        </div>
+      </div>
+
+      <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
+        {/* Left Column */}
+        <div className="space-y-6">
+          {/* Delivery Address */}
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 mb-5">
+              <MapPin size={18} className="text-indigo-600" /> Delivery Address
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Full Name</label>
+                <input
+                  name="fullName"
+                  value={address.fullName}
+                  onChange={handleAddressChange}
+                  placeholder="John Doe"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Phone Number</label>
+                <input
+                  name="phone"
+                  value={address.phone}
+                  onChange={handleAddressChange}
+                  placeholder="+91 9876543210"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Address</label>
+                <input
+                  name="addressLine"
+                  value={address.addressLine}
+                  onChange={handleAddressChange}
+                  placeholder="House No, Street, Area"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">City</label>
+                <input
+                  name="city"
+                  value={address.city}
+                  onChange={handleAddressChange}
+                  placeholder="Bangalore"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">State</label>
+                  <input
+                    name="state"
+                    value={address.state}
+                    onChange={handleAddressChange}
+                    placeholder="Karnataka"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Pincode</label>
+                  <input
+                    name="pincode"
+                    value={address.pincode}
+                    onChange={handleAddressChange}
+                    placeholder="560001"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Payment Method */}
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 mb-5">
+              <CreditCard size={18} className="text-indigo-600" /> Payment Method
+            </h2>
+            <div className="space-y-3">
+              {paymentMethods.map(({ id, label, icon: Icon, sub }) => (
+                <button
+                  key={id}
+                  onClick={() => setSelectedPayment(id)}
+                  className={`flex w-full items-center gap-4 rounded-xl border-2 px-4 py-4 text-left transition-all cursor-pointer ${
+                    selectedPayment === id
+                      ? "border-indigo-600 bg-indigo-50/50 shadow-xs"
+                      : "border-gray-200 bg-white hover:border-gray-300"
+                  }`}
+                >
+                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
+                    selectedPayment === id ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-500"
+                  }`}>
+                    <Icon size={18} />
+                  </div>
+                  <div className="flex-1">
+                    <p className={`text-sm font-semibold ${selectedPayment === id ? "text-indigo-900" : "text-gray-900"}`}>{label}</p>
+                    <p className="text-xs text-gray-500">{sub}</p>
+                  </div>
+                  {selectedPayment === id && (
+                    <CheckCircle2 size={20} className="text-indigo-600 shrink-0" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Order Items */}
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 mb-5">
+              <Package size={18} className="text-indigo-600" /> Order Items ({totalItems})
+            </h2>
+            <div className="space-y-4">
+              {cartItems.map((item) => {
+                const images: string[] = JSON.parse(item.product.images);
+                return (
+                  <div key={item.id} className="flex gap-4 rounded-lg border border-gray-100 bg-gray-50/50 p-3">
+                    <Link href={`/product/${item.productId}`} className="shrink-0">
+                      <div className="relative h-20 w-20 overflow-hidden rounded-lg border border-gray-200 bg-white">
+                        <Image src={images[0]} alt={item.product.title} fill className="object-contain p-1" sizes="80px" />
+                      </div>
+                    </Link>
+                    <div className="min-w-0 flex-1">
+                      <p className="line-clamp-2 text-sm font-semibold text-gray-900">{item.product.title}</p>
+                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-indigo-600">{item.product.brand}</p>
+                      <div className="mt-2 flex items-center gap-3">
+                        <span className="text-sm font-bold text-gray-900">₹{item.product.price.toLocaleString("en-IN")}</span>
+                        <span className="text-xs text-gray-400 line-through">₹{item.product.originalPrice.toLocaleString("en-IN")}</span>
+                        <span className="text-xs text-gray-500">× {item.quantity}</span>
+                      </div>
+                    </div>
+                    <div className="shrink-0 text-right">
+                      <p className="text-sm font-bold text-gray-900">
+                        ₹{(item.product.price * item.quantity).toLocaleString("en-IN")}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column — Order Summary */}
+        <div className="lg:sticky lg:top-24 lg:self-start">
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
+            <h2 className="mb-5 flex items-center gap-2 text-lg font-bold text-gray-900">
+              <Zap size={18} className="text-indigo-600" /> Order Summary
+            </h2>
+            <div className="space-y-3">
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Subtotal ({totalItems} items)</span>
+                <span className="font-semibold text-gray-900">₹{subtotal.toLocaleString("en-IN")}</span>
+              </div>
+              {savings > 0 && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Discount</span>
+                  <span className="font-semibold text-emerald-600">-₹{savings.toLocaleString("en-IN")}</span>
+                </div>
+              )}
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Delivery</span>
+                <span className={delivery === 0 ? "font-semibold text-emerald-600" : "font-semibold text-gray-900"}>
+                  {delivery === 0 ? "FREE" : `₹${delivery}`}
+                </span>
+              </div>
+              <div className="border-t border-gray-200 pt-3 flex justify-between">
+                <span className="font-bold text-gray-900">Total</span>
+                <span className="text-xl font-bold text-gray-900">₹{total.toLocaleString("en-IN")}</span>
+              </div>
+            </div>
+
+            {savings > 0 && (
+              <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-center">
+                <p className="text-sm font-semibold text-emerald-700">
+                  You save ₹{savings.toLocaleString("en-IN")} on this order
+                </p>
+              </div>
+            )}
+
+            <button
+              onClick={handlePlaceOrder}
+              disabled={placingOrder}
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 py-3.5 text-sm font-semibold text-white transition-all hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+            >
+              {placingOrder ? (
+                <>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/25 border-t-white" /> Placing Order...
+                </>
+              ) : (
+                <>
+                  <ShieldCheck size={16} /> Place Order • ₹{total.toLocaleString("en-IN")}
+                </>
+              )}
+            </button>
+
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400">
+              <ShieldCheck size={12} /> Secure checkout powered by ShopWave
+            </div>
+          </div>
+
+          {/* Delivery Info */}
+          <div className="mt-4 rounded-xl border border-gray-200 bg-white p-5 shadow-xs">
+            <div className="flex items-start gap-3">
+              <Truck size={18} className="mt-0.5 text-indigo-600 shrink-0" />
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Estimated Delivery</p>
+                <p className="mt-1 text-xs text-gray-500">
+                  {new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                  })} — {new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                  })}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <Link href="/cart" className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-900">
+            <ArrowLeft size={14} /> Back to cart
+            <ChevronRight size={14} />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

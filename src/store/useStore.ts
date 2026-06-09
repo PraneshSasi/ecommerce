@@ -12,6 +12,11 @@ interface StoreState {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   selectedCategory: string;
+  buyNowItem: string | null;
+  buyNowQuantity: number;
+  setBuyNowItem: (id: string | null) => void;
+  setBuyNowQuantity: (qty: number) => void;
+  clearBuyNow: () => void;
   setSelectedCategory: (category: string) => void;
 }
 
@@ -34,4 +39,9 @@ export const useStore = create<StoreState>((set) => ({
 
   selectedCategory: "All",
   setSelectedCategory: (category) => set({ selectedCategory: category }),
+  buyNowItem: null,
+  buyNowQuantity: 0,
+  setBuyNowItem: (id) => set({ buyNowItem: id }),
+  setBuyNowQuantity: (qty) => set({ buyNowQuantity: qty }),
+  clearBuyNow: () => set({ buyNowItem: null, buyNowQuantity: 0 }),
 }));

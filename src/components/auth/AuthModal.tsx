@@ -58,11 +58,15 @@ export default function AuthModal() {
         });
         handleClose();
         if (pendingAction) {
-          setTimeout(() => pendingAction(), 500);
+          // Run the pending action (e.g. add to cart / buy now)
+          // Don't reload — let the action complete and navigate if needed
+          setTimeout(() => pendingAction(), 300);
+        } else {
+          // No pending action — reload to refresh session state
+          setTimeout(() => {
+            window.location.reload();
+          }, 1200);
         }
-        setTimeout(() => {
-          window.location.reload();
-        }, 1200);
       }
     } catch {
       setError("Something went wrong. Please try again.");
@@ -129,11 +133,13 @@ export default function AuthModal() {
         });
         handleClose();
         if (pendingAction) {
-          setTimeout(() => pendingAction(), 500);
+          // Run the pending action — don't reload
+          setTimeout(() => pendingAction(), 300);
+        } else {
+          setTimeout(() => {
+            window.location.reload();
+          }, 1200);
         }
-        setTimeout(() => {
-          window.location.reload();
-        }, 1200);
       }
     } catch {
       setError("Something went wrong. Please try again.");

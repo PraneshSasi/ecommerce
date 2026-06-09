@@ -8,25 +8,32 @@ import Link from "next/link";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, ShoppingCart, Zap } from "lucide-react";
 import { CartItem } from "@/types";
 import Spinner from "@/components/ui/Spinner";
+import { useStore } from "@/store/useStore";
 import toast from "react-hot-toast";
 
 export default function CartPage() {
   const { status } = useSession();
   const router = useRouter();
+  const { setCartCount } = useStore();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-  const fetchCart = useCallback(async () => {    try {
+  const fetchCart = useCallback(async () => {
+    try {
       const res = await fetch("/api/cart");
       if (res.ok) {
         const data = await res.json();
-        setCartItems(Array.isArray(data) ? data : []);
+        const items = Array.isArray(data) ? data : [];
+        setCartItems(items);
+        // Sync header badge with real server count
+        const count = items.reduce((sum: number, i: CartItem) => sum + i.quantity, 0);
+        setCartCount(count);
       }
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setCartCount]);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -45,10 +52,16 @@ export default function CartPage() {
         body: JSON.stringify({ cartItemId, quantity }),
       });
       if (res.ok) {
+        const data = await res.json();
+        // Update local list
         if (quantity < 1) {
           setCartItems((prev) => prev.filter((i) => i.id !== cartItemId));
         } else {
           setCartItems((prev) => prev.map((i) => (i.id === cartItemId ? { ...i, quantity } : i)));
+        }
+        // Sync header badge from server response
+        if (data.cartCount !== undefined) {
+          setCartCount(data.cartCount);
         }
       }
     } finally {
@@ -65,7 +78,12 @@ export default function CartPage() {
         body: JSON.stringify({ cartItemId }),
       });
       if (res.ok) {
+        const data = await res.json();
         setCartItems((prev) => prev.filter((i) => i.id !== cartItemId));
+        // Sync header badge from server response (goes to 0 when cart is empty)
+        if (data.cartCount !== undefined) {
+          setCartCount(data.cartCount);
+        }
         toast.success("Item removed from cart", {
           style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
         });
@@ -240,9 +258,12 @@ export default function CartPage() {
                 </div>
               )}
 
-              <button className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm">
+              <Link
+                href="/checkout"
+                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm"
+              >
                 <Zap size={16} /> Proceed to checkout
-              </button>
+              </Link>
               <Link href="/" className="mt-4 block text-center text-sm text-gray-500 transition-colors hover:text-gray-900">
                 Continue shopping
               </Link>
@@ -253,5 +274,3 @@ export default function CartPage() {
     </div>
   );
 }
-
-
