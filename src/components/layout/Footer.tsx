@@ -14,7 +14,7 @@ const columns = [
   },
   {
     title: "Company",
-    links: ["About Us", "Careers", "Press", "Privacy Policy"],
+    links: ["About Us", "Our Story", "Careers", "Press", "Privacy Policy", "Terms of Service"],
   },
 ];
 
@@ -53,6 +53,16 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
+              {col.title === "Company" && (
+                <div className="mt-6 border-t border-gray-150 pt-4 space-y-1.5 text-xs text-gray-500">
+                  <p className="font-semibold text-gray-800">ShopWave India Corp</p>
+                  <p>123 Indigo Way, Sector 4</p>
+                  <p>Bangalore, KA 560001</p>
+                  <p className="pt-1 font-medium text-indigo-600 hover:text-indigo-755 transition-colors">
+                    <a href="mailto:corp@shopwave.com">corp@shopwave.com</a>
+                  </p>
+                </div>
+              )}
             </div>
           ))}
         </div>
