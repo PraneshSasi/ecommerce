@@ -14,18 +14,10 @@ import {
   ChevronDown,
   Home,
   Sparkles,
-  Palette,
 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useStore } from "@/store/useStore";
 import { useEffect, useRef, useState } from "react";
-
-const THEMES = [
-  { id: "indigo", name: "Indigo Waves", colorClass: "bg-indigo-600" },
-  { id: "emerald", name: "Emerald Garden", colorClass: "bg-emerald-600" },
-  { id: "ruby", name: "Crimson Ruby", colorClass: "bg-rose-600" },
-  { id: "amber", name: "Warm Amber", colorClass: "bg-amber-500" },
-];
 
 export default function Header() {
   const { data: session } = useSession();
@@ -35,12 +27,9 @@ export default function Header() {
     searchQuery,
     setSearchQuery,
     setSelectedCategory,
-    theme,
-    setTheme,
   } = useStore();
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [themeOpen, setThemeOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -70,7 +59,6 @@ export default function Header() {
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
         setProfileOpen(false);
         setMenuOpen(false);
-        setThemeOpen(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -163,44 +151,6 @@ export default function Header() {
           {/* Right actions */}
           <div className="ml-auto flex items-center gap-2">
 
-            {/* Theme Switcher */}
-            <div className="relative">
-              <button
-                onClick={() => setThemeOpen((o) => !o)}
-                className="relative inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-primary-500 hover:bg-primary-50 hover:text-primary-600 hover:shadow-md cursor-pointer"
-                aria-label="Change theme"
-              >
-                <Palette size={20} />
-              </button>
-
-              {themeOpen && (
-                <div className="animate-slide-down absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-xl shadow-gray-900/10 z-50">
-                  <p className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">Select Theme</p>
-                  <div className="space-y-1">
-                    {THEMES.map((t) => (
-                      <button
-                        key={t.id}
-                        onClick={() => {
-                          setTheme(t.id);
-                          setThemeOpen(false);
-                        }}
-                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold transition-colors cursor-pointer ${
-                          theme === t.id
-                            ? "bg-primary-50 text-primary-700"
-                            : "text-gray-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        <span className={`h-4.5 w-4.5 shrink-0 rounded-full border border-black/10 ${t.colorClass}`} />
-                        <span>{t.name}</span>
-                        {theme === t.id && (
-                          <span className="ml-auto flex h-2 w-2 rounded-full bg-primary-600" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
 
             {/* Cart button */}
             <Link

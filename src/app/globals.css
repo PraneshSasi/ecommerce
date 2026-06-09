@@ -132,20 +132,67 @@ html {
 
 body {
   min-height: 100vh;
-  color: #111827;
+  color: #0f172a;
   background-color: #f8fafc;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Subtle dot grid background */
+/* Elegant ambient blobs in background */
 body::before {
   content: "";
   position: fixed;
+  top: -10%;
+  left: -5%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, rgba(139, 92, 246, 0.04) 50%, transparent 100%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -2;
+  animation: ambient-glow-1 20s ease-in-out infinite alternate;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  bottom: -5%;
+  right: -5%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 500px;
+  max-height: 500px;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.06) 0%, rgba(79, 70, 229, 0.03) 50%, transparent 100%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -2;
+  animation: ambient-glow-2 25s ease-in-out infinite alternate;
+}
+
+/* Subtle fading dot grid */
+.grid-bg {
+  position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(circle, var(--primary-300) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-image: radial-gradient(circle at 1px 1px, rgba(79, 70, 229, 0.07) 1.5px, transparent 0);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 75%);
   z-index: -1;
-  opacity: 0.15;
+}
+
+@keyframes ambient-glow-1 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(40px, -60px) scale(1.1); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes ambient-glow-2 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-50px, 30px) scale(1.05); }
+  100% { transform: translate(0px, 0px) scale(1); }
 }
 
 /* Text selection */

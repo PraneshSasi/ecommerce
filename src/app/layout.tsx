@@ -33,6 +33,7 @@ export default function RootLayout({
       <body className={`${jakarta.variable} font-sans antialiased`}>
         <Providers>
           <div className="relative min-h-screen overflow-x-hidden">
+            <div className="grid-bg" />
             <Header />
             <main className="min-h-[calc(100vh-5rem)]">{children}</main>
             <Footer />
