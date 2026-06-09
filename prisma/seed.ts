@@ -131,9 +131,9 @@ const products = [
     brand: "Adidas",
     stock: 80,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1518049360754-cf4125b6079c?w=800&q=80",
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800&q=80",
+      "https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=800&q=80",
       "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=800&q=80",
-      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80",
     ]),
   },
   {
@@ -911,7 +911,7 @@ function generateMoreProducts() {
       category: "Electronics",
       brand: "Dell",
       stock: 25,
-      images: JSON.stringify(["https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800&q=80", "https://images.unsplash.com/photo-1496181130204-755241524eab?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800&q=80", "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800&q=80"])
     },
     {
       title: "HP Pavilion x360 2-in-1 Laptop",
@@ -1147,7 +1147,7 @@ function generateMoreProducts() {
       stock: 200,
       category: "Fashion",
       brand: "Adidas",
-      images: JSON.stringify(["https://images.unsplash.com/photo-1515462277126-270d878326e5?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1506152983158-b4a74a01c721?w=800&q=80"])
     },
     {
       title: "Puma Unisex Running Shoes",
@@ -1225,7 +1225,7 @@ function generateMoreProducts() {
       stock: 250,
       category: "Fashion",
       brand: "Roadster",
-      images: JSON.stringify(["https://images.unsplash.com/photo-1512374382149-433752e50d48?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=800&q=80"])
     },
     {
       title: "Nike Air Force 1 Sneakers",
@@ -1606,7 +1606,7 @@ function generateMoreProducts() {
       stock: 500,
       category: "Sports",
       brand: "Nivia",
-      images: JSON.stringify(["https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1518063319789-7217e6706b04?w=800&q=80"])
     },
     {
       title: "Wilson Championship Tennis Balls (3 Ball Can)",
@@ -1749,7 +1749,7 @@ function generateMoreProducts() {
       stock: 45,
       category: "Sports",
       brand: "Decathlon",
-      images: JSON.stringify(["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1511886929837-354d827aae26?w=800&q=80"])
     }
   ];
 

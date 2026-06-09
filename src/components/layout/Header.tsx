@@ -25,11 +25,23 @@ const navLinks = [
 
 export default function Header() {
   const { data: session } = useSession();
-  const { cartCount, setCartCount, searchQuery, setSearchQuery } = useStore();
+  const { cartCount, setCartCount, searchQuery, setSearchQuery, setSelectedCategory } = useStore();
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const handleSearchChange = (val: string) => {
+    setSearchQuery(val);
+    if (typeof window !== "undefined" && window.location.pathname !== "/") {
+      router.push("/");
+    }
+  };
+
+  const handleLogoClick = () => {
+    setSearchQuery("");
+    setSelectedCategory("All");
+  };
 
   useEffect(() => {
     if (session) {
@@ -70,7 +82,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-xl shadow-xs">
       <div ref={headerRef} className="mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center gap-3 lg:gap-4">
-          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+          <Link href="/" onClick={handleLogoClick} className="flex items-center gap-2.5 shrink-0">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-100 bg-indigo-50 text-indigo-600 shadow-xs">
               <Zap size={17} />
             </div>
@@ -81,7 +93,7 @@ export default function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center rounded-lg border border-gray-200 bg-gray-50/50 p-1">
-            <Link href="/" className="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900">
+            <Link href="/" onClick={handleLogoClick} className="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900">
               <Home size={14} /> Home
             </Link>
             {navLinks.map(({ href, label, icon: Icon }) => (
@@ -98,7 +110,7 @@ export default function Header() {
                 type="text"
                 placeholder="Search products, brands, and deals"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden transition-colors focus:border-indigo-500 focus:bg-white"
               />
             </div>
@@ -187,14 +199,14 @@ export default function Header() {
                     type="text"
                     placeholder="Search products"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => handleSearchChange(e.target.value)}
                     className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 focus:bg-white"
                   />
                 </div>
               </form>
 
               <div className="space-y-1">
-                <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center justify-between rounded-md px-3 py-3 text-sm text-gray-700 transition-colors hover:bg-gray-50">
+                <Link href="/" onClick={() => { handleLogoClick(); setMenuOpen(false); }} className="flex items-center justify-between rounded-md px-3 py-3 text-sm text-gray-700 transition-colors hover:bg-gray-50">
                   Home
                   <ChevronRight size={14} className="text-gray-400" />
                 </Link>

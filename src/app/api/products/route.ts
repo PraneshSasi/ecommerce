@@ -30,12 +30,13 @@ export async function GET(req: NextRequest) {
     const sort = searchParams.get("sort") || "featured";
     const priceRange = searchParams.get("priceRange") || "all";
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dbWhereClause: any = {
       AND: [],
     };
 
-    // Only filter by category if no search query is active
-    if (!query && category && category !== "All") {
+    // Filter by category if specified
+    if (category && category !== "All") {
       dbWhereClause.AND.push({ category: { equals: category } });
     }
 
@@ -49,6 +50,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Determine sort ordering
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let orderByClause: any = { createdAt: "desc" };
     if (sort === "price_asc") {
       orderByClause = { price: "asc" };
@@ -66,15 +68,20 @@ export async function GET(req: NextRequest) {
     // Apply tokenized prefix search in-memory to ensure precise matching
     let filteredProducts = products;
     if (query) {
-      const searchTokens = query.toLowerCase().split(/\s+/).filter(Boolean);
-      filteredProducts = products.filter((product) => {
-        const title = product.title || "";
-        const brand = product.brand || "";
-        
-        return searchTokens.every((token) => {
-          return matchesToken(title, token) || matchesToken(brand, token);
+      const searchTokens = query.toLowerCase().split(/[^a-z0-9]+/i).filter(Boolean);
+      if (searchTokens.length > 0) {
+        filteredProducts = products.filter((product) => {
+          const title = product.title || "";
+          const brand = product.brand || "";
+          
+          return searchTokens.every((token) => {
+            return matchesToken(title, token) || matchesToken(brand, token);
+          });
         });
-      });
+      } else {
+        // If query has only special characters, return no results
+        filteredProducts = [];
+      }
     }
 
     return NextResponse.json(filteredProducts);
