@@ -1,0 +1,254 @@
+"use client";
+
+import { useState } from "react";
+import { X, Mail, Lock, User, Eye, EyeOff, Zap, ArrowRight } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useStore } from "@/store/useStore";
+import toast from "react-hot-toast";
+
+export default function AuthModal() {
+  const { isAuthModalOpen, closeAuthModal, pendingAction } = useStore();
+  const [tab, setTab] = useState<"login" | "register">("login");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
+
+  if (!isAuthModalOpen) return null;
+
+  const resetForm = () => {
+    setForm({ name: "", email: "", password: "" });
+    setError("");
+    setTab("login");
+    setShowPassword(false);
+    setLoading(false);
+  };
+
+  const handleClose = () => {
+    resetForm();
+    closeAuthModal();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    setError("");
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const res = await signIn("credentials", {
+        email: form.email,
+        password: form.password,
+        redirect: false,
+      });
+      if (res?.error) {
+        setError("Invalid email or password.");
+      } else {
+        toast.success("Welcome back!", {
+          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+        });
+        handleClose();
+        if (pendingAction) {
+          setTimeout(() => pendingAction(), 500);
+        }
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Registration failed.");
+        return;
+      }
+      // Auto sign-in after registration
+      const signInRes = await signIn("credentials", {
+        email: form.email,
+        password: form.password,
+        redirect: false,
+      });
+      if (signInRes?.error) {
+        setError("Account created! Please log in.");
+        setTab("login");
+      } else {
+        toast.success("Account created! Welcome to ShopWave 🎉", {
+          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+        });
+        handleClose();
+        if (pendingAction) {
+          setTimeout(() => pendingAction(), 500);
+        }
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-xs"
+        onClick={handleClose}
+      />
+
+      {/* Modal */}
+      <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-3xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        {/* Top bar */}
+        <div className="h-1.5 bg-indigo-600" />
+
+        <div className="p-8">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-indigo-50 border border-indigo-100 rounded-lg flex items-center justify-center">
+                <Zap size={16} className="text-indigo-600" />
+              </div>
+              <span className="text-gray-900 font-extrabold text-lg">
+                Shop<span className="text-indigo-600">Wave</span>
+              </span>
+            </div>
+            <button
+              onClick={handleClose}
+              className="w-8 h-8 bg-gray-155 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          <h2 className="text-2xl font-bold text-gray-900 mb-1">
+            {tab === "login" ? "Welcome back" : "Create account"}
+          </h2>
+          <p className="text-gray-500 text-sm mb-6">
+            {tab === "login"
+              ? "Sign in to continue shopping"
+              : "Join millions of happy shoppers"}
+          </p>
+
+          {/* Tabs */}
+          <div className="flex bg-gray-100 rounded-xl p-1 mb-6">
+            {(["login", "register"] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => { setTab(t); setError(""); }}
+                className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
+                  tab === t
+                    ? "bg-indigo-600 text-white shadow-xs"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
+              >
+                {t === "login" ? "Sign In" : "Sign Up"}
+              </button>
+            ))}
+          </div>
+
+          {/* Error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl mb-4 font-medium">
+              {error}
+            </div>
+          )}
+
+          {/* Form */}
+          <form onSubmit={tab === "login" ? handleLogin : handleRegister} className="space-y-4">
+            {tab === "register" && (
+              <div className="relative">
+                <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  name="name"
+                  type="text"
+                  placeholder="Full name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+                />
+              </div>
+            )}
+
+            <div className="relative">
+              <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                name="email"
+                type="email"
+                placeholder="Email address"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+              />
+            </div>
+
+            <div className="relative">
+              <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
+            >
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  {tab === "login" ? "Sign In" : "Create Account"}
+                  <ArrowRight size={18} />
+                </>
+              )}
+            </button>
+          </form>
+
+          {/* Demo credentials hint */}
+          {tab === "login" && (
+            <div className="mt-4 p-3 bg-indigo-50 border border-indigo-100 rounded-xl">
+              <p className="text-indigo-700 text-xs text-center font-medium">
+                <span className="font-bold">Demo: </span>
+                demo@shopwave.com / demo1234
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
