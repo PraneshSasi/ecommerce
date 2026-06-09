@@ -165,17 +165,17 @@ export default function AuthModal() {
       {/* Modal */}
       <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-3xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Top bar */}
-        <div className="h-1.5 bg-indigo-600" />
+        <div className="h-1.5 bg-primary-600" />
 
         <div className="p-8">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-indigo-50 border border-indigo-100 rounded-lg flex items-center justify-center">
-                <Zap size={16} className="text-indigo-600" />
+              <div className="w-8 h-8 bg-primary-50 border border-primary-100 rounded-lg flex items-center justify-center">
+                <Zap size={16} className="text-primary-600" />
               </div>
               <span className="text-gray-900 font-extrabold text-lg">
-                Shop<span className="text-indigo-600">Wave</span>
+                Shop<span className="text-primary-600">Wave</span>
               </span>
             </div>
             <button
@@ -203,7 +203,7 @@ export default function AuthModal() {
                 onClick={() => { setTab(t); setError(""); }}
                 className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
                   tab === t
-                    ? "bg-indigo-600 text-white shadow-xs"
+                    ? "bg-primary-600 text-white shadow-xs"
                     : "text-gray-500 hover:text-gray-900"
                 }`}
               >
@@ -231,7 +231,7 @@ export default function AuthModal() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
                 />
               </div>
             )}
@@ -245,7 +245,7 @@ export default function AuthModal() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
               />
             </div>
 
@@ -258,7 +258,7 @@ export default function AuthModal() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
               />
               <button
                 type="button"
@@ -272,7 +272,7 @@ export default function AuthModal() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
+              className="w-full flex items-center justify-center gap-2 bg-primary-600 text-white font-semibold py-3.5 rounded-xl hover:bg-primary-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -287,8 +287,8 @@ export default function AuthModal() {
 
           {/* Demo credentials hint */}
           {tab === "login" && (
-            <div className="mt-4 p-3 bg-indigo-50 border border-indigo-100 rounded-xl">
-              <p className="text-indigo-700 text-xs text-center font-medium">
+            <div className="mt-4 p-3 bg-primary-50 border border-primary-100 rounded-xl">
+              <p className="text-primary-700 text-xs text-center font-medium">
                 <span className="font-bold">Demo: </span>
                 demo@shopwave.com / demo1234
               </p>

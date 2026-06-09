@@ -166,7 +166,7 @@ export default function CheckoutPage() {
           <div className="mt-6 flex gap-3">
             <Link
               href="/"
-              className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm"
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 cursor-pointer shadow-sm"
             >
               Continue Shopping
             </Link>
@@ -187,7 +187,7 @@ export default function CheckoutPage() {
           <p className="mt-3 text-sm leading-6 text-gray-500">Add some products to your cart first, then come back to checkout.</p>
           <Link
             href="/"
-            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm"
+            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 cursor-pointer shadow-sm"
           >
             Start Shopping
           </Link>
@@ -208,7 +208,7 @@ export default function CheckoutPage() {
         </button>
         <div className="h-5 w-px bg-gray-200" />
         <div className="inline-flex items-center gap-2 text-gray-900">
-          <ShieldCheck size={18} className="text-indigo-600" />
+          <ShieldCheck size={18} className="text-primary-600" />
           <h1 className="text-xl font-bold">Secure Checkout</h1>
         </div>
       </div>
@@ -219,7 +219,7 @@ export default function CheckoutPage() {
           {/* Delivery Address */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
             <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 mb-5">
-              <MapPin size={18} className="text-indigo-600" /> Delivery Address
+              <MapPin size={18} className="text-primary-600" /> Delivery Address
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -229,7 +229,7 @@ export default function CheckoutPage() {
                   value={address.fullName}
                   onChange={handleAddressChange}
                   placeholder="John Doe"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-primary-500 transition-colors"
                 />
               </div>
               <div>
@@ -239,7 +239,7 @@ export default function CheckoutPage() {
                   value={address.phone}
                   onChange={handleAddressChange}
                   placeholder="+91 9876543210"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-primary-500 transition-colors"
                 />
               </div>
               <div className="sm:col-span-2">
@@ -249,7 +249,7 @@ export default function CheckoutPage() {
                   value={address.addressLine}
                   onChange={handleAddressChange}
                   placeholder="House No, Street, Area"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-primary-500 transition-colors"
                 />
               </div>
               <div>
@@ -259,7 +259,7 @@ export default function CheckoutPage() {
                   value={address.city}
                   onChange={handleAddressChange}
                   placeholder="Bangalore"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-primary-500 transition-colors"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -270,7 +270,7 @@ export default function CheckoutPage() {
                     value={address.state}
                     onChange={handleAddressChange}
                     placeholder="Karnataka"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-primary-500 transition-colors"
                   />
                 </div>
                 <div>
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
                     value={address.pincode}
                     onChange={handleAddressChange}
                     placeholder="560001"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 transition-colors"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-primary-500 transition-colors"
                   />
                 </div>
               </div>
@@ -290,7 +290,7 @@ export default function CheckoutPage() {
           {/* Payment Method */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
             <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 mb-5">
-              <CreditCard size={18} className="text-indigo-600" /> Payment Method
+              <CreditCard size={18} className="text-primary-600" /> Payment Method
             </h2>
             <div className="space-y-3">
               {paymentMethods.map(({ id, label, icon: Icon, sub }) => (
@@ -299,21 +299,21 @@ export default function CheckoutPage() {
                   onClick={() => setSelectedPayment(id)}
                   className={`flex w-full items-center gap-4 rounded-xl border-2 px-4 py-4 text-left transition-all cursor-pointer ${
                     selectedPayment === id
-                      ? "border-indigo-600 bg-indigo-50/50 shadow-xs"
+                      ? "border-primary-600 bg-primary-50/50 shadow-xs"
                       : "border-gray-200 bg-white hover:border-gray-300"
                   }`}
                 >
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
-                    selectedPayment === id ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-500"
+                    selectedPayment === id ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-500"
                   }`}>
                     <Icon size={18} />
                   </div>
                   <div className="flex-1">
-                    <p className={`text-sm font-semibold ${selectedPayment === id ? "text-indigo-900" : "text-gray-900"}`}>{label}</p>
+                    <p className={`text-sm font-semibold ${selectedPayment === id ? "text-primary-900" : "text-gray-900"}`}>{label}</p>
                     <p className="text-xs text-gray-500">{sub}</p>
                   </div>
                   {selectedPayment === id && (
-                    <CheckCircle2 size={20} className="text-indigo-600 shrink-0" />
+                    <CheckCircle2 size={20} className="text-primary-600 shrink-0" />
                   )}
                 </button>
               ))}
@@ -323,7 +323,7 @@ export default function CheckoutPage() {
           {/* Order Items */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
             <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 mb-5">
-              <Package size={18} className="text-indigo-600" /> Order Items ({totalItems})
+              <Package size={18} className="text-primary-600" /> Order Items ({totalItems})
             </h2>
             <div className="space-y-4">
               {cartItems.map((item) => {
@@ -337,7 +337,7 @@ export default function CheckoutPage() {
                     </Link>
                     <div className="min-w-0 flex-1">
                       <p className="line-clamp-2 text-sm font-semibold text-gray-900">{item.product.title}</p>
-                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-indigo-600">{item.product.brand}</p>
+                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-primary-600">{item.product.brand}</p>
                       <div className="mt-2 flex items-center gap-3">
                         <span className="text-sm font-bold text-gray-900">₹{item.product.price.toLocaleString("en-IN")}</span>
                         <span className="text-xs text-gray-400 line-through">₹{item.product.originalPrice.toLocaleString("en-IN")}</span>
@@ -360,7 +360,7 @@ export default function CheckoutPage() {
         <div className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
             <h2 className="mb-5 flex items-center gap-2 text-lg font-bold text-gray-900">
-              <Zap size={18} className="text-indigo-600" /> Order Summary
+              <Zap size={18} className="text-primary-600" /> Order Summary
             </h2>
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
@@ -417,7 +417,7 @@ export default function CheckoutPage() {
           {/* Delivery Info */}
           <div className="mt-4 rounded-xl border border-gray-200 bg-white p-5 shadow-xs">
             <div className="flex items-start gap-3">
-              <Truck size={18} className="mt-0.5 text-indigo-600 shrink-0" />
+              <Truck size={18} className="mt-0.5 text-primary-600 shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-gray-900">Estimated Delivery</p>
                 <p className="mt-1 text-xs text-gray-500">

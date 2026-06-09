@@ -148,7 +148,7 @@ function AuthForm() {
         </Link>
 
         <div className="space-y-5">
-          <div className="inline-flex items-center gap-2 rounded-full border border-indigo-150 bg-indigo-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-indigo-700">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-primary-700">
             <Zap size={14} /> ShopWave account
           </div>
           <h1 className="max-w-xl text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
@@ -166,7 +166,7 @@ function AuthForm() {
             { icon: CreditCard, title: "Quick checkout", text: "Save time at payment" },
           ].map(({ icon: Icon, title, text }) => (
             <div key={title} className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-600 border border-primary-100">
                 <Icon size={18} />
               </div>
               <p className="mt-3 text-sm font-semibold text-gray-900">{title}</p>
@@ -177,10 +177,10 @@ function AuthForm() {
       </div>
 
       <div className="rounded-2xl border border-gray-200 bg-white shadow-md">
-        <div className="h-1.5 rounded-t-2xl bg-indigo-600" />
+        <div className="h-1.5 rounded-t-2xl bg-primary-600" />
         <div className="p-6 sm:p-8">
           <Link href="/" className="mb-8 inline-flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-100 bg-indigo-50 text-indigo-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary-100 bg-primary-50 text-primary-600">
               <Zap size={18} />
             </div>
             <span className="text-lg font-semibold text-gray-900">ShopWave</span>
@@ -196,7 +196,7 @@ function AuthForm() {
                 setTab(tab === "login" ? "register" : "login");
                 setError("");
               }}
-              className="font-semibold text-indigo-600 transition-colors hover:text-indigo-750 cursor-pointer"
+              className="font-semibold text-primary-600 transition-colors hover:text-primary-750 cursor-pointer"
             >
               {tab === "login" ? "Sign up" : "Sign in"}
             </button>
@@ -212,7 +212,7 @@ function AuthForm() {
                 }}
                 className={`flex-1 rounded-md px-4 py-2 text-sm font-semibold transition-colors cursor-pointer ${
                   tab === t
-                    ? "bg-indigo-600 text-white shadow-xs"
+                    ? "bg-primary-600 text-white shadow-xs"
                     : "text-gray-500 hover:text-gray-900"
                 }`}
               >
@@ -238,7 +238,7 @@ function AuthForm() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
                 />
               </div>
             )}
@@ -251,7 +251,7 @@ function AuthForm() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
               />
             </div>
             <div className="relative">
@@ -263,7 +263,7 @@ function AuthForm() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-450 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-colors shadow-2xs"
+                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-450 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-primary-500 transition-colors shadow-2xs"
               />
               <button
                 type="button"
@@ -277,7 +277,7 @@ function AuthForm() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3.5 text-sm font-semibold text-white transition-all hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer shadow-xs"
+              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary-600 px-5 py-3.5 text-sm font-semibold text-white transition-all hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer shadow-xs"
             >
               {loading ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/25 border-t-white" />
@@ -290,7 +290,7 @@ function AuthForm() {
           </form>
 
           {tab === "login" && (
-            <div className="mt-5 rounded-xl border border-indigo-150 bg-indigo-50 px-4 py-3 text-center text-xs text-indigo-700 font-semibold">
+            <div className="mt-5 rounded-xl border border-primary-200 bg-primary-50 px-4 py-3 text-center text-xs text-primary-700 font-semibold">
               <span className="font-bold">Demo credentials:</span> demo@shopwave.com / demo1234
             </div>
           )}

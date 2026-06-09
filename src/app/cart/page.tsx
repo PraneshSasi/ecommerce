@@ -123,7 +123,7 @@ export default function CartPage() {
         </button>
         <div className="h-5 w-px bg-gray-200" />
         <div className="inline-flex items-center gap-2 text-gray-900">
-          <ShoppingCart size={18} className="text-indigo-600" />
+          <ShoppingCart size={18} className="text-primary-600" />
           <h1 className="text-xl font-bold">
             My cart <span className="text-gray-500 font-normal">({cartItems.length})</span>
           </h1>
@@ -140,7 +140,7 @@ export default function CartPage() {
             <p className="mt-3 text-sm leading-6 text-gray-500">Add a few products and they will show up here for review and checkout.</p>
             <Link
               href="/"
-              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 cursor-pointer shadow-sm"
             >
               <ShoppingBag size={16} /> Start shopping
             </Link>
@@ -154,7 +154,7 @@ export default function CartPage() {
               return (
                 <div
                   key={item.id}
-                  className="flex gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-indigo-200 shadow-2xs"
+                  className="flex gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-primary-200 shadow-2xs"
                 >
                   <Link href={`/product/${item.productId}`} className="shrink-0">
                     <div className="relative h-24 w-24 overflow-hidden rounded-lg border border-gray-200 bg-gray-50/50">
@@ -164,11 +164,11 @@ export default function CartPage() {
 
                   <div className="min-w-0 flex-1">
                     <Link href={`/product/${item.productId}`}>
-                      <h3 className="line-clamp-2 text-sm font-semibold leading-6 text-gray-900 transition-colors hover:text-indigo-600">
+                      <h3 className="line-clamp-2 text-sm font-semibold leading-6 text-gray-900 transition-colors hover:text-primary-600">
                         {item.product.title}
                       </h3>
                     </Link>
-                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-600">{item.product.brand}</p>
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary-600">{item.product.brand}</p>
 
                     <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                       <div>
@@ -194,7 +194,7 @@ export default function CartPage() {
                           </button>
                           <span className="inline-flex h-8 w-9 items-center justify-center text-sm font-semibold text-gray-900">
                             {updatingId === item.id ? (
-                              <div className="h-3 w-3 animate-spin rounded-full border border-indigo-600/25 border-t-indigo-600" />
+                              <div className="h-3 w-3 animate-spin rounded-full border border-primary-600/25 border-t-primary-600" />
                             ) : (
                               item.quantity
                             )}
@@ -225,7 +225,7 @@ export default function CartPage() {
           <div className="lg:sticky lg:top-24 lg:self-start">
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
               <h2 className="mb-5 flex items-center gap-2 text-lg font-bold text-gray-900">
-                <ShoppingBag size={18} className="text-indigo-600" /> Order summary
+                <ShoppingBag size={18} className="text-primary-600" /> Order summary
               </h2>
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
@@ -260,7 +260,7 @@ export default function CartPage() {
 
               <Link
                 href="/checkout"
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 cursor-pointer shadow-sm"
+                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-primary-700 cursor-pointer shadow-sm"
               >
                 <Zap size={16} /> Proceed to checkout
               </Link>

@@ -14,16 +14,33 @@ import {
   ChevronDown,
   Home,
   Sparkles,
+  Palette,
 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useStore } from "@/store/useStore";
 import { useEffect, useRef, useState } from "react";
 
+const THEMES = [
+  { id: "indigo", name: "Indigo Waves", colorClass: "bg-indigo-600" },
+  { id: "emerald", name: "Emerald Garden", colorClass: "bg-emerald-600" },
+  { id: "ruby", name: "Crimson Ruby", colorClass: "bg-rose-600" },
+  { id: "amber", name: "Warm Amber", colorClass: "bg-amber-500" },
+];
+
 export default function Header() {
   const { data: session } = useSession();
-  const { cartCount, setCartCount, searchQuery, setSearchQuery, setSelectedCategory } = useStore();
+  const {
+    cartCount,
+    setCartCount,
+    searchQuery,
+    setSearchQuery,
+    setSelectedCategory,
+    theme,
+    setTheme,
+  } = useStore();
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -53,6 +70,7 @@ export default function Header() {
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
         setProfileOpen(false);
         setMenuOpen(false);
+        setThemeOpen(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -84,7 +102,7 @@ export default function Header() {
   return (
     <header
       className={`sticky top-0 z-50 border-b border-gray-200/80 bg-white/95 backdrop-blur-xl transition-shadow duration-200 ${
-        scrolled ? "shadow-md shadow-indigo-900/5" : "shadow-none"
+        scrolled ? "shadow-md shadow-primary-900/5" : "shadow-none"
       }`}
     >
       <div ref={headerRef} className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8">
@@ -96,12 +114,12 @@ export default function Header() {
             onClick={handleLogoClick}
             className="flex shrink-0 items-center gap-3 group"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 shadow-md shadow-indigo-500/30 transition-transform group-hover:scale-105">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 shadow-md shadow-primary-500/30 transition-transform group-hover:scale-105">
               <Zap size={20} className="text-white" />
             </div>
             <div className="leading-tight hidden sm:block">
               <span className="block text-lg font-extrabold text-gray-900 tracking-tight">ShopWave</span>
-              <span className="block text-[10px] uppercase tracking-[0.22em] text-indigo-500 font-semibold">Premium Retail</span>
+              <span className="block text-[10px] uppercase tracking-[0.22em] text-primary-500 font-semibold">Premium Retail</span>
             </div>
           </Link>
 
@@ -110,19 +128,19 @@ export default function Header() {
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-indigo-50 hover:text-indigo-700"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-primary-50 hover:text-primary-700"
             >
               <Home size={16} /> Home
             </Link>
             <Link
               href="/cart"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-indigo-50 hover:text-indigo-700"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-primary-50 hover:text-primary-700"
             >
               <ShoppingCart size={16} /> Cart
             </Link>
             <Link
               href="/checkout"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-indigo-50 hover:text-indigo-700"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold text-gray-600 transition-all hover:bg-primary-50 hover:text-primary-700"
             >
               <Sparkles size={16} /> Checkout
             </Link>
@@ -137,7 +155,7 @@ export default function Header() {
                 placeholder="Search products, brands, categories…"
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
-                className="w-full rounded-2xl border-2 border-gray-200 bg-gray-50 py-3.5 pl-12 pr-5 text-base text-gray-900 placeholder:text-gray-400 outline-none transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/15 hover:border-gray-300"
+                className="w-full rounded-2xl border-2 border-gray-200 bg-gray-50 py-3.5 pl-12 pr-5 text-base text-gray-900 placeholder:text-gray-400 outline-none transition-all focus:border-primary-500 focus:bg-white focus:ring-4 focus:ring-primary-500/15 hover:border-gray-300"
               />
             </div>
           </form>
@@ -145,15 +163,54 @@ export default function Header() {
           {/* Right actions */}
           <div className="ml-auto flex items-center gap-2">
 
+            {/* Theme Switcher */}
+            <div className="relative">
+              <button
+                onClick={() => setThemeOpen((o) => !o)}
+                className="relative inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-primary-500 hover:bg-primary-50 hover:text-primary-600 hover:shadow-md cursor-pointer"
+                aria-label="Change theme"
+              >
+                <Palette size={20} />
+              </button>
+
+              {themeOpen && (
+                <div className="animate-slide-down absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-xl shadow-gray-900/10 z-50">
+                  <p className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">Select Theme</p>
+                  <div className="space-y-1">
+                    {THEMES.map((t) => (
+                      <button
+                        key={t.id}
+                        onClick={() => {
+                          setTheme(t.id);
+                          setThemeOpen(false);
+                        }}
+                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold transition-colors cursor-pointer ${
+                          theme === t.id
+                            ? "bg-primary-50 text-primary-700"
+                            : "text-gray-700 hover:bg-gray-50"
+                        }`}
+                      >
+                        <span className={`h-4.5 w-4.5 shrink-0 rounded-full border border-black/10 ${t.colorClass}`} />
+                        <span>{t.name}</span>
+                        {theme === t.id && (
+                          <span className="ml-auto flex h-2 w-2 rounded-full bg-primary-600" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Cart button */}
             <Link
               href="/cart"
-              className="relative inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-indigo-500 hover:bg-indigo-50 hover:text-indigo-600 hover:shadow-md"
+              className="relative inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-primary-500 hover:bg-primary-50 hover:text-primary-600 hover:shadow-md"
               aria-label="Cart"
             >
               <ShoppingCart size={22} />
               {cartCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-6 min-w-6 animate-fade-in items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 px-1.5 text-[11px] font-bold text-white shadow-sm">
+                <span className="absolute -right-1.5 -top-1.5 flex h-6 min-w-6 animate-fade-in items-center justify-center rounded-full bg-gradient-to-br from-primary-600 to-secondary-600 px-1.5 text-[11px] font-bold text-white shadow-sm">
                   {cartCount > 9 ? "9+" : cartCount}
                 </span>
               )}
@@ -164,9 +221,9 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setProfileOpen((o) => !o)}
-                  className="hidden sm:inline-flex h-12 items-center gap-3 rounded-2xl border-2 border-gray-200 bg-white pl-1.5 pr-4 text-[15px] font-semibold text-gray-700 transition-all hover:border-indigo-300 hover:bg-indigo-50 hover:shadow-sm"
+                  className="hidden sm:inline-flex h-12 items-center gap-3 rounded-2xl border-2 border-gray-200 bg-white pl-1.5 pr-4 text-[15px] font-semibold text-gray-700 transition-all hover:border-primary-300 hover:bg-primary-50 hover:shadow-sm"
                 >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-sm font-bold text-white shadow-sm">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 text-sm font-bold text-white shadow-sm">
                     {session.user?.name?.[0]?.toUpperCase() || "U"}
                   </div>
                   <span className="max-w-28 truncate">{session.user?.name?.split(" ")[0]}</span>
@@ -177,11 +234,11 @@ export default function Header() {
                 </button>
 
                 {profileOpen && (
-                  <div className="animate-slide-down absolute right-0 top-full mt-2 w-64 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl shadow-gray-900/10">
+                  <div className="animate-slide-down absolute right-0 top-full mt-2 w-64 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl shadow-gray-900/10 z-50">
                     {/* User info */}
-                    <div className="bg-gradient-to-br from-indigo-50 to-violet-50 border-b border-gray-100 px-4 py-4">
+                    <div className="bg-gradient-to-br from-primary-50 to-secondary-50 border-b border-gray-100 px-4 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-sm font-bold text-white shadow-sm">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 text-sm font-bold text-white shadow-sm">
                           {session.user?.name?.[0]?.toUpperCase() || "U"}
                         </div>
                         <div className="min-w-0">
@@ -197,19 +254,19 @@ export default function Header() {
                         onClick={() => setProfileOpen(false)}
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50"
                       >
-                        <Package size={16} className="text-indigo-500" /> My Orders
+                        <Package size={16} className="text-primary-500" /> My Orders
                       </Link>
                       <Link
                         href="/checkout"
                         onClick={() => setProfileOpen(false)}
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50"
                       >
-                        <Sparkles size={16} className="text-violet-500" /> Checkout
+                        <Sparkles size={16} className="text-secondary-500" /> Checkout
                       </Link>
                       <div className="my-1 border-t border-gray-100" />
                       <button
                         onClick={() => { signOut({ callbackUrl: "/" }); setProfileOpen(false); }}
-                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-rose-600 transition-colors hover:bg-rose-50"
+                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-rose-600 transition-colors hover:bg-rose-50 cursor-pointer"
                       >
                         <LogOut size={16} /> Sign Out
                       </button>
@@ -220,7 +277,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/auth"
-                className="hidden sm:inline-flex h-12 items-center gap-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 px-5 text-[15px] font-bold text-white shadow-md shadow-indigo-500/30 transition-all hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5"
+                className="hidden sm:inline-flex h-12 items-center gap-2.5 rounded-2xl bg-gradient-to-r from-primary-600 to-secondary-600 px-5 text-[15px] font-bold text-white shadow-md shadow-primary-500/30 transition-all hover:shadow-lg hover:shadow-primary-500/40 hover:-translate-y-0.5"
               >
                 <User size={17} /> Sign In
               </Link>
@@ -228,7 +285,7 @@ export default function Header() {
 
             {/* Mobile menu toggle */}
             <button
-              className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-indigo-300 hover:bg-indigo-50 md:hidden"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-primary-300 hover:bg-primary-50 md:hidden"
               onClick={() => setMenuOpen((o) => !o)}
               aria-label="Toggle menu"
             >
@@ -250,7 +307,7 @@ export default function Header() {
                     placeholder="Search products…"
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-indigo-500 focus:bg-white"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-primary-500 focus:bg-white"
                   />
                 </div>
               </form>
@@ -265,9 +322,9 @@ export default function Header() {
                     key={label}
                     href={href}
                     onClick={onClick}
-                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-indigo-50 hover:text-indigo-700"
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-primary-50 hover:text-primary-700"
                   >
-                    <Icon size={16} className="text-indigo-500" /> {label}
+                    <Icon size={16} className="text-primary-500" /> {label}
                   </Link>
                 ))}
 
@@ -275,14 +332,14 @@ export default function Header() {
                   <Link
                     href="/auth"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-indigo-600 transition-colors hover:bg-indigo-50"
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-primary-600 transition-colors hover:bg-primary-50"
                   >
                     <User size={16} /> Sign In
                   </Link>
                 ) : (
                   <button
                     onClick={() => { signOut({ callbackUrl: "/" }); setMenuOpen(false); }}
-                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-50"
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-50 cursor-pointer"
                   >
                     <LogOut size={16} /> Sign Out
                   </button>

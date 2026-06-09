@@ -24,20 +24,20 @@ export default function HeroBanner() {
   return (
     <section className="relative overflow-hidden rounded-2xl">
       {/* Gradient Background */}
-      <div className="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-6 py-14 sm:px-10 sm:py-16 lg:py-20">
+      <div className="relative bg-gradient-to-br from-slate-900 via-primary-950 to-slate-900 px-6 py-14 sm:px-10 sm:py-16 lg:py-20">
         {/* Decorative blobs */}
-        <div className="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-indigo-600/20 blur-[120px]" />
-        <div className="pointer-events-none absolute -right-32 bottom-0 h-[400px] w-[400px] rounded-full bg-violet-600/20 blur-[100px]" />
+        <div className="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-primary-600/20 blur-[120px]" />
+        <div className="pointer-events-none absolute -right-32 bottom-0 h-[400px] w-[400px] rounded-full bg-secondary-600/20 blur-[100px]" />
         <div className="pointer-events-none absolute left-1/2 top-0 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-cyan-600/10 blur-[80px]" />
 
         <div className="relative mx-auto max-w-6xl">
           {/* Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-4 py-1.5 backdrop-blur-sm">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-500/10 px-4 py-1.5 backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-400" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary-400" />
             </span>
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-300">Summer Sale — Up to 60% off</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-300">Summer Sale — Up to 60% off</span>
           </div>
 
           {/* Headline */}
@@ -45,7 +45,7 @@ export default function HeroBanner() {
             <div>
               <h1 className="text-4xl font-extrabold leading-[1.12] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
                 Shop Smarter.{" "}
-                <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary-400 via-secondary-400 to-cyan-400 bg-clip-text text-transparent">
                   Live Better.
                 </span>
               </h1>
@@ -56,7 +56,7 @@ export default function HeroBanner() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="#products"
-                  className="group inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:bg-indigo-500 hover:shadow-indigo-500/40 hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-2 rounded-xl bg-primary-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-primary-500/30 transition-all duration-200 hover:bg-primary-500 hover:shadow-primary-500/40 hover:-translate-y-0.5"
                 >
                   <Zap size={16} className="transition-transform group-hover:rotate-12" />
                   Shop Now

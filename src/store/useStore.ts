@@ -17,6 +17,8 @@ interface StoreState {
   setBuyNowItem: (id: string | null) => void;
   setBuyNowQuantity: (qty: number) => void;
   clearBuyNow: () => void;
+  theme: string;
+  setTheme: (theme: string) => void;
   setSelectedCategory: (category: string) => void;
 }
 
@@ -44,4 +46,11 @@ export const useStore = create<StoreState>((set) => ({
   setBuyNowItem: (id) => set({ buyNowItem: id }),
   setBuyNowQuantity: (qty) => set({ buyNowQuantity: qty }),
   clearBuyNow: () => set({ buyNowItem: null, buyNowQuantity: 0 }),
+  theme: typeof window !== "undefined" ? localStorage.getItem("shopwave-theme") || "indigo" : "indigo",
+  setTheme: (theme) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("shopwave-theme", theme);
+    }
+    set({ theme });
+  },
 }));

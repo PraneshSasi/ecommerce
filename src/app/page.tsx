@@ -70,7 +70,7 @@ export default function HomePage() {
         <HeroBanner />
 
         {/* Promo strip */}
-        <div className="mt-5 flex items-center gap-4 overflow-x-auto rounded-2xl bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 px-6 py-3.5 scrollbar-hide">
+        <div className="mt-5 flex items-center gap-4 overflow-x-auto rounded-2xl bg-gradient-to-r from-primary-600 via-secondary-600 to-secondary-800 px-6 py-3.5 scrollbar-hide">
           {[
             "🚀 Free shipping on orders above ₹499",
             "🎉 New arrivals every week",
@@ -90,8 +90,8 @@ export default function HomePage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <TrendingUp size={16} className="text-indigo-600" />
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-indigo-600">Catalog</p>
+                <TrendingUp size={16} className="text-primary-600" />
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary-600">Catalog</p>
               </div>
               <h2 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">{sectionTitle}</h2>
               {!loading && (
@@ -125,17 +125,17 @@ export default function HomePage() {
           {/* Filter info pill */}
           {(searchQuery || selectedCategory !== "All" || filterSort !== "featured") && (
             <div className="flex flex-wrap items-center gap-2">
-              <div className="flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1">
-                <SlidersHorizontal size={12} className="text-indigo-600" />
-                <span className="text-xs font-semibold text-indigo-700">Active filters:</span>
+              <div className="flex items-center gap-1.5 rounded-full border border-primary-200 bg-primary-50 px-3 py-1">
+                <SlidersHorizontal size={12} className="text-primary-600" />
+                <span className="text-xs font-semibold text-primary-700">Active filters:</span>
               </div>
               {searchQuery && (
-                <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-800">
+                <span className="rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary-800">
                   Search: {searchQuery}
                 </span>
               )}
               {selectedCategory !== "All" && (
-                <span className="rounded-full bg-violet-100 px-3 py-1 text-xs font-medium text-violet-800">
+                <span className="rounded-full bg-secondary-100 px-3 py-1 text-xs font-medium text-secondary-800">
                   {selectedCategory}
                 </span>
               )}

@@ -36,8 +36,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         setAdded(true);
         setTimeout(() => setAdded(false), 2000);
         toast.success("Added to cart!", {
-          style: { background: "#1e1b4b", color: "#fff", border: "1px solid #4f46e5" },
-          iconTheme: { primary: "#818cf8", secondary: "#1e1b4b" },
+          style: { background: "var(--primary-950)", color: "#fff", border: "1px solid var(--primary-600)" },
+          iconTheme: { primary: "var(--primary-300)", secondary: "var(--primary-950)" },
         });
       } else if (res.status === 403) {
         toast.error("Session expired. Please sign in again.");
@@ -94,7 +94,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link href={`/product/${product.id}`} className="group block h-full">
-      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-indigo-100/60 hover:border-indigo-200">
+      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary-100/60 hover:border-primary-200">
         
         {/* Image area */}
         <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
@@ -118,10 +118,10 @@ export default function ProductCard({ product }: ProductCardProps) {
               onClick={handleQuickAdd}
               disabled={adding || product.stock === 0}
               title="Add to cart"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 shadow-md transition-all hover:border-indigo-500 hover:bg-indigo-600 hover:text-white disabled:opacity-50 cursor-pointer"
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 shadow-md transition-all hover:border-primary-500 hover:bg-primary-600 hover:text-white disabled:opacity-50 cursor-pointer"
             >
               {adding ? (
-                <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-indigo-300 border-t-indigo-700" />
+                <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary-300 border-t-primary-700" />
               ) : added ? (
                 <span className="text-emerald-600 text-xs font-bold">✓</span>
               ) : (
@@ -153,7 +153,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex flex-1 flex-col p-4">
           {/* Brand + Category */}
           <div className="mb-2 flex items-center justify-between gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600">
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-600">
               {product.brand}
             </span>
             <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[10px] font-semibold text-gray-500">
@@ -162,7 +162,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Title */}
-          <h3 className="line-clamp-2 flex-1 text-sm font-semibold leading-5 text-gray-900 transition-colors group-hover:text-indigo-700">
+          <h3 className="line-clamp-2 flex-1 text-sm font-semibold leading-5 text-gray-900 transition-colors group-hover:text-primary-700">
             {product.title}
           </h3>
 
@@ -211,7 +211,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Hover bottom bar */}
-        <div className="h-0.5 w-full bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 opacity-0 transition-all duration-300 group-hover:opacity-100" />
+        <div className="h-0.5 w-full bg-gradient-to-r from-primary-500 via-secondary-500 to-cyan-500 opacity-0 transition-all duration-300 group-hover:opacity-100" />
       </article>
     </Link>
   );
