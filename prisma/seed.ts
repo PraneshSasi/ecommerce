@@ -57,7 +57,7 @@ const products = [
     images: JSON.stringify([
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80",
       "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=800&q=80",
-      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800&q=80",
+      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800&q=80",
       "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=800&q=80",
     ]),
   },
@@ -131,10 +131,9 @@ const products = [
     brand: "Adidas",
     stock: 80,
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800&q=80",
       "https://images.unsplash.com/photo-1518049360754-cf4125b6079c?w=800&q=80",
-      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80",
       "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=800&q=80",
+      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80",
     ]),
   },
   {
@@ -1161,7 +1160,7 @@ function generateMoreProducts() {
       stock: 110,
       category: "Fashion",
       brand: "Puma",
-      images: JSON.stringify(["https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800&q=80"])
     },
     {
       title: "Zara Men's Regular Fit Denim Shirt",
@@ -1226,7 +1225,7 @@ function generateMoreProducts() {
       stock: 250,
       category: "Fashion",
       brand: "Roadster",
-      images: JSON.stringify(["https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800&q=80"])
+      images: JSON.stringify(["https://images.unsplash.com/photo-1512374382149-433752e50d48?w=800&q=80"])
     },
     {
       title: "Nike Air Force 1 Sneakers",

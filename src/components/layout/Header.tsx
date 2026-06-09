@@ -99,14 +99,6 @@ export default function Header() {
                 placeholder="Search products, brands, and deals"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={() => {
-                  if (window.location.pathname === "/") {
-                    const element = document.getElementById("products");
-                    if (element) {
-                      element.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }
-                }}
                 className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden transition-colors focus:border-indigo-500 focus:bg-white"
               />
             </div>
@@ -196,14 +188,6 @@ export default function Header() {
                     placeholder="Search products"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    onFocus={() => {
-                      if (window.location.pathname === "/") {
-                        const element = document.getElementById("products");
-                        if (element) {
-                          element.scrollIntoView({ behavior: "smooth" });
-                        }
-                      }
-                    }}
                     className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 focus:bg-white"
                   />
                 </div>
