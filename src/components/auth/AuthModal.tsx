@@ -46,6 +46,12 @@ export default function AuthModal() {
       });
       if (res?.error) {
         setError("Invalid email or password.");
+        toast.error("Invalid email or password.", {
+          style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       } else {
         toast.success("Welcome back!", {
           style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
@@ -54,9 +60,18 @@ export default function AuthModal() {
         if (pendingAction) {
           setTimeout(() => pendingAction(), 500);
         }
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200);
       }
     } catch {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.", {
+        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } finally {
       setLoading(false);
     }
@@ -66,6 +81,12 @@ export default function AuthModal() {
     e.preventDefault();
     if (form.password.length < 6) {
       setError("Password must be at least 6 characters.");
+      toast.error("Password must be at least 6 characters.", {
+        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1550);
       return;
     }
     setLoading(true);
@@ -79,6 +100,12 @@ export default function AuthModal() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Registration failed.");
+        toast.error(data.error || "Registration failed.", {
+          style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
         return;
       }
       // Auto sign-in after registration
@@ -89,7 +116,13 @@ export default function AuthModal() {
       });
       if (signInRes?.error) {
         setError("Account created! Please log in.");
+        toast.success("Account created! Please log in.", {
+          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+        });
         setTab("login");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       } else {
         toast.success("Account created! Welcome to ShopWave 🎉", {
           style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
@@ -98,9 +131,18 @@ export default function AuthModal() {
         if (pendingAction) {
           setTimeout(() => pendingAction(), 500);
         }
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200);
       }
     } catch {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.", {
+        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } finally {
       setLoading(false);
     }

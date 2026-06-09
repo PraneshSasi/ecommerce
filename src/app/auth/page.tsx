@@ -47,14 +47,29 @@ function AuthForm() {
       });
       if (res?.error) {
         setError("Invalid email or password. Try demo@shopwave.com / demo1234");
+        toast.error("Invalid email or password.", {
+          style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       } else {
         toast.success("Welcome back!", {
           style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
         });
-        router.push(callbackUrl);
+        setTimeout(() => {
+          router.push(callbackUrl);
+          setTimeout(() => window.location.reload(), 100);
+        }, 1200);
       }
     } catch {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.", {
+        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } finally {
       setLoading(false);
     }
@@ -64,6 +79,12 @@ function AuthForm() {
     e.preventDefault();
     if (form.password.length < 6) {
       setError("Password must be at least 6 characters.");
+      toast.error("Password must be at least 6 characters.", {
+        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1550);
       return;
     }
     setLoading(true);
@@ -77,6 +98,12 @@ function AuthForm() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Registration failed.");
+        toast.error(data.error || "Registration failed.", {
+          style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
         return;
       }
 
@@ -89,13 +116,25 @@ function AuthForm() {
         toast.success("Account created!", {
           style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
         });
-        router.push(callbackUrl);
+        setTimeout(() => {
+          router.push(callbackUrl);
+          setTimeout(() => window.location.reload(), 100);
+        }, 1200);
       } else {
         setTab("login");
         toast.success("Account created. Please sign in.");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       }
     } catch {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.", {
+        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } finally {
       setLoading(false);
     }
