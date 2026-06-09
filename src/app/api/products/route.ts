@@ -9,17 +9,14 @@ export async function GET(req: NextRequest) {
     const sort = searchParams.get("sort") || "featured";
     const priceRange = searchParams.get("priceRange") || "all";
 
+    const words = query ? query.split(/\s+/).filter(Boolean) : [];
     const whereClause: any = {
-      AND: [
-        query
-          ? {
-              OR: [
-                { title: { contains: query } },
-                { brand: { contains: query } },
-              ],
-            }
-          : {},
-      ],
+      AND: words.map((word) => ({
+        OR: [
+          { title: { contains: word } },
+          { brand: { contains: word } },
+        ],
+      })),
     };
 
     // Only filter by category if no search query is active

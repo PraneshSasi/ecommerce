@@ -899,226 +899,864 @@ const products = [
 ];
 
 function generateMoreProducts() {
-  const electronicsBrands = ["Sony", "Dell", "HP", "Anker", "Noise", "Zebronics", "Crucial", "Seagate", "Logitech"];
-  const fashionBrands = ["Nike", "Adidas", "Puma", "Zara", "H&M", "Roadster", "Woodland", "Allen Solly"];
-  const homeBrands = ["IKEA", "Philips", "Borosil", "Solimo", "Prestige", "Hawkins", "Pigeon", "Sleepwell"];
-  const sportsBrands = ["Nivia", "Wilson", "Cosco", "Decathlon", "Yonex", "Speedo", "Spalding", "SG"];
+  const extraProducts = [
+    // Electronics (17 products)
+    {
+      title: "Dell Inspiron 15 3520 Laptop",
+      description: "Dell Inspiron laptop powered by Intel Core processor, 8GB RAM, and 512GB SSD for reliable daily multitasking.",
+      price: 38990,
+      originalPrice: 49990,
+      discount: 22,
+      rating: 4.2,
+      reviewCount: 384,
+      category: "Electronics",
+      brand: "Dell",
+      stock: 25,
+      images: JSON.stringify(["https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800&q=80", "https://images.unsplash.com/photo-1496181130204-755241524eab?w=800&q=80"])
+    },
+    {
+      title: "HP Pavilion x360 2-in-1 Laptop",
+      description: "Multi-touch convertible laptop with a 14-inch screen, Intel i5 processor, and a premium thin metal chassis.",
+      price: 57990,
+      originalPrice: 72990,
+      discount: 20,
+      rating: 4.4,
+      reviewCount: 298,
+      stock: 15,
+      category: "Electronics",
+      brand: "HP",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800&q=80", "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800&q=80"])
+    },
+    {
+      title: "Anker PowerPort III Nano Charger",
+      description: "High-speed charging adapter for phones, tablets, and accessories using USB-C Power Delivery.",
+      price: 1299,
+      originalPrice: 1999,
+      discount: 35,
+      rating: 4.6,
+      reviewCount: 2314,
+      stock: 200,
+      category: "Electronics",
+      brand: "Anker",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1619489646924-b4fce76b1db5?w=800&q=80", "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&q=80"])
+    },
+    {
+      title: "Noise ColorFit Pro 4 Smartwatch",
+      description: "Bluetooth calling smartwatch with built-in voice assistant, heart-rate tracking, and sports modes.",
+      price: 2999,
+      originalPrice: 5999,
+      discount: 50,
+      rating: 4.3,
+      reviewCount: 12891,
+      stock: 150,
+      category: "Electronics",
+      brand: "Noise",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80", "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=800&q=80"])
+    },
+    {
+      title: "Zebronics Zeb-Juke Bar 9500 Soundbar",
+      description: "High-fidelity home theater soundbar system with wireless subwoofer, multiple inputs, and surround audio.",
+      price: 9999,
+      originalPrice: 16999,
+      discount: 41,
+      rating: 4.1,
+      reviewCount: 1402,
+      stock: 85,
+      category: "Electronics",
+      brand: "Zebronics",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1545454675-3531b543be5d?w=800&q=80", "https://images.unsplash.com/photo-1589256469067-ea99122bbdc4?w=800&q=80"])
+    },
+    {
+      title: "Crucial MX500 1TB Internal SSD",
+      description: "Ultra-fast 2.5-inch SATA internal solid-state drive for upgrading desktops and laptops.",
+      price: 7490,
+      originalPrice: 9990,
+      discount: 25,
+      rating: 4.8,
+      reviewCount: 4231,
+      stock: 120,
+      category: "Electronics",
+      brand: "Crucial",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&q=80", "https://images.unsplash.com/photo-1591405351990-4726e331f141?w=800&q=80"])
+    },
+    {
+      title: "Seagate Expansion 2TB Portable External HDD",
+      description: "Fast USB 3.0 drag-and-drop file saving external hard drive, perfect for backups.",
+      price: 5999,
+      originalPrice: 7999,
+      discount: 25,
+      rating: 4.5,
+      reviewCount: 15670,
+      stock: 90,
+      category: "Electronics",
+      brand: "Seagate",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&q=80"])
+    },
+    {
+      title: "Logitech G502 Hero High Performance Gaming Mouse",
+      description: "Advanced optical sensor gaming mouse with customizable weight tuning, RGB lighting, and programmable keys.",
+      price: 4195,
+      originalPrice: 5495,
+      discount: 23,
+      rating: 4.7,
+      reviewCount: 9234,
+      stock: 110,
+      category: "Electronics",
+      brand: "Logitech",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&q=80", "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&q=80"])
+    },
+    {
+      title: "OnePlus Nord CE 3 Lite 5G",
+      description: "Premium mid-range smartphone featuring 108MP camera, 67W fast charging, and smooth 120Hz display.",
+      price: 19999,
+      originalPrice: 21999,
+      discount: 9,
+      rating: 4.3,
+      reviewCount: 8432,
+      stock: 65,
+      category: "Electronics",
+      brand: "OnePlus",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80", "https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=800&q=80"])
+    },
+    {
+      title: "Apple AirPods Pro (2nd Generation)",
+      description: "Active Noise Cancellation, Adaptive Audio, transparency mode, and customized spatial sound.",
+      price: 24900,
+      originalPrice: 26900,
+      discount: 7,
+      rating: 4.8,
+      reviewCount: 12845,
+      stock: 40,
+      category: "Electronics",
+      brand: "Apple",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=800&q=80"])
+    },
+    {
+      title: "Sony Alpha 7 IV Mirrorless Camera",
+      description: "Full-frame mirrorless interchangeable lens camera with 33MP sensor and high-speed autofocus.",
+      price: 214990,
+      originalPrice: 242490,
+      discount: 11,
+      rating: 4.9,
+      reviewCount: 732,
+      stock: 8,
+      category: "Electronics",
+      brand: "Sony",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80"])
+    },
+    {
+      title: "Dell UltraSharp 27 4K USB-C Hub Monitor",
+      description: "Outstanding color coverage, USB-C connectivity, and comfort-view screen adjustments.",
+      price: 45999,
+      originalPrice: 54999,
+      discount: 16,
+      rating: 4.6,
+      reviewCount: 1542,
+      stock: 18,
+      category: "Electronics",
+      brand: "Dell",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&q=80"])
+    },
+    {
+      title: "Zebronics Max Pro Mechanical Gaming Keyboard",
+      description: "Tactile mechanical switches, multi-color LED backlighting modes, and integrated multimedia keys.",
+      price: 2999,
+      originalPrice: 3999,
+      discount: 25,
+      rating: 4.2,
+      reviewCount: 1892,
+      stock: 55,
+      category: "Electronics",
+      brand: "Zebronics",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&q=80"])
+    },
+    {
+      title: "HP Laserjet Pro Mono Wireless Printer",
+      description: "Fast monochrome laser printing, compact design, and smart wireless app integration.",
+      price: 15490,
+      originalPrice: 18990,
+      discount: 18,
+      rating: 4.3,
+      reviewCount: 2314,
+      stock: 22,
+      category: "Electronics",
+      brand: "HP",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"])
+    },
+    {
+      title: "TP-Link Deco Whole Home Mesh WiFi System",
+      description: "Dual-band AC1900 mesh devices to cover large homes with seamless fast WiFi.",
+      price: 12999,
+      originalPrice: 16999,
+      discount: 23,
+      rating: 4.7,
+      reviewCount: 3841,
+      stock: 30,
+      category: "Electronics",
+      brand: "TP-Link",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"])
+    },
+    {
+      title: "Logitech StreamCam Full HD Webcam",
+      description: "High-quality vertical/horizontal stream camera featuring auto-focus and auto-exposure.",
+      price: 11995,
+      originalPrice: 14995,
+      discount: 20,
+      rating: 4.5,
+      reviewCount: 842,
+      stock: 45,
+      category: "Electronics",
+      brand: "Logitech",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&q=80"])
+    },
+    {
+      title: "OnePlus Buds 3 True Wireless Earbuds",
+      description: "Dual dynamic drivers, smart active noise cancellation, and high-res audio certification.",
+      price: 5499,
+      originalPrice: 7999,
+      discount: 31,
+      rating: 4.5,
+      reviewCount: 4210,
+      stock: 120,
+      category: "Electronics",
+      brand: "OnePlus",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=800&q=80"])
+    },
 
-  const electronicsImages = [
-    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80",
-    "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800&q=80",
-    "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=800&q=80",
-    "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=800&q=80",
-    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
-    "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&q=80",
-    "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=800&q=80",
-    "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?w=800&q=80",
-    "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&q=80",
-    "https://images.unsplash.com/photo-1461151304267-38535e780c79?w=800&q=80",
-    "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80",
-    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&q=80",
-    "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800&q=80",
-    "https://images.unsplash.com/photo-1540829917886-91ab031b1764?w=800&q=80",
-    "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=800&q=80",
-    "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80",
-    "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?w=800&q=80",
-    "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800&q=80",
-    "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&q=80",
-    "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
-    "https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=800&q=80",
-    "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800&q=80",
-    "https://images.unsplash.com/photo-1593118247619-e2d6f056869e?w=800&q=80",
-    "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&q=80",
-    "https://images.unsplash.com/photo-1589256469067-ea99122bbdc4?w=800&q=80",
-    "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=800&q=80",
-    "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?w=800&q=80",
-    "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&q=80",
-    "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&q=80",
-    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
-    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800&q=80",
-    "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&q=80",
-    "https://images.unsplash.com/photo-1591405351990-4726e331f141?w=800&q=80",
-    "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&q=80",
-    "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&q=80",
-    "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800&q=80",
-    "https://images.unsplash.com/photo-1589739900243-4b52cd9b104e?w=800&q=80"
-  ];
+    // Fashion (16 products)
+    {
+      title: "Nike Club Fleece Hoodie",
+      description: "Classic brushed fleece pullover hoodie for warm everyday comfort.",
+      price: 3495,
+      originalPrice: 4495,
+      discount: 22,
+      rating: 4.7,
+      reviewCount: 9234,
+      stock: 150,
+      category: "Fashion",
+      brand: "Nike",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=80"])
+    },
+    {
+      title: "Adidas Essentials Tracksuit Pants",
+      description: "Classic athletic track trousers made with comfortable cotton-fleece and elastic waist.",
+      price: 2499,
+      originalPrice: 3999,
+      discount: 37,
+      rating: 4.5,
+      reviewCount: 8452,
+      stock: 200,
+      category: "Fashion",
+      brand: "Adidas",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1515462277126-270d878326e5?w=800&q=80"])
+    },
+    {
+      title: "Puma Unisex Running Shoes",
+      description: "Cushioned athletic running shoes featuring lightweight breathable mesh and durable sole.",
+      price: 3999,
+      originalPrice: 5999,
+      discount: 33,
+      rating: 4.3,
+      reviewCount: 1542,
+      stock: 110,
+      category: "Fashion",
+      brand: "Puma",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"])
+    },
+    {
+      title: "Zara Men's Regular Fit Denim Shirt",
+      description: "Classic washed denim shirt featuring front button snaps and regular collar.",
+      price: 2990,
+      originalPrice: 3990,
+      discount: 25,
+      rating: 4.4,
+      reviewCount: 782,
+      stock: 60,
+      category: "Fashion",
+      brand: "Zara",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80"])
+    },
+    {
+      title: "H&M Relaxed Fit Cotton Crewneck Tee",
+      description: "Heavyweight organic cotton relaxed fit t-shirt for daily layering and casual wear.",
+      price: 799,
+      originalPrice: 1299,
+      discount: 38,
+      rating: 4.2,
+      reviewCount: 23145,
+      stock: 400,
+      category: "Fashion",
+      brand: "H&M",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80"])
+    },
+    {
+      title: "Woodland Men's Waterproof Leather Boots",
+      description: "Rugged outdoor nubuck leather hiking boots offering robust ankle support and wet-weather protection.",
+      price: 4295,
+      originalPrice: 5495,
+      discount: 21,
+      rating: 4.6,
+      reviewCount: 3841,
+      stock: 85,
+      category: "Fashion",
+      brand: "Woodland",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=800&q=80"])
+    },
+    {
+      title: "Allen Solly Cotton Blazer",
+      description: "Smart casual unstructured cotton blazer designed with dual buttons and patch pockets.",
+      price: 4999,
+      originalPrice: 7999,
+      discount: 37,
+      rating: 4.3,
+      reviewCount: 1452,
+      stock: 35,
+      category: "Fashion",
+      brand: "Allen Solly",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80"])
+    },
+    {
+      title: "Roadster Canvas Sneaker Shoes",
+      description: "Durable canvas low-top vulcanized sneakers for street casual daily comfort.",
+      price: 1299,
+      originalPrice: 2499,
+      discount: 48,
+      rating: 4.0,
+      reviewCount: 6783,
+      stock: 250,
+      category: "Fashion",
+      brand: "Roadster",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=800&q=80"])
+    },
+    {
+      title: "Nike Air Force 1 Sneakers",
+      description: "Premium synthetic leather construction with signature Air cushioning midsole.",
+      price: 7495,
+      originalPrice: 9495,
+      discount: 21,
+      rating: 4.8,
+      reviewCount: 12450,
+      stock: 65,
+      category: "Fashion",
+      brand: "Nike",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800&q=80"])
+    },
+    {
+      title: "Adidas Linear Duffle Sports Bag",
+      description: "Multi-compartment durable canvas duffle bag for gym, travel, or court gear.",
+      price: 1799,
+      originalPrice: 2499,
+      discount: 28,
+      rating: 4.5,
+      reviewCount: 1892,
+      stock: 140,
+      category: "Fashion",
+      brand: "Adidas",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80"])
+    },
+    {
+      title: "Puma Graphic Crewneck Sweatshirt",
+      description: "Soft cotton blend fleece crewneck sweatshirt featuring dynamic chest screen-prints.",
+      price: 2199,
+      originalPrice: 3499,
+      discount: 37,
+      rating: 4.4,
+      reviewCount: 4210,
+      stock: 120,
+      category: "Fashion",
+      brand: "Puma",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&q=80"])
+    },
+    {
+      title: "Zara Comfort Stretch Slim Chinos",
+      description: "Lightweight cotton chino trousers with spandex stretch for versatile daily styling.",
+      price: 2790,
+      originalPrice: 3990,
+      discount: 30,
+      rating: 4.3,
+      reviewCount: 842,
+      stock: 90,
+      category: "Fashion",
+      brand: "Zara",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80"])
+    },
+    {
+      title: "H&M Linen Blend Overshirt Jacket",
+      description: "Breathable linen blend jacket shirt featuring button snaps and chest patch pocketing.",
+      price: 2299,
+      originalPrice: 3499,
+      discount: 34,
+      rating: 4.2,
+      reviewCount: 2314,
+      stock: 75,
+      category: "Fashion",
+      brand: "H&M",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80"])
+    },
+    {
+      title: "Woodland Genuine Suede Casual Shoes",
+      description: "Genuine suede leather casual slip-on loafers offering supportive walking rubber outsoles.",
+      price: 3495,
+      originalPrice: 4995,
+      discount: 30,
+      rating: 4.5,
+      reviewCount: 3841,
+      stock: 55,
+      category: "Fashion",
+      brand: "Woodland",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1560343090-f0409e92791a?w=800&q=80"])
+    },
+    {
+      title: "Allen Solly Premium Formal Trousers",
+      description: "Smart fit poly-viscose blend flat-front dress pants for business or work wear.",
+      price: 1899,
+      originalPrice: 2999,
+      discount: 36,
+      rating: 4.3,
+      reviewCount: 1542,
+      stock: 110,
+      category: "Fashion",
+      brand: "Allen Solly",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80"])
+    },
+    {
+      title: "Roadster Heavy Hooded Winter Parka",
+      description: "Insulated heavy hooded coat with soft sherpa lining for maximum thermal comfort.",
+      price: 3999,
+      originalPrice: 6999,
+      discount: 42,
+      rating: 4.4,
+      reviewCount: 384,
+      stock: 30,
+      category: "Fashion",
+      brand: "Roadster",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80"])
+    },
 
-  const fashionImages = [
-    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80",
-    "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=800&q=80",
-    "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800&q=80",
-    "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=800&q=80",
-    "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80",
-    "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80",
-    "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80",
-    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
-    "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
-    "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80",
-    "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=800&q=80",
-    "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80",
-    "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
-    "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
-    "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=800&q=80",
-    "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&q=80",
-    "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=800&q=80",
-    "https://images.unsplash.com/photo-1582966772680-860e372bb558?w=800&q=80",
-    "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=80",
-    "https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&q=80",
-    "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800&q=80",
-    "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800&q=80",
-    "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=800&q=80",
-    "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&q=80",
-    "https://images.unsplash.com/photo-1508296695146-257a814070b4?w=800&q=80",
-    "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=800&q=80",
-    "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80"
-  ];
+    // Home (16 products)
+    {
+      title: "Prestige 3-Piece Non-Stick Cookware Set",
+      description: "Heavy-gauge aluminum non-stick cookware set including frying pan, flat tawa, and kadhai.",
+      price: 2899,
+      originalPrice: 4499,
+      discount: 35,
+      rating: 4.4,
+      reviewCount: 3842,
+      stock: 180,
+      category: "Home",
+      brand: "Prestige",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&q=80"])
+    },
+    {
+      title: "Hawkins Classic 3L Aluminum Pressure Cooker",
+      description: "Hard-anodized standard aluminum inner lid safety pressure cooker for daily kitchen preparation.",
+      price: 1699,
+      originalPrice: 2299,
+      discount: 26,
+      rating: 4.6,
+      reviewCount: 9234,
+      stock: 250,
+      category: "Home",
+      brand: "Hawkins",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&q=80"])
+    },
+    {
+      title: "Pigeon Amaze 1.5L Electric Kettle",
+      description: "Stainless steel inner liner quick boil cordless electric kettle with auto-off security.",
+      price: 899,
+      originalPrice: 1499,
+      discount: 40,
+      rating: 4.2,
+      reviewCount: 15423,
+      stock: 400,
+      category: "Home",
+      brand: "Pigeon",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"])
+    },
+    {
+      title: "Sleepwell Orthopedic Memory Foam Support Pillow",
+      description: "Medical contour neck support memory foam pillow for spine alignment and posture health.",
+      price: 1499,
+      originalPrice: 2499,
+      discount: 40,
+      rating: 4.5,
+      reviewCount: 2314,
+      stock: 120,
+      category: "Home",
+      brand: "Sleepwell",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800&q=80"])
+    },
+    {
+      title: "Borosil Glass Mixing Bowls (Set of 3)",
+      description: "Tough borosilicate glass microwave-safe serving and mixing bowls with air-tight lids.",
+      price: 1199,
+      originalPrice: 1699,
+      discount: 29,
+      rating: 4.7,
+      reviewCount: 3841,
+      stock: 150,
+      category: "Home",
+      brand: "Borosil",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80"])
+    },
+    {
+      title: "Solimo Ultra Soft Cotton Bath Towels (Pack of 2)",
+      description: "Extra-plush 500 GSM ring-spun cotton towels for quick moisture absorption.",
+      price: 899,
+      originalPrice: 1499,
+      discount: 40,
+      rating: 4.3,
+      reviewCount: 6783,
+      stock: 300,
+      category: "Home",
+      brand: "Solimo",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=800&q=80"])
+    },
+    {
+      title: "IKEA LACK Minimalist Side Table",
+      description: "Elegant lightweight wood side coffee table, easy to assemble and clean.",
+      price: 1299,
+      originalPrice: 1999,
+      discount: 35,
+      rating: 4.4,
+      reviewCount: 8941,
+      stock: 200,
+      category: "Home",
+      brand: "IKEA",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80"])
+    },
+    {
+      title: "Philips Everyday Cordless Beard Trimmer",
+      description: "DuraPower self-sharpening stainless blades trimmer with rechargeable USB cordless utility.",
+      price: 1499,
+      originalPrice: 2299,
+      discount: 35,
+      rating: 4.5,
+      reviewCount: 12450,
+      stock: 150,
+      category: "Home",
+      brand: "Philips",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1558562805-4bf1e2a724eb?w=800&q=80"])
+    },
+    {
+      title: "Prestige Iris 750W Mixer Grinder",
+      description: "750W high-speed motor mixer grinder set including 3 stainless steel jars.",
+      price: 3499,
+      originalPrice: 4999,
+      discount: 30,
+      rating: 4.2,
+      reviewCount: 1892,
+      stock: 90,
+      category: "Home",
+      brand: "Prestige",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&q=80"])
+    },
+    {
+      title: "Hawkins Futura Hard Anodized Kadhai",
+      description: "Advanced non-toxic hard-anodized steel cooking wok with dual handles.",
+      price: 2199,
+      originalPrice: 2999,
+      discount: 26,
+      rating: 4.7,
+      reviewCount: 4210,
+      stock: 140,
+      category: "Home",
+      brand: "Hawkins",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&q=80"])
+    },
+    {
+      title: "Pigeon Amaze Stainless Steel Gas Stove",
+      description: "2-burner auto ignition high efficiency cooktop gas stove for modern kitchens.",
+      price: 2799,
+      originalPrice: 4299,
+      discount: 34,
+      rating: 4.1,
+      reviewCount: 842,
+      stock: 85,
+      category: "Home",
+      brand: "Pigeon",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"])
+    },
+    {
+      title: "Sleepwell Fiber Filled Comfort Bed Pillows (Pair)",
+      description: "Hollow siliconized polyester fiber-filled cloud sleep pillows with cotton shell.",
+      price: 899,
+      originalPrice: 1299,
+      discount: 30,
+      rating: 4.3,
+      reviewCount: 2314,
+      stock: 200,
+      category: "Home",
+      brand: "Sleepwell",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800&q=80"])
+    },
+    {
+      title: "Borosil Glass Water Tumblers (Pack of 6)",
+      description: "Elegant lightweight scratch-resistant borosilicate glass tumblers set for daily water/juice.",
+      price: 599,
+      originalPrice: 899,
+      discount: 33,
+      rating: 4.5,
+      reviewCount: 3841,
+      stock: 220,
+      category: "Home",
+      brand: "Borosil",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80"])
+    },
+    {
+      title: "Solimo Premium Microfiber Reversible Comforter",
+      description: "Soft microfiber reversible lightweight duvet comforter for air-conditioned rooms.",
+      price: 1799,
+      originalPrice: 2999,
+      discount: 40,
+      rating: 4.4,
+      reviewCount: 1542,
+      stock: 110,
+      category: "Home",
+      brand: "Solimo",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80"])
+    },
+    {
+      title: "IKEA KALLAX Shelving Unit (White)",
+      description: "Versatile cube display shelving bookcase unit, fits standing or horizontal layouts.",
+      price: 4999,
+      originalPrice: 6999,
+      discount: 28,
+      rating: 4.6,
+      reviewCount: 384,
+      stock: 30,
+      category: "Home",
+      brand: "IKEA",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80"])
+    },
+    {
+      title: "Philips Handheld Garment Steamer",
+      description: "Easy quick crease removal portable handheld fabric clothes steamer.",
+      price: 2999,
+      originalPrice: 4499,
+      discount: 33,
+      rating: 4.3,
+      reviewCount: 890,
+      stock: 95,
+      category: "Home",
+      brand: "Philips",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80"])
+    },
 
-  const homeImages = [
-    "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800&q=80",
-    "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
-    "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80",
-    "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
-    "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80",
-    "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80",
-    "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=800&q=80",
-    "https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&q=80",
-    "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
-    "https://images.unsplash.com/photo-1556909172-8c2f041fca1e?w=800&q=80",
-    "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=800&q=80",
-    "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80",
-    "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80",
-    "https://images.unsplash.com/photo-1558562805-4bf1e2a724eb?w=800&q=80",
-    "https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=800&q=80",
-    "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=800&q=80",
-    "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80",
-    "https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=800&q=80",
-    "https://images.unsplash.com/photo-1621972750749-0fbb1abb7736?w=800&q=80",
-    "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&q=80",
-    "https://images.unsplash.com/photo-1618172193763-c511deb635ca?w=800&q=80",
-    "https://images.unsplash.com/photo-1562408590-e32931084e23?w=800&q=80"
-  ];
-
-  const sportsImages = [
-    "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80",
-    "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=800&q=80",
-    "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80",
-    "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=800&q=80",
-    "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80",
-    "https://images.unsplash.com/photo-1599586120429-48281b6f0ece?w=800&q=80",
-    "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&q=80",
-    "https://images.unsplash.com/photo-1592419044706-39796d40f98c?w=800&q=80",
-    "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80",
-    "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80",
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
-    "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80",
-    "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80",
-    "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80",
-    "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80",
-    "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=800&q=80",
-    "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=80",
-    "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800&q=80",
-    "https://images.unsplash.com/photo-1518063319789-7217e6706b04?w=800&q=80",
-    "https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?w=800&q=80",
-    "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80"
-  ];
-
-  const electronicsTemplates = [
-    { title: "Wireless Soundbar with Subwoofer", desc: "Experience immersive cinema-quality surround sound audio at home featuring deep dynamic bass, multiple input modes, and an elegant slim design.", priceMin: 4999, priceMax: 18999, discount: 25 },
-    { title: "Smartwatch Active with Heart Rate Monitor", desc: "A sleek smart fitness companion tracking steps, sleep, exercises, stress, and continuous heart rate. 1.4-inch AMOLED touch display.", priceMin: 3499, priceMax: 9999, discount: 30 },
-    { title: "10000mAh Dual Port Fast Power Bank", desc: "Super-compact mobile power supply equipped with Power Delivery technology, short-circuit protection, and LED power level indicators.", priceMin: 899, priceMax: 1999, discount: 45 },
-    { title: "Mechanical RGB Backlit Gaming Keyboard", desc: "Professional tactile mechanical keys, customizable RGB illumination patterns, and solid build quality designed for fast typing and intense gaming.", priceMin: 1999, priceMax: 6999, discount: 20 },
-    { title: "27-inch IPS UHD Business Monitor", desc: "Ultra-sharp 4K display with high color accuracy, frameless construction, eye-comfort blue light filter, and dual HDMI ports.", priceMin: 16999, priceMax: 29999, discount: 15 },
-    { title: "Compact Bluetooth Soundbar for Desktop", desc: "Dual audio channels delivering crisp vocals and deep tones. Perfectly fits under any computer monitor or TV for clear sound.", priceMin: 1499, priceMax: 3499, discount: 40 },
-    { title: "Braided 60W USB-C to USB-C Cable (2m)", desc: "Reinforced cable build designed to withstand high bends. Supports fast charging speeds and super-speed data synchronization.", priceMin: 299, priceMax: 799, discount: 50 },
-    { title: "Wireless Bluetooth Earbuds Pro", desc: "Active noise-canceling wireless earbuds featuring long battery lifespan, quick charging case, water-resistance, and ergonomic custom fit.", priceMin: 2499, priceMax: 12999, discount: 35 }
-  ];
-
-  const fashionTemplates = [
-    { title: "Men's Cotton Slim Fit Polo Shirt", desc: "Crafted from 100% fine cotton pique, featuring double-needle stitched seams, side vents, and a clean classic flat collar.", priceMin: 899, priceMax: 2499, discount: 30 },
-    { title: "Unisex Everyday Carry Canvas Backpack", desc: "Spacious heavy-duty canvas bag complete with a padded laptop sleeve, dual mesh drink pockets, and comfortable adjustable straps.", priceMin: 1299, priceMax: 3999, discount: 25 },
-    { title: "Lightweight Athletic Running Shorts", desc: "Sweat-wicking synthetic running shorts with reflective graphics, soft inner lining, and secure zip storage for small essentials.", priceMin: 699, priceMax: 1899, discount: 40 },
-    { title: "Genuine Italian Leather Dress Belt", desc: "Top-grain premium cowhide leather belt finished with a polished satin buckle, versatile styling matching suit trousers or denim.", priceMin: 599, priceMax: 1499, discount: 35 },
-    { title: "Polarized Retro Clubmaster Sunglasses", desc: "Sleek combination metal-acetate frame featuring HD polarized UV400 lenses that enhance color clarity and eliminate glare.", priceMin: 1299, priceMax: 5999, discount: 20 },
-    { title: "Memory Foam Cushioned Walking Shoes", desc: "Step in comfort. Breathable mesh slip-ons featuring a flexible traction outer sole and high-rebound cushioning foam.", priceMin: 1899, priceMax: 4999, discount: 30 },
-    { title: "Women's Comfort Stretch Denim Jacket", desc: "Timeless fashion layer featuring button closures, chest button flap pockets, and elastane blend for flexible casual wear.", priceMin: 1999, priceMax: 4499, discount: 25 },
-    { title: "Premium Wool Blend Winter Scarf", desc: "Super-soft warm winter scarf finished with subtle fringe edges. Lightweight design that blocks wind chill during cold weather.", priceMin: 499, priceMax: 1299, discount: 50 }
-  ];
-
-  const homeTemplates = [
-    { title: "Stainless Steel Vacuum Water Bottle", desc: "Double-wall insulated flask keeping drinks icy cold for 24h or hot for 12h. Standard mouth cap with carry loop. Leakproof.", priceMin: 599, priceMax: 1699, discount: 25 },
-    { title: "3-Piece Non-Stick Induction Cookware Set", desc: "Heavy-gauge aluminum pans with a robust non-toxic coating. Includes a deep frying pan, flat griddle tawa, and saucepan.", priceMin: 1899, priceMax: 4999, discount: 35 },
-    { title: "Ergonomic Orthopedic Memory Foam Pillow", desc: "Contoured medical pillow designed to align the head and spine, reducing morning neck stiffness and easing breathing patterns.", priceMin: 1199, priceMax: 2899, discount: 40 },
-    { title: "Double-Wall Cool Touch Electric Kettle", desc: "Fast-boiling cordless jug featuring high-grade stainless inner liner, automatic shut-off safety, and dry-boil cutoff.", priceMin: 999, priceMax: 2499, discount: 30 },
-    { title: "Ultra-Absorbent Microfiber Towels (Pack of 6)", desc: "Quick-drying lint-free kitchen towels perfect for cleaning glass, polishing dinnerware, or wiping tables dry.", priceMin: 299, priceMax: 799, discount: 45 },
-    { title: "Adjustable Brightness LED Desk Study Lamp", desc: "Flexible gooseneck lamp offering multiple color temperatures, touch switches, and an integrated smartphone wireless charger.", priceMin: 1299, priceMax: 3499, discount: 20 },
-    { title: "Ceramic Decorative Flower Vase Set", desc: "Two elegantly glazed hand-crafted white ceramic vases, styling shelves, desks, or living spaces with minimal modern accents.", priceMin: 799, priceMax: 2299, discount: 30 },
-    { title: "Anti-Skid Cotton Memory Foam Bath Mat", desc: "Super absorbent bathroom rug filled with high-density polyurethane memory foam that rebounds comfortably under foot.", priceMin: 499, priceMax: 1299, discount: 50 }
-  ];
-
-  const sportsTemplates = [
-    { title: "High-Tension Carbon Badminton Racket", desc: "Isometric head frame shape constructed from high-modulus graphite. Increases sweet-spot area for aggressive hitting control.", priceMin: 1599, priceMax: 5499, discount: 25 },
-    { title: "Alum-Tanned Leather Cricket Seam Ball", desc: "Regulation size hand-stitched leather ball with thick wool-cork core, delivering true seam bounce and durable paint gloss.", priceMin: 450, priceMax: 1290, discount: 30 },
-    { title: "High-Absorbent Non-Slip Grip Tape (Pack of 5)", desc: "Soft-touch dry racket overgrip wraps that absorb hand sweat instantly, preventing slips during high-power matches.", priceMin: 199, priceMax: 599, discount: 50 },
-    { title: "Anti-Fog Curved Lens Swimming Goggles", desc: "Panoramic underwater vision with leakproof silicone seals, nose bridge adjustments, and adjustable double strap locks.", priceMin: 499, priceMax: 1499, discount: 40 },
-    { title: "Indoor/Outdoor Composite Leather Basketball", desc: "Deep channel design with custom pebbled skin ensuring exceptional palm grip, consistent air retention, and reliable bounce.", priceMin: 1299, priceMax: 3299, discount: 20 },
-    { title: "Steel Cable Digital Skipping Speed Rope", desc: "Weighted ergonomic handle skipping rope with built-in LCD tracker counting rotations, calorie burns, and timer metrics.", priceMin: 349, priceMax: 999, discount: 45 },
-    { title: "Durable Neoprene Sports Ankle Support", desc: "Breathable wrap around compression sleeve offering stable joint support and warmth during fitness training or sports rehabilitation.", priceMin: 299, priceMax: 799, discount: 50 },
-    { title: "Protective Hard-Shell Sports Shin Guards", desc: "High-impact protection guards lined with soft cushioning foam backing, keeping shins shielded during soccer matches.", priceMin: 399, priceMax: 999, discount: 35 }
-  ];
-
-  const categories = [
-    { name: "Electronics", templates: electronicsTemplates, brands: electronicsBrands, images: electronicsImages },
-    { name: "Fashion", templates: fashionTemplates, brands: fashionBrands, images: fashionImages },
-    { name: "Home", templates: homeTemplates, brands: homeBrands, images: homeImages },
-    { name: "Sports", templates: sportsTemplates, brands: sportsBrands, images: sportsImages }
-  ];
-
-  const generatedProducts: any[] = [];
-
-  // Let's generate 15 products per category (60 total) to expand the catalog to 110 items
-  for (const cat of categories) {
-    for (let i = 0; i < 15; i++) {
-      const template = cat.templates[i % cat.templates.length];
-      const brand = cat.brands[Math.floor((i + 3) * 7.3) % cat.brands.length];
-      const title = `${brand} ${template.title}`;
-
-      // Pick two distinct images from the pool
-      const img1Index = Math.floor(i * 1.7) % cat.images.length;
-      let img2Index = (img1Index + 3) % cat.images.length;
-      if (img1Index === img2Index) {
-        img2Index = (img1Index + 1) % cat.images.length;
-      }
-      const productImages = [cat.images[img1Index], cat.images[img2Index]];
-
-      // Generate realistic price based on template min/max
-      const priceRange = template.priceMax - template.priceMin;
-      const step = priceRange / 14;
-      const priceVal = Math.round(template.priceMin + (step * i));
-      const originalPriceVal = Math.round(priceVal / (1 - template.discount / 100));
-
-      const rating = parseFloat((4.0 + ((i * 7.7) % 1.0)).toFixed(1));
-      const reviewCount = Math.floor((i + 1) * 314.7 + 10);
-      const stock = Math.floor((i + 2) * 23.3);
-
-      generatedProducts.push({
-        title,
-        description: template.desc.replace("{brand}", brand),
-        price: priceVal,
-        originalPrice: originalPriceVal,
-        discount: template.discount,
-        rating,
-        reviewCount,
-        category: cat.name,
-        brand,
-        stock,
-        images: JSON.stringify(productImages)
-      });
+    // Sports (16 products)
+    {
+      title: "Yonex Muscle Power 22 Badminton Racket",
+      description: "Isometric carbon-shaft high-tension badminton racket for consistent smash response.",
+      price: 1999,
+      originalPrice: 2999,
+      discount: 33,
+      rating: 4.5,
+      reviewCount: 3841,
+      stock: 200,
+      category: "Sports",
+      brand: "Yonex",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80"])
+    },
+    {
+      title: "Speedo Silicone Swimming Cap",
+      description: "100% durable silicone swim cap offering streamlined head contour fit and hair protection.",
+      price: 499,
+      originalPrice: 799,
+      discount: 37,
+      rating: 4.4,
+      reviewCount: 9234,
+      stock: 300,
+      category: "Sports",
+      brand: "Speedo",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=80"])
+    },
+    {
+      title: "Spalding NBA Street Basketball",
+      description: "Deep channel outdoor composite leather basketball with high-pebble palm grip.",
+      price: 1799,
+      originalPrice: 2499,
+      discount: 28,
+      rating: 4.6,
+      reviewCount: 1542,
+      stock: 120,
+      category: "Sports",
+      brand: "Spalding",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80"])
+    },
+    {
+      title: "SG Scorer Kashmir Willow Cricket Bat",
+      description: "Handcrafted select Kashmir willow bat equipped with premium cane handle for shock control.",
+      price: 2899,
+      originalPrice: 3999,
+      discount: 27,
+      rating: 4.3,
+      reviewCount: 2314,
+      stock: 85,
+      category: "Sports",
+      brand: "SG",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80"])
+    },
+    {
+      title: "Nivia Storm Rubber Football",
+      description: "32-panel durable rubberized outer skin football with latex bladder.",
+      price: 499,
+      originalPrice: 799,
+      discount: 37,
+      rating: 4.1,
+      reviewCount: 15423,
+      stock: 500,
+      category: "Sports",
+      brand: "Nivia",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&q=80"])
+    },
+    {
+      title: "Wilson Championship Tennis Balls (3 Ball Can)",
+      description: "Pressurized felt tennis balls delivering true bounce, durable playing lifespan.",
+      price: 449,
+      originalPrice: 699,
+      discount: 35,
+      rating: 4.5,
+      reviewCount: 8452,
+      stock: 400,
+      category: "Sports",
+      brand: "Wilson",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=800&q=80"])
+    },
+    {
+      title: "Cosco Light Cricket Tennis Balls (Heavy Weight - Pack of 6)",
+      description: "Durable heavy tennis cricket balls designed for fast seam bowling in street tournaments.",
+      price: 499,
+      originalPrice: 799,
+      discount: 37,
+      rating: 4.3,
+      reviewCount: 3841,
+      stock: 350,
+      category: "Sports",
+      brand: "Cosco",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=800&q=80"])
+    },
+    {
+      title: "Decathlon Kipsta High Comfort Sports Socks (Pack of 3)",
+      description: "Breathable high-loop cotton socks offering dynamic arch support and blister protection.",
+      price: 599,
+      originalPrice: 999,
+      discount: 40,
+      rating: 4.4,
+      reviewCount: 1892,
+      stock: 250,
+      category: "Sports",
+      brand: "Decathlon",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1582966772680-860e372bb558?w=800&q=80"])
+    },
+    {
+      title: "Yonex Mavis 350 Nylon Shuttlecocks (Yellow - Pack of 6)",
+      description: "Highly accurate nylon shuttlecocks featuring stable flight path matching feather speeds.",
+      price: 1299,
+      originalPrice: 1699,
+      discount: 23,
+      rating: 4.7,
+      reviewCount: 45120,
+      stock: 300,
+      category: "Sports",
+      brand: "Yonex",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80"])
+    },
+    {
+      title: "Speedo Anti-Fog Swimming Goggles",
+      description: "UV-protection anti-fog leakproof swimming goggles with comfortable silicone straps.",
+      price: 999,
+      originalPrice: 1499,
+      discount: 33,
+      rating: 4.5,
+      reviewCount: 8901,
+      stock: 150,
+      category: "Sports",
+      brand: "Speedo",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=80"])
+    },
+    {
+      title: "Spalding Silver Outdoor Basketball",
+      description: "Durable outdoor composite leather game basketball with enhanced pebble texturing.",
+      price: 2199,
+      originalPrice: 2999,
+      discount: 26,
+      rating: 4.6,
+      reviewCount: 3451,
+      stock: 90,
+      category: "Sports",
+      brand: "Spalding",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80"])
+    },
+    {
+      title: "SG Tournament Leather Cricket Ball",
+      description: "Regulation alumed-tanned hand-stitched four-piece leather seam cricket ball.",
+      price: 1299,
+      originalPrice: 1899,
+      discount: 31,
+      rating: 4.7,
+      reviewCount: 1542,
+      stock: 80,
+      category: "Sports",
+      brand: "SG",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80"])
+    },
+    {
+      title: "Nivia Classic Football Shin Guards",
+      description: "Ergonomic hard protective shell sports soccer football leg shin guards.",
+      price: 399,
+      originalPrice: 599,
+      discount: 33,
+      rating: 4.2,
+      reviewCount: 4210,
+      stock: 180,
+      category: "Sports",
+      brand: "Nivia",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80"])
+    },
+    {
+      title: "Wilson Pro Overgrip Grip Tape (Pack of 3)",
+      description: "Soft feel sweat-absorbing racquet handle overgrip wrap tape for tennis or squash.",
+      price: 599,
+      originalPrice: 899,
+      discount: 33,
+      rating: 4.8,
+      reviewCount: 1832,
+      stock: 220,
+      category: "Sports",
+      brand: "Wilson",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80"])
+    },
+    {
+      title: "Cosco Light Cricket Tennis Ball (Light Weight - Pack of 6)",
+      description: "Heavy felt street tournament cricket tennis balls delivering standard bounce.",
+      price: 449,
+      originalPrice: 699,
+      discount: 35,
+      rating: 4.2,
+      reviewCount: 894,
+      stock: 350,
+      category: "Sports",
+      brand: "Cosco",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=800&q=80"])
+    },
+    {
+      title: "Decathlon Kipsta Adult Football Boots",
+      description: "Robust soccer cleats designed with synthetic leather upper for excellent grip.",
+      price: 2499,
+      originalPrice: 3999,
+      discount: 37,
+      rating: 4.4,
+      reviewCount: 189,
+      stock: 45,
+      category: "Sports",
+      brand: "Decathlon",
+      images: JSON.stringify(["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"])
     }
-  }
+  ];
 
-  return generatedProducts;
+  return extraProducts;
 }
+
 
 async function main() {
   console.log("🌱 Starting database seed...");
