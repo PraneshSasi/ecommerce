@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+function matchesToken(text: string, token: string): boolean {
+  if (!text) return false;
+  const lowerText = text.toLowerCase();
+  
+  // Check 1: original word prefixes (split by non-alphanumeric characters)
+  const originalWords = lowerText.split(/[^a-z0-9]+/i).filter(Boolean);
+  if (originalWords.some(word => word.startsWith(token))) {
+    return true;
+  }
+  
+  // Check 2: camelCase/PascalCase/number sub-word prefixes
+  const splitText = text
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/([0-9])([a-zA-Z])/g, "$1 $2")
+    .replace(/([a-zA-Z])([0-9])/g, "$1 $2")
+    .toLowerCase();
+  const splitWords = splitText.split(/[^a-z0-9]+/i).filter(Boolean);
+  
+  return splitWords.some(word => word.startsWith(token));
+}
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -9,28 +30,22 @@ export async function GET(req: NextRequest) {
     const sort = searchParams.get("sort") || "featured";
     const priceRange = searchParams.get("priceRange") || "all";
 
-    const words = query ? query.split(/\s+/).filter(Boolean) : [];
-    const whereClause: any = {
-      AND: words.map((word) => ({
-        OR: [
-          { title: { contains: word } },
-          { brand: { contains: word } },
-        ],
-      })),
+    const dbWhereClause: any = {
+      AND: [],
     };
 
     // Only filter by category if no search query is active
     if (!query && category && category !== "All") {
-      whereClause.AND.push({ category: { equals: category } });
+      dbWhereClause.AND.push({ category: { equals: category } });
     }
 
     // Apply price range filtering
     if (priceRange === "budget") {
-      whereClause.AND.push({ price: { lt: 1000 } });
+      dbWhereClause.AND.push({ price: { lt: 1000 } });
     } else if (priceRange === "mid") {
-      whereClause.AND.push({ price: { gte: 1000, lte: 10000 } });
+      dbWhereClause.AND.push({ price: { gte: 1000, lte: 10000 } });
     } else if (priceRange === "premium") {
-      whereClause.AND.push({ price: { gt: 10000 } });
+      dbWhereClause.AND.push({ price: { gt: 10000 } });
     }
 
     // Determine sort ordering
@@ -44,11 +59,25 @@ export async function GET(req: NextRequest) {
     }
 
     const products = await prisma.product.findMany({
-      where: whereClause,
+      where: dbWhereClause.AND.length > 0 ? dbWhereClause : {},
       orderBy: orderByClause,
     });
 
-    return NextResponse.json(products);
+    // Apply tokenized prefix search in-memory to ensure precise matching
+    let filteredProducts = products;
+    if (query) {
+      const searchTokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+      filteredProducts = products.filter((product) => {
+        const title = product.title || "";
+        const brand = product.brand || "";
+        
+        return searchTokens.every((token) => {
+          return matchesToken(title, token) || matchesToken(brand, token);
+        });
+      });
+    }
+
+    return NextResponse.json(filteredProducts);
   } catch (error) {
     console.error("Products fetch error:", error);
     return NextResponse.json(
