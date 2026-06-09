@@ -7,10 +7,11 @@ const columns = [
   {
     title: "Support",
     links: [
-      { name: "Help Center", href: "/info/help" },
-      { name: "Track Order", href: "/info/help" },
-      { name: "Returns", href: "/info/returns" },
-      { name: "Contact Us", href: "mailto:support@shopwave.com" },
+      { name: "Help Center & FAQ", href: "/info/help" },
+      { name: "support@shopwave.com", href: "mailto:support@shopwave.com" },
+      { name: "Helpline: +91 80 5555 9283", href: "/info/help" },
+      { name: "30-Day Returns Policy", href: "/info/returns" },
+      { name: "Track Order Status", href: "/info/help" },
     ],
   },
   {
