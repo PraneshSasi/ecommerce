@@ -141,7 +141,7 @@ function AuthForm() {
   };
 
   return (
-    <div className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+    <div className="mx-auto grid min-h-[calc(100vh-5rem)] w-full items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
       <div className="space-y-8">
         <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 cursor-pointer">
           <ArrowLeft size={16} /> Back to shop

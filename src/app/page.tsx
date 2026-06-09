@@ -49,7 +49,7 @@ export default function HomePage() {
   }, [fetchProducts]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+    <div className="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <HeroBanner />
 
       <section id="products" className="mt-10 space-y-6">

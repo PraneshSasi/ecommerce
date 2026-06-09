@@ -19,7 +19,6 @@ import { useStore } from "@/store/useStore";
 import { useEffect, useRef, useState } from "react";
 
 const navLinks = [
-  { href: "/#products", label: "Products", icon: Package },
   { href: "/cart", label: "Cart", icon: ShoppingCart },
   { href: "/auth", label: "Account", icon: User },
 ];
@@ -56,13 +55,20 @@ export default function Header() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(`/?q=${encodeURIComponent(searchQuery)}`);
+    if (window.location.pathname === "/") {
+      const element = document.getElementById("products");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      router.push(`/#products`);
+    }
     setMenuOpen(false);
   };
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-xl shadow-xs">
-      <div ref={headerRef} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div ref={headerRef} className="mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center gap-3 lg:gap-4">
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-100 bg-indigo-50 text-indigo-600 shadow-xs">
@@ -85,7 +91,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <form onSubmit={handleSearch} className="hidden md:block flex-1 max-w-xl lg:mx-4">
+          <form onSubmit={handleSearch} className="hidden md:block flex-1 max-w-2xl lg:mx-4">
             <div className="relative">
               <Search size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
@@ -93,6 +99,14 @@ export default function Header() {
                 placeholder="Search products, brands, and deals"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => {
+                  if (window.location.pathname === "/") {
+                    const element = document.getElementById("products");
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }
+                }}
                 className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden transition-colors focus:border-indigo-500 focus:bg-white"
               />
             </div>
@@ -182,6 +196,14 @@ export default function Header() {
                     placeholder="Search products"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={() => {
+                      if (window.location.pathname === "/") {
+                        const element = document.getElementById("products");
+                        if (element) {
+                          element.scrollIntoView({ behavior: "smooth" });
+                        }
+                      }
+                    }}
                     className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-hidden focus:border-indigo-500 focus:bg-white"
                   />
                 </div>

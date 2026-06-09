@@ -148,7 +148,7 @@ export default async function InfoPage({ params }: InfoPageProps) {
   const IconComponent = content.icon;
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full px-4 py-16 sm:px-6 lg:px-8">
       <Link href="/#products" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 mb-8 transition-colors">
         <ArrowLeft size={16} /> Back to shop
       </Link>

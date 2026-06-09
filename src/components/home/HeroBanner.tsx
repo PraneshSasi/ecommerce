@@ -25,10 +25,10 @@ export default function HeroBanner() {
           </div>
 
           <div className="space-y-4">
-            <h1 className="max-w-2xl text-4xl font-bold leading-tight text-gray-900 sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-none text-4xl font-bold leading-tight text-gray-900 sm:text-5xl lg:text-6xl">
               A cleaner way to shop premium products online.
             </h1>
-            <p className="max-w-xl text-base leading-7 text-gray-600 sm:text-lg">
+            <p className="max-w-none text-base leading-7 text-gray-600 sm:text-lg">
               Browse a focused catalog, compare products quickly, and move from discovery to checkout without friction.
             </p>
           </div>
