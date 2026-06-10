@@ -164,11 +164,11 @@ export default function CartPage() {
 
                   <div className="min-w-0 flex-1">
                     <Link href={`/product/${item.productId}`}>
-                      <h3 className="line-clamp-2 text-sm font-semibold leading-6 text-black transition-colors hover:text-orange-655">
+                      <h3 className="line-clamp-2 text-sm font-semibold leading-6 text-black transition-colors hover:text-orange-700">
                         {item.product.title}
                       </h3>
                     </Link>
-                    <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-orange-650">{item.product.brand}</p>
+                    <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-orange-600">{item.product.brand}</p>
 
                     <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                       <div>
@@ -225,7 +225,7 @@ export default function CartPage() {
           <div className="lg:sticky lg:top-24 lg:self-start">
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
               <h2 className="mb-5 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-black">
-                <ShoppingBag size={18} className="text-orange-650" /> Order summary
+                <ShoppingBag size={18} className="text-orange-600" /> Order summary
               </h2>
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
@@ -235,7 +235,7 @@ export default function CartPage() {
                 {savings > 0 && (
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Discount</span>
-                    <span className="font-semibold text-orange-650">-₹{savings.toLocaleString("en-IN")}</span>
+                    <span className="font-semibold text-orange-600">-₹{savings.toLocaleString("en-IN")}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm">

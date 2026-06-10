@@ -14,7 +14,7 @@ export default function ProductMeta({ product }: ProductMetaProps) {
   return (
     <div className="space-y-5 text-black">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full border border-orange-250 bg-orange-50 px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-orange-650">
+        <span className="rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-orange-600">
           {product.brand}
         </span>
         <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-500">
@@ -47,7 +47,7 @@ export default function ProductMeta({ product }: ProductMetaProps) {
         </div>
 
         {discountedAmount > 0 && (
-          <div className="mt-3 flex items-center gap-2 text-sm font-bold text-orange-650">
+          <div className="mt-3 flex items-center gap-2 text-sm font-bold text-orange-600">
             <Tag size={14} /> You save ₹{discountedAmount.toLocaleString("en-IN")}
           </div>
         )}
@@ -57,7 +57,7 @@ export default function ProductMeta({ product }: ProductMetaProps) {
       <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 shadow-2xs">
         {product.stock > 0 ? (
           <>
-            <CheckCircle size={18} className="text-orange-650" />
+            <CheckCircle size={18} className="text-orange-600" />
             <span className="text-sm font-semibold text-orange-600">
               {product.stock < 10 ? `Only ${product.stock} left in stock.` : "In stock and ready to ship."}
             </span>
@@ -72,7 +72,7 @@ export default function ProductMeta({ product }: ProductMetaProps) {
 
       <div className="space-y-3">
         <h2 className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-black">
-          <Award size={16} className="text-orange-650" /> About this product
+          <Award size={16} className="text-orange-600" /> About this product
         </h2>
         <p className="text-sm leading-7 text-gray-600">{product.description}</p>
       </div>

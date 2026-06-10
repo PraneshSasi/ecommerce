@@ -149,14 +149,14 @@ export default function CheckoutPage() {
       <div className="flex min-h-[70vh] items-center justify-center px-4">
         <div className="max-w-lg rounded-2xl border border-gray-200 bg-gray-50 p-8 text-center shadow-lg text-black">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-orange-50 border border-orange-200">
-            <CheckCircle2 size={40} className="text-orange-655" />
+            <CheckCircle2 size={40} className="text-orange-700" />
           </div>
           <h2 className="mt-6 text-2xl font-black uppercase tracking-tight text-black">Order Placed!</h2>
           <p className="mt-3 text-sm leading-6 text-gray-500">
             Your order has been confirmed and will be shipped soon. Thank you for shopping with LOCO!
           </p>
           <div className="mt-6 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3">
-            <p className="text-sm font-bold text-orange-650 uppercase tracking-wider">
+            <p className="text-sm font-bold text-orange-600 uppercase tracking-wider">
               Order Total: ₹{total.toLocaleString("en-IN")}
             </p>
             <p className="mt-1 text-xs text-orange-600">
@@ -208,7 +208,7 @@ export default function CheckoutPage() {
         </button>
         <div className="h-5 w-px bg-gray-200" />
         <div className="inline-flex items-center gap-2 text-black">
-          <ShieldCheck size={18} className="text-orange-650" />
+          <ShieldCheck size={18} className="text-orange-600" />
           <h1 className="text-xl font-bold uppercase tracking-wide">Secure Checkout</h1>
         </div>
       </div>
@@ -219,7 +219,7 @@ export default function CheckoutPage() {
           {/* Delivery Address */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
             <h2 className="flex items-center gap-2 text-lg font-bold text-black mb-5 uppercase tracking-wide">
-              <MapPin size={18} className="text-orange-650" /> Delivery Address
+              <MapPin size={18} className="text-orange-600" /> Delivery Address
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -290,7 +290,7 @@ export default function CheckoutPage() {
           {/* Payment Method */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
             <h2 className="flex items-center gap-2 text-lg font-bold text-black mb-5 uppercase tracking-wide">
-              <CreditCard size={18} className="text-orange-655" /> Payment Method
+              <CreditCard size={18} className="text-orange-700" /> Payment Method
             </h2>
             <div className="space-y-3">
               {paymentMethods.map(({ id, label, icon: Icon, sub }) => (
@@ -309,11 +309,11 @@ export default function CheckoutPage() {
                     <Icon size={18} />
                   </div>
                   <div className="flex-1">
-                    <p className={`text-sm font-semibold ${selectedPayment === id ? "text-orange-650" : "text-black"}`}>{label}</p>
+                    <p className={`text-sm font-semibold ${selectedPayment === id ? "text-orange-600" : "text-black"}`}>{label}</p>
                     <p className="text-xs text-gray-500">{sub}</p>
                   </div>
                   {selectedPayment === id && (
-                    <CheckCircle2 size={20} className="text-orange-650 shrink-0" />
+                    <CheckCircle2 size={20} className="text-orange-600 shrink-0" />
                   )}
                 </button>
               ))}
@@ -323,7 +323,7 @@ export default function CheckoutPage() {
           {/* Order Items */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
             <h2 className="flex items-center gap-2 text-lg font-bold text-black mb-5 uppercase tracking-wide">
-              <Package size={18} className="text-orange-650" /> Order Items ({totalItems})
+              <Package size={18} className="text-orange-600" /> Order Items ({totalItems})
             </h2>
             <div className="space-y-4">
               {cartItems.map((item) => {
@@ -337,7 +337,7 @@ export default function CheckoutPage() {
                     </Link>
                     <div className="min-w-0 flex-1">
                       <p className="line-clamp-2 text-sm font-semibold text-black">{item.product.title}</p>
-                      <p className="mt-1 text-xs font-black uppercase tracking-wider text-orange-650">{item.product.brand}</p>
+                      <p className="mt-1 text-xs font-black uppercase tracking-wider text-orange-600">{item.product.brand}</p>
                       <div className="mt-2 flex items-center gap-3">
                         <span className="text-sm font-bold text-black">₹{item.product.price.toLocaleString("en-IN")}</span>
                         <span className="text-xs text-gray-400 line-through">₹{item.product.originalPrice.toLocaleString("en-IN")}</span>
@@ -360,7 +360,7 @@ export default function CheckoutPage() {
         <div className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
             <h2 className="mb-5 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-black">
-              <Zap size={18} className="text-orange-650" /> Order Summary
+              <Zap size={18} className="text-orange-600" /> Order Summary
             </h2>
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
@@ -370,7 +370,7 @@ export default function CheckoutPage() {
               {savings > 0 && (
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Discount</span>
-                  <span className="font-semibold text-orange-655">-₹{savings.toLocaleString("en-IN")}</span>
+                  <span className="font-semibold text-orange-700">-₹{savings.toLocaleString("en-IN")}</span>
                 </div>
               )}
               <div className="flex justify-between text-sm">
@@ -417,7 +417,7 @@ export default function CheckoutPage() {
           {/* Delivery Info */}
           <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-5 shadow-xs">
             <div className="flex items-start gap-3">
-              <Truck size={18} className="mt-0.5 text-orange-650 shrink-0" />
+              <Truck size={18} className="mt-0.5 text-orange-600 shrink-0" />
               <div>
                 <p className="text-sm font-bold text-black">Estimated Delivery</p>
                 <p className="mt-1 text-xs text-gray-500 leading-relaxed">

@@ -132,7 +132,7 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
       >
         {addedToCart ? (
           <>
-            <Check size={18} className="text-orange-655" /> Added
+            <Check size={18} className="text-orange-700" /> Added
           </>
         ) : addingToCart ? (
           <>
@@ -148,7 +148,7 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
       <button
         onClick={handleBuyNow}
         disabled={disabled || buyingNow}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-650 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer shadow-md shadow-orange-650/20"
+        className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer shadow-md shadow-orange-600/20"
       >
         {buyingNow ? (
           <>
