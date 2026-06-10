@@ -8,6 +8,7 @@ import CategoryBar from "@/components/home/CategoryBar";
 import ProductCard from "@/components/home/ProductCard";
 import Spinner from "@/components/ui/Spinner";
 import Image from "next/image";
+import Link from "next/link";
 import { PackageSearch, SlidersHorizontal, TrendingUp, ArrowUpDown } from "lucide-react";
 
 const SORT_OPTIONS = [
@@ -22,9 +23,54 @@ const SORT_OPTIONS = [
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [lookbookItems, setLookbookItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterSort, setFilterSort] = useState("featured");
   const { searchQuery, selectedCategory } = useStore();
+
+  useEffect(() => {
+    async function loadLookbook() {
+      try {
+        const res = await fetch("/api/products");
+        if (res.ok) {
+          const data: Product[] = await res.json();
+          const jordan = data.find(p => p.title.toLowerCase().includes("jordan"));
+          const sony = data.find(p => p.title.toLowerCase().includes("wh-1000xm5") || p.title.toLowerCase().includes("sony"));
+          const iphone = data.find(p => p.title.toLowerCase().includes("iphone"));
+          
+          const filtered = data.filter(p => p.id !== jordan?.id && p.id !== sony?.id && p.id !== iphone?.id);
+          const accessory = filtered[0] || data[3];
+
+          const items: Product[] = [];
+          if (jordan) items.push(jordan);
+          if (sony) items.push(sony);
+          if (iphone) items.push(iphone);
+          if (accessory && items.length < 4) items.push(accessory);
+
+          while (items.length < 4 && data.length > items.length) {
+            const nextItem = data.find(p => !items.includes(p));
+            if (nextItem) items.push(nextItem);
+            else break;
+          }
+
+          setLookbookItems(items);
+        }
+      } catch (err) {
+        console.error("Failed to load lookbook:", err);
+      }
+    }
+    loadLookbook();
+  }, []);
+
+  const getLookbookImage = (product: Product | undefined, fallback: string) => {
+    if (!product) return fallback;
+    try {
+      const parsed = JSON.parse(product.images);
+      return parsed[0] || fallback;
+    } catch {
+      return fallback;
+    }
+  };
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
@@ -181,7 +227,7 @@ export default function HomePage() {
           <div>
             <div className="flex items-center gap-2 mb-1 select-none">
               <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50">
-                ✦ OUTDOOR SPECIFICATIONS
+                ✦ ARCHITECTURAL CONCEPT
               </span>
             </div>
             <h2 className="text-3xl font-black text-white sm:text-4xl tracking-tight uppercase">
@@ -194,78 +240,112 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 perspective-3d">
             {/* Gallery Card 1 - Large Tall Card */}
-            <div className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[450px] md:col-span-2 tilt-3d-left hover:border-white/20 select-none">
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/20 to-transparent opacity-80" />
-              <div className="relative w-full h-full pop-3d-image">
-                <Image
-                  src="https://images.unsplash.com/photo-1551698618-1ffdfe079a23?w=800&q=80"
-                  alt="Snowboarder descent"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-w-768px) 100vw, 50vw"
-                />
+            <Link 
+              href={lookbookItems[0] ? `/product/${lookbookItems[0].id}` : "#"}
+              className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[450px] md:col-span-2 flex flex-col justify-between p-6 select-none tilt-3d-left hover:border-white/20 cursor-pointer block"
+            >
+              <div className="relative w-full h-2/3 rounded-2xl overflow-hidden bg-[#889bb0]/30 flex items-center justify-center p-8 [transform-style:preserve-3d]">
+                <div className="relative w-full h-full animate-3d-nike [transform-style:preserve-3d]">
+                  <div className="relative w-full h-full pop-3d-image">
+                    <Image
+                      src={getLookbookImage(lookbookItems[0], "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80")}
+                      alt={lookbookItems[0] ? lookbookItems[0].title : "Nike Jordan Sneaker"}
+                      fill
+                      className="object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.5)]"
+                      sizes="(max-w-768px) 100vw, 50vw"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="absolute bottom-6 left-6 z-20">
-                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/60">01 / ACTIVITY</span>
-                <h3 className="text-lg font-black uppercase tracking-wide text-white mt-1">ALTITUDE DESCENT</h3>
+              <div>
+                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">01 / FEATURED CONCEPT</span>
+                <h3 className="text-lg font-black uppercase tracking-wider text-white mt-1 font-mono">
+                  {lookbookItems[0] ? lookbookItems[0].title.toUpperCase() : "NIKE AIR JORDAN 1"}
+                </h3>
               </div>
-            </div>
+            </Link>
 
             {/* Gallery Card 2 - Standard Card */}
-            <div className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[450px] md:col-span-1 tilt-3d-center hover:border-white/20 select-none">
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/20 to-transparent opacity-80" />
-              <div className="relative w-full h-full pop-3d-image">
-                <Image
-                  src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80"
-                  alt="Mountain Peaks"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-w-768px) 100vw, 25vw"
-                />
+            <Link 
+              href={lookbookItems[1] ? `/product/${lookbookItems[1].id}` : "#"}
+              className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[450px] md:col-span-1 flex flex-col justify-between p-6 select-none tilt-3d-center hover:border-white/20 cursor-pointer block"
+            >
+              <div className="relative w-full h-2/3 rounded-2xl overflow-hidden bg-[#889bb0]/20 flex items-center justify-center p-6 [transform-style:preserve-3d]">
+                <div className="relative w-full h-full animate-3d-sony [transform-style:preserve-3d]">
+                  <div className="relative w-full h-full pop-3d-image">
+                    <Image
+                      src={getLookbookImage(lookbookItems[1], "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80")}
+                      alt={lookbookItems[1] ? lookbookItems[1].title : "Sony Headphones"}
+                      fill
+                      className="object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.4)]"
+                      sizes="(max-w-768px) 100vw, 25vw"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="absolute bottom-6 left-6 z-20">
-                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/60">02 / ENVIRONMENT</span>
-                <h3 className="text-lg font-black uppercase tracking-wide text-white mt-1">RIDGE BOUNDARY</h3>
+              <div>
+                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">02 / AUDIO DETAIL</span>
+                <h3 className="text-lg font-black uppercase tracking-wider text-white mt-1 font-mono">
+                  {lookbookItems[1] ? lookbookItems[1].title.toUpperCase() : "SONY WH-1000XM5"}
+                </h3>
               </div>
-            </div>
+            </Link>
 
             {/* Right Column: Stack of two cards */}
             <div className="flex flex-col gap-6 md:col-span-1">
               {/* Gallery Card 3 */}
-              <div className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[213px] tilt-3d-right hover:border-white/20 select-none">
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/30 to-transparent opacity-80" />
-                <div className="relative w-full h-full pop-3d-image">
-                  <Image
-                    src="https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&q=80"
-                    alt="Winter path"
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    sizes="25vw"
-                  />
+              <Link 
+                href={lookbookItems[2] ? `/product/${lookbookItems[2].id}` : "#"}
+                className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[213px] flex items-center gap-4 p-4 select-none tilt-3d-right hover:border-white/20 cursor-pointer block"
+              >
+                <div className="relative w-1/2 h-full rounded-xl overflow-hidden bg-[#889bb0]/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                  <div className="relative w-full h-full animate-3d-apple [transform-style:preserve-3d]">
+                    <div className="relative w-full h-full pop-3d-image">
+                      <Image
+                        src={getLookbookImage(lookbookItems[2], "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80")}
+                        alt={lookbookItems[2] ? lookbookItems[2].title : "Apple iPhone"}
+                        fill
+                        className="object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
+                        sizes="15vw"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="absolute bottom-4 left-4 z-20">
-                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-white/60">03 / TRANSIT</span>
-                  <h3 className="text-sm font-black uppercase tracking-wide text-white mt-0.5">COLD PATHWAY</h3>
+                <div className="flex-1 min-w-0">
+                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">03 / DEVICE</span>
+                  <h3 className="text-xs font-black uppercase tracking-wider text-white mt-1 truncate font-mono">
+                    {lookbookItems[2] ? lookbookItems[2].title.toUpperCase() : "IPHONE 15 PRO"}
+                  </h3>
+                  <p className="text-[8px] font-black text-white/30 uppercase mt-0.5 tracking-wider font-mono">WAVE 01 LOG</p>
                 </div>
-              </div>
+              </Link>
 
               {/* Gallery Card 4 */}
-              <div className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[213px] tilt-3d-right hover:border-white/20 select-none">
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/30 to-transparent opacity-80" />
-                <div className="relative w-full h-full pop-3d-image">
-                  <Image
-                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"
-                    alt="Scenic Ridge"
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    sizes="25vw"
-                  />
+              <Link 
+                href={lookbookItems[3] ? `/product/${lookbookItems[3].id}` : "#"}
+                className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[213px] flex items-center gap-4 p-4 select-none tilt-3d-right hover:border-white/20 cursor-pointer block"
+              >
+                <div className="relative w-1/2 h-full rounded-xl overflow-hidden bg-[#889bb0]/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                  <div className="relative w-full h-full animate-3d-sony [transform-style:preserve-3d]">
+                    <div className="relative w-full h-full pop-3d-image">
+                      <Image
+                        src={getLookbookImage(lookbookItems[3], "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80")}
+                        alt={lookbookItems[3] ? lookbookItems[3].title : "Smartwatch"}
+                        fill
+                        className="object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
+                        sizes="15vw"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="absolute bottom-4 left-4 z-20">
-                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-white/60">04 / LANDSCAPE</span>
-                  <h3 className="text-sm font-black uppercase tracking-wide text-white mt-0.5">VALLEY EXPOSURE</h3>
+                <div className="flex-1 min-w-0">
+                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">04 / ACCESSORY</span>
+                  <h3 className="text-xs font-black uppercase tracking-wider text-white mt-1 truncate font-mono">
+                    {lookbookItems[3] ? lookbookItems[3].title.toUpperCase() : "SMARTWATCH 4"}
+                  </h3>
+                  <p className="text-[8px] font-black text-white/30 uppercase mt-0.5 tracking-wider font-mono">WAVE 01 LOG</p>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </section>
