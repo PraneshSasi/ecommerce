@@ -182,27 +182,29 @@ export default function HeroBanner() {
           <div className="lg:col-span-6 z-10 flex flex-col justify-center text-white">
             <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white/20 border border-white/30 px-3.5 py-1 text-xs font-black uppercase tracking-wider mb-4">
               <Zap size={12} className="fill-current" />
-              HOT DEAL
+              EXCLUSIVE COLLECTION
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight uppercase mb-4 max-w-lg">
-              {mainProductTitle}
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight uppercase mb-4 max-w-lg">
+              THE FUTURE
+              <br />
+              OF STREETWEAR
+              <br />
+              IS HERE
             </h2>
-            <p className="max-w-md text-sm md:text-base text-white/85 leading-relaxed mb-6 line-clamp-3">
-              {mainProductDesc}
+            <p className="max-w-md text-sm md:text-base text-white/85 leading-relaxed mb-6">
+              Step into the next generation of style. Discover exclusive drops, premium quality fabrics, and curated design concepts built to elevate your everyday rotation.
             </p>
 
-            <div className="flex items-baseline gap-3 mb-8">
-              <span className="text-3xl font-black">{mainProductPrice}</span>
-              {featured && featured.originalPrice > featured.price && (
-                <span className="text-lg text-white/60 line-through">
-                  ₹{featured.originalPrice.toLocaleString("en-IN")}
-                </span>
-              )}
-              {featured && featured.discount > 0 && (
-                <span className="rounded-md bg-white text-orange-700 font-bold px-2 py-0.5 text-xs uppercase tracking-wide">
-                  -{featured.discount}% OFF
-                </span>
-              )}
+            <div className="flex flex-wrap items-center gap-2 mb-8 text-[9px] font-black uppercase tracking-[0.2em] text-white/95 select-none">
+              <span className="rounded-full bg-white/20 border border-white/30 px-3 py-1.5 backdrop-blur-xs">
+                ✦ SHIPS GLOBALLY
+              </span>
+              <span className="rounded-full bg-white/20 border border-white/30 px-3 py-1.5 backdrop-blur-xs">
+                ✦ 100% ORIGINAL
+              </span>
+              <span className="rounded-full bg-white/20 border border-white/30 px-3 py-1.5 backdrop-blur-xs">
+                ✦ EASY RETURNS
+              </span>
             </div>
 
             {/* Aesthetic style details card & active palette */}
@@ -229,27 +231,27 @@ export default function HeroBanner() {
               {/* Design specifications grid */}
               <div className="grid grid-cols-2 gap-4 select-none">
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">EDITION</span>
-                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">LIMITED RUN</span>
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">RELEASE</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">SPECIAL DROP</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">COLLECTION</span>
-                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">S/S 2026</span>
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">DELIVERY</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">FREE & EXPRESS</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">DESIGNED BY</span>
-                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">LOCO STUDIO™</span>
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">RETURNS</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">30-DAY WINDOW</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">FABRIC / CORE</span>
-                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">PREMIUM MESH</span>
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">GUARANTEE</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">100% GENUINE</span>
                 </div>
               </div>
               
               {/* Extra visual metadata badge */}
               <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[9px] font-black uppercase tracking-[0.2em] text-white/70">
-                <span>STYLE CODE: LC-995</span>
-                <span>ORIGIN: TOKYO, JP</span>
+                <span>JOIN THE LOCO CLUB FOR EXTRA PERKS</span>
+                <span>EST. 2026</span>
               </div>
             </div>
           </div>
