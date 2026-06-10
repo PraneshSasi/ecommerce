@@ -166,26 +166,18 @@ export default function HeroBanner() {
               WAVE 01™
             </h2>
             
-            {/* Circular CTA Arrow Button */}
+            {/* CTA details */}
             <button 
               onClick={(e) => {
                 e.preventDefault();
                 document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="flex items-center gap-6 select-none bg-transparent border-none outline-none text-left p-0 cursor-pointer group/arrow text-white"
+              className="flex flex-col select-none bg-transparent border-none outline-none text-left p-0 cursor-pointer group/arrow text-white"
             >
-              {/* Circle Button */}
-              <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-white group-hover/arrow:bg-white group-hover/arrow:text-[#1b222a] transition-all duration-300">
-                <ArrowRight size={24} className="-rotate-45 transition-transform duration-300 group-hover/arrow:translate-x-0.5 group-hover/arrow:-translate-y-0.5" />
-              </div>
-              
-              {/* CTA details */}
-              <div className="flex flex-col">
-                <span className="text-[10px] font-black tracking-[0.25em] text-white/50 uppercase leading-none">DISCOVER</span>
-                <span className="text-2xl font-black text-white mt-1.5 leading-none uppercase tracking-wide">
-                  COLLECTION
-                </span>
-              </div>
+              <span className="text-[10px] font-black tracking-[0.25em] text-white/50 uppercase leading-none transition-colors group-hover/arrow:text-white/80">DISCOVER</span>
+              <span className="text-2xl font-black text-white mt-2 leading-none uppercase tracking-widest border-b border-white/20 group-hover/arrow:border-white transition-colors duration-300 pb-1">
+                COLLECTION ✦
+              </span>
             </button>
           </div>
 
