@@ -26,27 +26,27 @@
 }
 
 :root, .theme-indigo, .theme-emerald, .theme-ruby, .theme-amber {
-  --primary-50: #f8f9fa;
-  --primary-100: #f1f3f5;
-  --primary-200: #e9ecef;
-  --primary-300: #dee2e6;
-  --primary-400: #ced4da;
-  --primary-500: #000000;
-  --primary-600: #121212;
-  --primary-700: #212529;
-  --primary-800: #343a40;
-  --primary-950: #000000;
+  --primary-50: #1b222a;
+  --primary-100: #222b35;
+  --primary-200: #2d3743;
+  --primary-300: #3a4755;
+  --primary-400: #889bb0;
+  --primary-500: #ffffff;
+  --primary-600: #f1f5f9;
+  --primary-700: #cbd5e1;
+  --primary-800: #94a3b8;
+  --primary-950: #ffffff;
 
-  --secondary-50: #fafafa;
-  --secondary-100: #f4f4f5;
-  --secondary-200: #e4e4e7;
-  --secondary-300: #d4d4d8;
-  --secondary-400: #a1a1aa;
-  --secondary-500: #71717a;
-  --secondary-600: #52525b;
-  --secondary-700: #3f3f46;
-  --secondary-800: #27272a;
-  --secondary-950: #09090b;
+  --secondary-50: #1b222a;
+  --secondary-100: #222b35;
+  --secondary-200: #2d3743;
+  --secondary-300: #3a4755;
+  --secondary-400: #889bb0;
+  --secondary-500: #ffffff;
+  --secondary-600: #f1f5f9;
+  --secondary-700: #cbd5e1;
+  --secondary-800: #94a3b8;
+  --secondary-950: #ffffff;
 }
 
 * {
@@ -60,13 +60,13 @@ html {
 
 body {
   min-height: 100vh;
-  color: #000000;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #1b222a;
   position: relative;
   overflow-x: hidden;
 }
 
-/* Subtle ambient blobs in background - updated for light Loco theme */
+/* Subtle ambient blobs in background - updated for dark Arctic theme */
 body::before {
   content: "";
   position: fixed;
@@ -76,7 +76,7 @@ body::before {
   height: 50vw;
   max-width: 600px;
   max-height: 600px;
-  background: radial-gradient(circle, rgba(234, 88, 12, 0.03) 0%, rgba(245, 158, 11, 0.01) 50%, transparent 100%);
+  background: radial-gradient(circle, rgba(136, 155, 176, 0.05) 0%, rgba(255, 255, 255, 0.01) 50%, transparent 100%);
   filter: blur(80px);
   pointer-events: none;
   z-index: -2;
@@ -92,19 +92,19 @@ body::after {
   height: 45vw;
   max-width: 500px;
   max-height: 500px;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.02) 0%, rgba(234, 88, 12, 0.005) 50%, transparent 100%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, rgba(136, 155, 176, 0.01) 50%, transparent 100%);
   filter: blur(80px);
   pointer-events: none;
   z-index: -2;
   animation: ambient-glow-2 25s ease-in-out infinite alternate;
 }
 
-/* Subtle fading dot grid - optimized for light mode */
+/* Subtle fading dot grid - optimized for dark mode */
 .grid-bg {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.02) 1.5px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.02) 1.5px, transparent 0);
   background-size: 32px 32px;
   mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 80%);
   -webkit-mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 80%);

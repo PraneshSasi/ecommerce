@@ -93,125 +93,73 @@ export default function ProductCard({ product }: ProductCardProps) {
     : 0);
 
   return (
-    <Link href={`/product/${product.id}`} className="group block h-full">
-      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-150 bg-[#f4f4f5] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-gray-200/40 hover:border-black">
+    <Link href={`/product/${product.id}`} className="group block h-full select-none">
+      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#cbd5e1] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/25">
         
         {/* Image area */}
-        <div className="relative overflow-hidden bg-[#ececed] border-b border-gray-150">
+        <div className="relative overflow-hidden bg-[#cbd5e1] p-4 flex items-center justify-center">
           {/* Discount badge */}
           {discount > 0 && (
-            <div className="absolute left-3 top-3 z-10 rounded-full bg-black px-2.5 py-0.5 text-[10px] font-black text-white uppercase tracking-wider shadow-sm">
+            <div className="absolute left-3 top-3 z-10 rounded-full bg-zinc-950 px-2 py-0.5 text-[9px] font-black text-white uppercase tracking-widest">
               -{discount}%
             </div>
           )}
 
           {/* Out of stock overlay */}
           {product.stock === 0 && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/85 backdrop-blur-xs">
-              <span className="rounded-lg bg-gray-200 border border-gray-300 px-3 py-1.5 text-xs font-bold text-gray-800 uppercase tracking-wider">Out of Stock</span>
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70 backdrop-blur-xs">
+              <span className="rounded-lg bg-zinc-900 px-3 py-1.5 text-[10px] font-black text-white uppercase tracking-wider">OUT OF STOCK</span>
             </div>
           )}
 
-          {/* Action buttons — appear on hover */}
-          <div className="absolute right-3 top-3 z-10 flex flex-col gap-1.5 opacity-0 translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">
-            <button
-              onClick={handleQuickAdd}
-              disabled={adding || product.stock === 0}
-              title="Add to cart"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-700 shadow-sm transition-all hover:border-black hover:bg-black hover:text-white disabled:opacity-50 cursor-pointer"
-            >
-              {adding ? (
-                <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-gray-300 border-t-black" />
-              ) : added ? (
-                <span className="text-black text-xs font-bold">✓</span>
-              ) : (
-                <ShoppingCart size={14} />
-              )}
-            </button>
-            <button
-              onClick={handleBuyNow}
-              disabled={product.stock === 0}
-              title="Buy now"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-orange-650 shadow-sm transition-all hover:border-orange-600 hover:bg-orange-650 hover:text-white disabled:opacity-50 cursor-pointer"
-            >
-              <Zap size={14} />
-            </button>
-          </div>
-
-          <div className="relative aspect-[4/3]">
-            <Image
-              src={images[0]}
-              alt={product.title}
-              fill
-              className="object-contain p-5 transition-all duration-500 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            />
+          <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-white/10 flex items-center justify-center p-2">
+            <div className="relative w-full h-full mix-blend-multiply">
+              <Image
+                src={images[0]}
+                alt={product.title}
+                fill
+                className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 25vw"
+              />
+            </div>
           </div>
         </div>
 
         {/* Info area */}
-        <div className="flex flex-1 flex-col p-4">
-          {/* Brand + Category */}
-          <div className="mb-2 flex items-center justify-between gap-2">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-650">
-              {product.brand}
-            </span>
-            <span className="rounded-full bg-white border border-gray-200 px-2.5 py-0.5 text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-              {product.category}
-            </span>
-          </div>
+        <div className="flex flex-1 flex-col p-5 bg-[#cbd5e1]">
+          {/* Brand */}
+          <span className="text-[9px] font-black uppercase tracking-[0.25em] text-zinc-950/50">
+            {product.brand}
+          </span>
 
           {/* Title */}
-          <h3 className="line-clamp-2 flex-1 text-sm font-semibold leading-5 text-black transition-colors group-hover:text-orange-650">
+          <h3 className="line-clamp-2 flex-1 text-xs font-black uppercase tracking-tight text-zinc-950 mt-1 leading-normal group-hover:text-zinc-900">
             {product.title}
           </h3>
 
-          {/* Rating */}
-          <div className="mt-2.5 flex items-center gap-1.5">
-            <div className="flex items-center gap-0.5">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star
-                  key={i}
-                  size={11}
-                  className={i <= Math.round(product.rating) ? "fill-amber-400 text-amber-400" : "fill-gray-200 text-gray-200"}
-                />
-              ))}
-            </div>
-            <span className="text-xs font-bold text-gray-700">{product.rating.toFixed(1)}</span>
-            <span className="text-[10px] text-gray-400">({product.reviewCount?.toLocaleString()})</span>
+          {/* Mockup Color swatches */}
+          <div className="mt-3 flex items-center gap-1.5 text-[8px] font-black text-zinc-950/60 uppercase tracking-widest select-none">
+            <span className="h-1.5 w-1.5 rounded-full bg-white border border-zinc-950/15" />
+            <span>WHITE</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-zinc-900" />
+            <span>BLACK</span>
           </div>
 
           {/* Price row */}
-          <div className="mt-3 flex items-end justify-between">
-            <div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-lg font-black text-black">
-                  ₹{product.price.toLocaleString("en-IN")}
-                </span>
-                {product.originalPrice > product.price && (
-                  <span className="text-xs text-gray-400 line-through">
-                    ₹{product.originalPrice.toLocaleString("en-IN")}
-                  </span>
-                )}
-              </div>
-              {product.stock > 0 && product.stock <= 5 && (
-                <p className="mt-0.5 text-[10px] font-bold text-orange-600 uppercase tracking-wide">
-                  Only {product.stock} left!
-                </p>
-              )}
-            </div>
-
-            {/* Free delivery chip */}
-            {product.price >= 499 && (
-              <span className="rounded-lg bg-orange-50 border border-orange-200 px-2 py-0.5 text-[9px] font-bold text-orange-600 uppercase tracking-wider">
-                FREE delivery
+          <div className="mt-4 flex items-baseline gap-2 pt-3 border-t border-zinc-950/5">
+            <span className="text-sm font-black text-zinc-950">
+              ₹{product.price.toLocaleString("en-IN")}
+            </span>
+            {product.originalPrice > product.price && (
+              <span className="text-[10px] text-zinc-950/40 line-through">
+                ₹{product.originalPrice.toLocaleString("en-IN")}
               </span>
             )}
           </div>
         </div>
 
-        {/* Hover bottom bar */}
-        <div className="h-0.5 w-full bg-black opacity-0 transition-all duration-300 group-hover:opacity-100" />
+        {/* Hover highlight bar */}
+        <div className="h-1 w-full bg-zinc-950 opacity-0 transition-all duration-300 group-hover:opacity-100" />
       </article>
     </Link>
   );

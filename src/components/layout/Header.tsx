@@ -89,8 +89,8 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-gray-100 bg-white transition-shadow duration-200 ${
-        scrolled ? "shadow-md shadow-gray-200/30" : "shadow-none"
+      className={`sticky top-0 z-50 border-b border-white/10 bg-[#1b222a]/95 backdrop-blur-md transition-shadow duration-200 ${
+        scrolled ? "shadow-lg shadow-black/20" : "shadow-none"
       }`}
     >
       <div ref={headerRef} className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-10">
@@ -102,19 +102,19 @@ export default function Header() {
             onClick={handleLogoClick}
             className="flex shrink-0 items-center gap-2 group select-none"
           >
-            <span className="text-4xl font-black text-black tracking-tighter uppercase font-sans">
+            <span className="text-4xl font-black text-white tracking-tighter uppercase font-sans">
               LOCO
             </span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8 text-[11px] font-black uppercase tracking-[0.25em] text-white/60 select-none">
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="text-base font-bold text-gray-700 hover:text-black transition-colors"
+              className="hover:text-white transition-colors"
             >
-              Home
+              . HOME /
             </Link>
             <a
               href="#products"
@@ -126,9 +126,9 @@ export default function Header() {
                   router.push(`/#products`);
                 }
               }}
-              className="text-base font-bold text-gray-700 hover:text-black transition-colors cursor-pointer"
+              className="hover:text-white transition-colors cursor-pointer"
             >
-              Products
+              . PRODUCTS /
             </a>
           </nav>
 
@@ -136,13 +136,13 @@ export default function Header() {
           <div className="flex items-center gap-4 flex-1 max-w-lg md:max-w-sm lg:max-w-md justify-end md:justify-start">
             <form onSubmit={handleSearch} className="hidden md:block w-full">
               <div className="relative">
-                <Search size={18} className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={18} className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-white/40" />
                 <input
                   type="text"
-                  placeholder="Search products..."
+                  placeholder="SEARCH..."
                   value={searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full rounded-full border border-gray-200 bg-gray-50 py-3 pl-12 pr-6 text-base text-black placeholder:text-gray-400 outline-none transition-all focus:border-gray-450 focus:bg-white"
+                  className="w-full rounded-full border border-white/10 bg-white/5 py-3 pl-12 pr-6 text-xs text-white placeholder:text-white/40 outline-none transition-all focus:border-white/20 focus:bg-white/10 uppercase tracking-widest font-black"
                 />
               </div>
             </form>
@@ -151,19 +151,19 @@ export default function Header() {
           {/* Actions */}
           <div className="flex items-center gap-3">
             {/* Wishlist Heart Icon (Decorative matching the mockup) */}
-            <button className="hidden sm:inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black hover:text-black transition-all cursor-pointer">
+            <button className="hidden sm:inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/70 hover:border-white hover:text-white transition-all cursor-pointer">
               <Heart size={20} />
             </button>
 
             {/* Cart button */}
             <Link
               href="/cart"
-              className="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black hover:text-black transition-all"
+              className="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/70 hover:border-white hover:text-white transition-all"
               aria-label="Cart"
             >
               <ShoppingCart size={20} />
               {cartCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-5.5 min-w-[22px] items-center justify-center rounded-full bg-black px-1.5 text-[10px] font-black text-white shadow-sm">
+                <span className="absolute -right-1.5 -top-1.5 flex h-5.5 min-w-[22px] items-center justify-center rounded-full bg-white px-1.5 text-[10px] font-black text-[#1b222a] shadow-sm">
                   {cartCount > 9 ? "9+" : cartCount}
                 </span>
               )}
@@ -174,43 +174,43 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setProfileOpen((o) => !o)}
-                  className="inline-flex h-12 items-center gap-2.5 rounded-full border border-gray-200 bg-transparent pl-2 pr-4 text-base font-semibold text-black hover:border-black transition-all cursor-pointer"
+                  className="inline-flex h-12 items-center gap-2.5 rounded-full border border-white/10 bg-transparent pl-2 pr-4 text-base font-semibold text-white hover:border-white transition-all cursor-pointer"
                 >
-                  <div className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-black text-sm font-black text-white">
+                  <div className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-white text-sm font-black text-[#1b222a]">
                     {session.user?.name?.[0]?.toUpperCase() || "U"}
                   </div>
                   <ChevronDown
                     size={15}
-                    className="text-gray-500"
+                    className="text-white/50"
                   />
                 </button>
 
                 {profileOpen && (
-                  <div className="animate-slide-down absolute right-0 top-full mt-2 w-60 overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 shadow-lg z-50">
-                    <div className="bg-gray-50 rounded-xl px-3 py-3 mb-1.5">
-                      <p className="truncate text-xs font-black text-black">{session.user?.name}</p>
-                      <p className="truncate text-[10px] text-gray-500">{session.user?.email}</p>
+                  <div className="animate-slide-down absolute right-0 top-full mt-2 w-60 overflow-hidden rounded-2xl border border-white/15 bg-[#222b35] p-1.5 shadow-xl z-50">
+                    <div className="bg-white/5 rounded-xl px-3 py-3 mb-1.5">
+                      <p className="truncate text-xs font-black text-white">{session.user?.name}</p>
+                      <p className="truncate text-[10px] text-white/50">{session.user?.email}</p>
                     </div>
 
                     <div className="space-y-0.5">
                       <Link
                         href="/cart"
                         onClick={() => setProfileOpen(false)}
-                        className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-gray-700 hover:bg-gray-50 hover:text-black"
+                        className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-white/70 hover:bg-white/5 hover:text-white"
                       >
-                        <Package size={14} className="text-gray-500" /> My Orders
+                        <Package size={14} className="text-white/50" /> My Orders
                       </Link>
                       <Link
                         href="/checkout"
                         onClick={() => setProfileOpen(false)}
-                        className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-gray-700 hover:bg-gray-50 hover:text-black"
+                        className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-white/70 hover:bg-white/5 hover:text-white"
                       >
-                        <Sparkles size={14} className="text-gray-500" /> Checkout
+                        <Sparkles size={14} className="text-white/50" /> Checkout
                       </Link>
-                      <div className="my-1 border-t border-gray-150" />
+                      <div className="my-1 border-t border-white/10" />
                       <button
                         onClick={() => { signOut({ callbackUrl: "/" }); setProfileOpen(false); }}
-                        className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-red-600 hover:bg-red-50 cursor-pointer"
+                        className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-rose-400 hover:bg-rose-500/10 cursor-pointer"
                       >
                         <LogOut size={14} /> Sign Out
                       </button>
@@ -221,7 +221,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/auth"
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-black px-6 text-base font-bold text-white transition-all hover:bg-zinc-800"
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-base font-bold text-[#1b222a] transition-all hover:bg-slate-200"
               >
                 <User size={16} /> Sign In
               </Link>
@@ -229,7 +229,7 @@ export default function Header() {
 
             {/* Mobile menu toggle */}
             <button
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black md:hidden"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/70 hover:border-white md:hidden"
               onClick={() => setMenuOpen((o) => !o)}
               aria-label="Toggle menu"
             >
@@ -241,28 +241,28 @@ export default function Header() {
         {/* Mobile menu */}
         {menuOpen && (
           <div className="animate-slide-down md:hidden pb-4">
-            <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-lg">
+            <div className="rounded-2xl border border-white/10 bg-[#222b35] p-4 shadow-lg animate-fade-in">
               {/* Mobile search */}
               <form onSubmit={handleSearch} className="mb-4">
                 <div className="relative">
-                  <Search size={14} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Search size={14} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" />
                   <input
                     type="text"
-                    placeholder="Search products..."
+                    placeholder="SEARCH..."
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-xs text-black outline-none"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 py-2 pl-9 pr-4 text-xs text-white outline-none uppercase tracking-wider"
                   />
                 </div>
               </form>
 
-              <div className="space-y-1">
+              <div className="space-y-1 text-white/70 font-semibold">
                 <Link
                   href="/"
                   onClick={() => { handleLogoClick(); setMenuOpen(false); }}
-                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-black"
+                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-white/5 hover:text-white"
                 >
-                  <Home size={15} className="text-gray-500" /> Home
+                  <Home size={15} className="text-white/50" /> Home
                 </Link>
                 <a
                   href="#products"
@@ -275,23 +275,23 @@ export default function Header() {
                       router.push(`/#products`);
                     }
                   }}
-                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-black cursor-pointer"
+                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-white/5 hover:text-white cursor-pointer"
                 >
-                  <Package size={15} className="text-gray-500" /> Products
+                  <Package size={15} className="text-white/50" /> Products
                 </a>
 
                 {!session ? (
                   <Link
                     href="/auth"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-black hover:bg-gray-50"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-white hover:bg-white/5"
                   >
                     <User size={15} /> Sign In
                   </Link>
                 ) : (
                   <button
                     onClick={() => { signOut({ callbackUrl: "/" }); setMenuOpen(false); }}
-                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50 cursor-pointer"
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-rose-450 hover:bg-rose-500/10 cursor-pointer"
                   >
                     <LogOut size={15} /> Sign Out
                   </button>

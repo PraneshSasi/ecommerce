@@ -16,25 +16,20 @@ export default function CategoryBar() {
   const { selectedCategory, setSelectedCategory } = useStore();
 
   return (
-    <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
-      {categories.map(({ name, icon: Icon }) => {
+    <div className="flex items-center gap-6 overflow-x-auto pb-2.5 scrollbar-hide select-none border-b border-white/5">
+      {categories.map(({ name }) => {
         const isActive = selectedCategory === name;
         return (
           <button
             key={name}
             onClick={() => setSelectedCategory(name)}
-            className={`group flex shrink-0 items-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 cursor-pointer border ${
+            className={`shrink-0 text-xs font-black uppercase tracking-[0.25em] transition-all duration-200 cursor-pointer ${
               isActive
-                ? "border-black bg-black text-white shadow-xs"
-                : "border-gray-200 bg-white text-gray-750 hover:border-black hover:text-black"
+                ? "text-white"
+                : "text-white/40 hover:text-white/80"
             }`}
           >
-            <div className={`flex h-6 w-6 items-center justify-center rounded-lg shrink-0 transition-colors ${
-              isActive ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500 group-hover:bg-black group-hover:text-white"
-            }`}>
-              <Icon size={12} />
-            </div>
-            {name}
+            {isActive ? `[ ${name} ]` : name}
           </button>
         );
       })}
