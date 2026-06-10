@@ -13,7 +13,6 @@ import {
   ChevronDown,
   Home,
   Sparkles,
-  Heart,
 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useStore } from "@/store/useStore";
@@ -150,10 +149,7 @@ export default function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            {/* Wishlist Heart Icon (Decorative matching the mockup) */}
-            <button className="hidden sm:inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/70 hover:border-white hover:text-white transition-all cursor-pointer">
-              <Heart size={20} />
-            </button>
+
 
             {/* Cart button */}
             <Link
