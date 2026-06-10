@@ -367,8 +367,8 @@ export default function HomePage() {
 
           <div className="relative w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-end z-10 text-white">
             {/* Left brand description */}
-            <div className="md:col-span-4 text-[10px] font-black uppercase tracking-[0.25em] text-white/50 leading-relaxed max-w-xs select-none">
-              <p className="text-white mb-2">✦ THE LOCO ORIGIN</p>
+            <div className="md:col-span-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 leading-relaxed max-w-xs select-none font-mono">
+              <p className="text-white mb-2 tracking-[0.25em] font-black font-mono">✦ THE LOCO ORIGIN</p>
               LOCO WAS BORN IN
               <br />
               THE MOUNTAINS, NOT
@@ -380,10 +380,10 @@ export default function HomePage() {
 
             {/* Middle large slogan */}
             <div className="md:col-span-5 flex flex-col justify-end">
-              <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase leading-[0.95] tracking-tight font-sans">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase leading-[1.05] tracking-wider font-mono">
                 BUILT FOR COLD
                 <br />
-                MADE FOR HEIGHT
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-[#f59e0b]">MADE FOR HEIGHT</span>
                 <br />
                 FORGED TO LAST
               </h3>
