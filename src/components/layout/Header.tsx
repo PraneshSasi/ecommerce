@@ -116,18 +116,20 @@ export default function Header() {
             >
               Home
             </Link>
-            <Link
-              href="/cart"
-              className="text-base font-bold text-gray-700 hover:text-black transition-colors"
+            <a
+              href="#products"
+              onClick={(e) => {
+                e.preventDefault();
+                if (window.location.pathname === "/") {
+                  document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+                } else {
+                  router.push(`/#products`);
+                }
+              }}
+              className="text-base font-bold text-gray-700 hover:text-black transition-colors cursor-pointer"
             >
-              Cart
-            </Link>
-            <Link
-              href="/checkout"
-              className="text-base font-bold text-gray-700 hover:text-black transition-colors"
-            >
-              Checkout
-            </Link>
+              Products
+            </a>
           </nav>
 
           {/* Search bar, heart, and bag */}
@@ -255,20 +257,28 @@ export default function Header() {
               </form>
 
               <div className="space-y-1">
-                {[
-                  { href: "/", label: "Home", icon: Home, onClick: () => { handleLogoClick(); setMenuOpen(false); } },
-                  { href: "/cart", label: "Cart", icon: ShoppingCart, onClick: () => setMenuOpen(false) },
-                  { href: "/checkout", label: "Checkout", icon: Sparkles, onClick: () => setMenuOpen(false) },
-                ].map(({ href, label, icon: Icon, onClick }) => (
-                  <Link
-                    key={label}
-                    href={href}
-                    onClick={onClick}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-black"
-                  >
-                    <Icon size={15} className="text-gray-500" /> {label}
-                  </Link>
-                ))}
+                <Link
+                  href="/"
+                  onClick={() => { handleLogoClick(); setMenuOpen(false); }}
+                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-black"
+                >
+                  <Home size={15} className="text-gray-500" /> Home
+                </Link>
+                <a
+                  href="#products"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMenuOpen(false);
+                    if (window.location.pathname === "/") {
+                      document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                      router.push(`/#products`);
+                    }
+                  }}
+                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-black cursor-pointer"
+                >
+                  <Package size={15} className="text-gray-500" /> Products
+                </a>
 
                 {!session ? (
                   <Link
