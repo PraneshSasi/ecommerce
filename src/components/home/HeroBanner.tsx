@@ -180,16 +180,18 @@ export default function HeroBanner() {
             
             {/* Main Product Image Container */}
             <div className="relative w-[280px] h-[360px] md:w-[320px] md:h-[420px] lg:w-[360px] lg:h-[480px] overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl flex items-center justify-center p-6 group select-none tilt-3d-center hover:border-white/20">
-              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#889bb0]/30 flex items-center justify-center p-8">
-                <div className="relative w-full h-full pop-3d-image">
-                  <Image
-                    src={getProductImage(featured, fallbackJordanImg)}
-                    alt={mainProductTitle}
-                    fill
-                    priority
-                    className="object-contain transition-transform duration-700 drop-shadow-[0_20px_35px_rgba(0,0,0,0.5)]"
-                    sizes="(max-w-md) 100vw, 360px"
-                  />
+              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#889bb0]/30 flex items-center justify-center p-8 [transform-style:preserve-3d]">
+                <div className="relative w-full h-full animate-3d-nike [transform-style:preserve-3d]">
+                  <div className="relative w-full h-full pop-3d-image">
+                    <Image
+                      src={getProductImage(featured, fallbackJordanImg)}
+                      alt={mainProductTitle}
+                      fill
+                      priority
+                      className="object-contain transition-transform duration-700 drop-shadow-[0_20px_35px_rgba(0,0,0,0.5)]"
+                      sizes="(max-w-md) 100vw, 360px"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -198,15 +200,17 @@ export default function HeroBanner() {
             <div className="flex flex-row md:flex-col gap-4">
               {/* Detail Card 1 (Sony Headphones) */}
               <div className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-2 shadow-xl select-none tilt-3d-right hover:border-white/20 group">
-                <div className="relative h-2/3 rounded-lg overflow-hidden mb-2 bg-[#889bb0]/20 flex items-center justify-center p-2">
-                  <div className="relative w-full h-full pop-3d-image">
-                    <Image
-                      src={getProductImage(card1, fallbackSonyImg)}
-                      alt={card1 ? card1.title : "Sony Headphones"}
-                      fill
-                      className="object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
-                      sizes="120px"
-                    />
+                <div className="relative h-2/3 rounded-lg overflow-hidden mb-2 bg-[#889bb0]/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                  <div className="relative w-full h-full animate-3d-sony [transform-style:preserve-3d]">
+                    <div className="relative w-full h-full pop-3d-image">
+                      <Image
+                        src={getProductImage(card1, fallbackSonyImg)}
+                        alt={card1 ? card1.title : "Sony Headphones"}
+                        fill
+                        className="object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
+                        sizes="120px"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="text-center">
@@ -219,15 +223,17 @@ export default function HeroBanner() {
 
               {/* Detail Card 2 (Apple iPhone) */}
               <div className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-2 shadow-xl select-none tilt-3d-right hover:border-white/20 group">
-                <div className="relative h-2/3 rounded-lg overflow-hidden mb-2 bg-[#889bb0]/20 flex items-center justify-center p-2">
-                  <div className="relative w-full h-full pop-3d-image">
-                    <Image
-                      src={getProductImage(card2, fallbackIphoneImg)}
-                      alt={card2 ? card2.title : "Apple iPhone"}
-                      fill
-                      className="object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
-                      sizes="120px"
-                    />
+                <div className="relative h-2/3 rounded-lg overflow-hidden mb-2 bg-[#889bb0]/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                  <div className="relative w-full h-full animate-3d-apple [transform-style:preserve-3d]">
+                    <div className="relative w-full h-full pop-3d-image">
+                      <Image
+                        src={getProductImage(card2, fallbackIphoneImg)}
+                        alt={card2 ? card2.title : "Apple iPhone"}
+                        fill
+                        className="object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
+                        sizes="120px"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="text-center">
