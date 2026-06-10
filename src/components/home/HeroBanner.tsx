@@ -178,7 +178,7 @@ export default function HeroBanner() {
         
         <div className="relative mx-auto w-full max-w-screen-2xl px-6 py-12 md:px-12 md:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Left Column: Headline and active buttons */}
+          {/* Left Column: Headline and static design spec card */}
           <div className="lg:col-span-6 z-10 flex flex-col justify-center text-white">
             <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white/20 border border-white/30 px-3.5 py-1 text-xs font-black uppercase tracking-wider mb-4">
               <Zap size={12} className="fill-current" />
@@ -205,29 +205,52 @@ export default function HeroBanner() {
               )}
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={handleBuyNow}
-                disabled={featured?.stock === 0}
-                className="inline-flex items-center gap-2 rounded-full bg-black px-8 py-4 text-sm font-bold text-white uppercase tracking-wider transition-all duration-200 hover:bg-zinc-800 hover:-translate-y-0.5 shadow-md shadow-black/20 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Buy Now
-                <ArrowRight size={15} />
-              </button>
-              <button
-                onClick={handleAddToCart}
-                disabled={adding || featured?.stock === 0}
-                className="inline-flex items-center gap-2 rounded-full border-2 border-white bg-transparent px-8 py-4 text-sm font-bold text-white uppercase tracking-wider transition-all duration-200 hover:bg-white hover:text-black hover:-translate-y-0.5 shadow-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {adding ? (
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                ) : (
-                  <>
-                    Add to Cart
-                    <ShoppingCart size={15} />
-                  </>
-                )}
-              </button>
+            {/* Aesthetic style details card & active palette */}
+            <div className="rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md p-6 max-w-md shadow-lg space-y-6">
+              {/* Palette pills */}
+              <div className="flex items-center justify-between border-b border-white/10 pb-4 select-none">
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/80">DESIGN PALETTE</span>
+                <div className="flex items-center gap-2.5">
+                  {[
+                    { name: "Flame Red", hex: "bg-[#d31c26] ring-2 ring-white/50" },
+                    { name: "Cyber Yellow", hex: "bg-[#facc15]" },
+                    { name: "Onyx Black", hex: "bg-[#121212] border border-white/30" },
+                    { name: "Pure White", hex: "bg-white" }
+                  ].map((color) => (
+                    <div 
+                      key={color.name} 
+                      className={`h-5 w-5 rounded-full transition-all duration-300 hover:scale-125 hover:rotate-12 cursor-pointer ${color.hex}`}
+                      title={color.name}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Design specifications grid */}
+              <div className="grid grid-cols-2 gap-4 select-none">
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">EDITION</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">LIMITED RUN</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">COLLECTION</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">S/S 2026</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">DESIGNED BY</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">LOCO STUDIO™</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">FABRIC / CORE</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">PREMIUM MESH</span>
+                </div>
+              </div>
+              
+              {/* Extra visual metadata badge */}
+              <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[9px] font-black uppercase tracking-[0.2em] text-white/70">
+                <span>STYLE CODE: LC-995</span>
+                <span>ORIGIN: TOKYO, JP</span>
+              </div>
             </div>
           </div>
 
@@ -235,26 +258,25 @@ export default function HeroBanner() {
           <div className="lg:col-span-6 relative flex justify-center items-center h-[400px] md:h-[480px] lg:h-[540px] z-10 w-full mt-8 lg:mt-0">
             
             {/* Main Product Image Container */}
-            <Link 
-              href={featured ? `/product/${featured.id}` : "#products"}
-              className="relative w-[260px] h-[340px] md:w-[320px] md:h-[420px] lg:w-[380px] lg:h-[500px] overflow-hidden rounded-[32px] border-4 border-white bg-white/10 backdrop-blur-md shadow-2xl transition-transform duration-500 hover:scale-[1.02] flex items-center justify-center p-8 group"
-            >
-              <div className="relative w-full h-full">
-                <Image
-                  src={getProductImage(featured, fallbackJordanImg)}
-                  alt={mainProductTitle}
-                  fill
-                  priority
-                  className="object-contain transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-w-md) 100vw, 380px"
-                />
+            <div className="relative w-[260px] h-[340px] md:w-[320px] md:h-[420px] lg:w-[380px] lg:h-[500px] overflow-hidden rounded-[36px] border-4 border-white bg-transparent shadow-2xl transition-transform duration-500 hover:scale-[1.02] flex items-center justify-center p-4 md:p-6 group select-none">
+              <div className="relative w-full h-full rounded-[24px] overflow-hidden bg-[#d31c26] flex items-center justify-center p-6 md:p-8">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={getProductImage(featured, fallbackJordanImg)}
+                    alt={mainProductTitle}
+                    fill
+                    priority
+                    className="object-contain transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-w-md) 100vw, 380px"
+                  />
+                </div>
               </div>
-            </Link>
+            </div>
 
             {/* Floating Card 1: Top-Left (Sony Headphones) */}
-            <div className="absolute top-4 left-2 md:left-6 lg:left-0 z-20 w-28 md:w-36 overflow-hidden rounded-2xl border-2 border-white bg-white/20 backdrop-blur-md p-1.5 shadow-lg transform -rotate-6 transition-all duration-300 hover:rotate-0 hover:-translate-y-1">
-              <Link href={card1 ? `/product/${card1.id}` : "#products"}>
-                <div className="relative h-20 md:h-28 rounded-xl overflow-hidden mb-1 bg-white p-2">
+            <div className="absolute top-4 left-2 md:left-6 lg:left-0 z-20 w-28 md:w-36 overflow-hidden rounded-[24px] border-4 border-white bg-white p-2.5 shadow-xl transform -rotate-6 transition-all duration-300 hover:rotate-0 hover:-translate-y-1 select-none">
+              <div className="relative aspect-square rounded-xl overflow-hidden mb-2 bg-[#facc15] flex items-center justify-center p-3">
+                <div className="relative w-full h-full">
                   <Image
                     src={getProductImage(card1, fallbackSonyImg)}
                     alt={card1 ? card1.title : "Sony Headphones"}
@@ -263,16 +285,18 @@ export default function HeroBanner() {
                     sizes="120px"
                   />
                 </div>
-                <p className="text-[9px] md:text-[10px] font-bold text-black text-center py-1 bg-white/80 rounded-lg uppercase tracking-wider truncate px-1">
-                  {card1 ? card1.brand : "Sony"}
-                </p>
-              </Link>
+              </div>
+              <div className="bg-[#fcefe3] rounded-lg py-1.5 px-3 flex items-center justify-center">
+                <span className="text-[9px] md:text-[10px] font-black text-[#5c3e21] uppercase tracking-widest leading-none">
+                  {card1 ? card1.brand : "SONY"}
+                </span>
+              </div>
             </div>
 
             {/* Floating Card 2: Bottom-Right (Apple iPhone) */}
-            <div className="absolute bottom-4 right-2 md:right-6 lg:right-0 z-20 w-28 md:w-36 overflow-hidden rounded-2xl border-2 border-white bg-white/20 backdrop-blur-md p-1.5 shadow-lg transform rotate-6 transition-all duration-300 hover:rotate-0 hover:-translate-y-1">
-              <Link href={card2 ? `/product/${card2.id}` : "#products"}>
-                <div className="relative h-20 md:h-28 rounded-xl overflow-hidden mb-1 bg-white p-2">
+            <div className="absolute bottom-4 right-2 md:right-6 lg:right-0 z-20 w-28 md:w-36 overflow-hidden rounded-[24px] border-4 border-white bg-white p-2.5 shadow-xl transform rotate-6 transition-all duration-300 hover:rotate-0 hover:-translate-y-1 select-none">
+              <div className="relative aspect-square rounded-xl overflow-hidden mb-2 bg-[#121212] flex items-center justify-center p-3">
+                <div className="relative w-full h-full">
                   <Image
                     src={getProductImage(card2, fallbackIphoneImg)}
                     alt={card2 ? card2.title : "Apple iPhone"}
@@ -281,10 +305,12 @@ export default function HeroBanner() {
                     sizes="120px"
                   />
                 </div>
-                <p className="text-[9px] md:text-[10px] font-bold text-black text-center py-1 bg-white/80 rounded-lg uppercase tracking-wider truncate px-1">
-                  {card2 ? card2.brand : "Apple"}
-                </p>
-              </Link>
+              </div>
+              <div className="bg-[#fcefe3] rounded-lg py-1.5 px-3 flex items-center justify-center">
+                <span className="text-[9px] md:text-[10px] font-black text-[#5c3e21] uppercase tracking-widest leading-none">
+                  {card2 ? card2.brand : "APPLE"}
+                </span>
+              </div>
             </div>
 
           </div>
