@@ -1,7 +1,7 @@
 "use client";
 
 import { useStore } from "@/store/useStore";
-import { Layers, Cpu, Shirt, Home, Dumbbell, Gem } from "lucide-react";
+import { Layers, Cpu, Shirt, Home, Dumbbell } from "lucide-react";
 
 const categories = [
   { name: "All", icon: Layers, color: "from-slate-600 to-slate-700" },
@@ -9,7 +9,6 @@ const categories = [
   { name: "Fashion", icon: Shirt, color: "from-pink-500 to-rose-600" },
   { name: "Home", icon: Home, color: "from-amber-500 to-orange-600" },
   { name: "Sports", icon: Dumbbell, color: "from-emerald-500 to-teal-600" },
-  { name: "Premium", icon: Gem, color: "from-violet-500 to-purple-600" },
 ];
 
 export default function CategoryBar() {
