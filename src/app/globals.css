@@ -23,6 +23,11 @@
   --color-secondary-700: var(--secondary-700);
   --color-secondary-800: var(--secondary-800);
   --color-secondary-950: var(--secondary-950);
+
+  /* Custom brand oranges */
+  --color-orange-650: #ea580c;
+  --color-orange-655: #c2410c;
+  --color-orange-250: #fdbb74;
 }
 
 :root, .theme-indigo, .theme-emerald, .theme-ruby, .theme-amber {
