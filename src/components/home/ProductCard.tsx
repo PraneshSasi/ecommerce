@@ -93,11 +93,11 @@ export default function ProductCard({ product }: ProductCardProps) {
     : 0);
 
   return (
-    <Link href={`/product/${product.id}`} className="group block h-full select-none">
-      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#cbd5e1] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/25">
+    <Link href={`/product/${product.id}`} className="group block h-full select-none perspective-3d">
+      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#cbd5e1] transition-all duration-500 hover:shadow-2xl hover:shadow-black/25 tilt-3d-center">
         
         {/* Image area */}
-        <div className="relative overflow-hidden bg-[#cbd5e1] p-4 flex items-center justify-center">
+        <div className="relative overflow-hidden bg-[#cbd5e1] p-4 flex items-center justify-center [transform-style:preserve-3d]">
           {/* Discount badge */}
           {discount > 0 && (
             <div className="absolute left-3 top-3 z-10 rounded-full bg-zinc-950 px-2 py-0.5 text-[9px] font-black text-white uppercase tracking-widest">
@@ -112,13 +112,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
 
-          <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-white/10 flex items-center justify-center p-2">
-            <div className="relative w-full h-full mix-blend-multiply">
+          <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-white/10 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+            <div className="relative w-full h-full mix-blend-multiply pop-3d-image">
               <Image
                 src={images[0]}
                 alt={product.title}
                 fill
-                className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                className="object-contain p-2 transition-transform duration-500 drop-shadow-[0_8px_15px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.35)]"
                 sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 25vw"
               />
             </div>
@@ -126,7 +126,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Info area */}
-        <div className="flex flex-1 flex-col p-5 bg-[#cbd5e1]">
+        <div className="flex flex-1 flex-col p-5 bg-[#cbd5e1] border-t border-zinc-950/5">
           {/* Brand */}
           <span className="text-[9px] font-black uppercase tracking-[0.25em] text-zinc-950/50">
             {product.brand}
@@ -136,26 +136,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           <h3 className="line-clamp-2 flex-1 text-xs font-black uppercase tracking-tight text-zinc-950 mt-1 leading-normal group-hover:text-zinc-900">
             {product.title}
           </h3>
-
-          {/* Mockup Color swatches */}
-          <div className="mt-3 flex items-center gap-1.5 text-[8px] font-black text-zinc-950/60 uppercase tracking-widest select-none">
-            <span className="h-1.5 w-1.5 rounded-full bg-white border border-zinc-950/15" />
-            <span>WHITE</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-zinc-900" />
-            <span>BLACK</span>
-          </div>
-
-          {/* Price row */}
-          <div className="mt-4 flex items-baseline gap-2 pt-3 border-t border-zinc-950/5">
-            <span className="text-sm font-black text-zinc-950">
-              ₹{product.price.toLocaleString("en-IN")}
-            </span>
-            {product.originalPrice > product.price && (
-              <span className="text-[10px] text-zinc-950/40 line-through">
-                ₹{product.originalPrice.toLocaleString("en-IN")}
-              </span>
-            )}
-          </div>
         </div>
 
         {/* Hover highlight bar */}

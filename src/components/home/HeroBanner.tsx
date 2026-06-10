@@ -166,51 +166,42 @@ export default function HeroBanner() {
               WAVE 01™
             </h2>
             
-            <div className="flex flex-col gap-1 mb-8 text-[11px] font-black uppercase tracking-[0.25em] text-white/50 select-none">
-              <p>SIZE: <span className="text-white ml-2">S &nbsp; M &nbsp; L &nbsp; XL</span></p>
-              <p>COLOUR: <span className="text-white ml-2">WHITE &nbsp; SILVER</span></p>
-            </div>
-
             {/* Circular CTA Arrow Button */}
             <button 
-              onClick={handleAddToCart}
-              disabled={adding || featured?.stock === 0}
-              className="flex items-center gap-6 select-none bg-transparent border-none outline-none text-left p-0 cursor-pointer disabled:opacity-50 group/arrow text-white"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="flex items-center gap-6 select-none bg-transparent border-none outline-none text-left p-0 cursor-pointer group/arrow text-white"
             >
               {/* Circle Button */}
               <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-white group-hover/arrow:bg-white group-hover/arrow:text-[#1b222a] transition-all duration-300">
-                {adding ? (
-                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/30 border-t-white group-hover/arrow:border-zinc-800/30 group-hover/arrow:border-t-zinc-800" />
-                ) : (
-                  <ArrowRight size={24} className="-rotate-45 transition-transform duration-300 group-hover/arrow:translate-x-0.5 group-hover/arrow:-translate-y-0.5" />
-                )}
+                <ArrowRight size={24} className="-rotate-45 transition-transform duration-300 group-hover/arrow:translate-x-0.5 group-hover/arrow:-translate-y-0.5" />
               </div>
               
               {/* CTA details */}
               <div className="flex flex-col">
-                <span className="text-[10px] font-black tracking-[0.25em] text-white/50 uppercase leading-none">
-                  {adding ? "ADDING..." : "ADD TO CART"}
-                </span>
-                <span className="text-2xl font-black text-white mt-1.5 leading-none">
-                  {mainProductPrice}
+                <span className="text-[10px] font-black tracking-[0.25em] text-white/50 uppercase leading-none">DISCOVER</span>
+                <span className="text-2xl font-black text-white mt-1.5 leading-none uppercase tracking-wide">
+                  COLLECTION
                 </span>
               </div>
             </button>
           </div>
 
           {/* Right Column: Central model product image & detail cards */}
-          <div className="lg:col-span-6 flex flex-col md:flex-row items-center justify-center gap-6 z-10 w-full mt-8 lg:mt-0">
+          <div className="lg:col-span-6 flex flex-col md:flex-row items-center justify-center gap-6 z-10 w-full mt-8 lg:mt-0 perspective-3d">
             
             {/* Main Product Image Container */}
-            <div className="relative w-[280px] h-[360px] md:w-[320px] md:h-[420px] lg:w-[360px] lg:h-[480px] overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl transition-transform duration-500 hover:scale-[1.02] flex items-center justify-center p-6 group select-none">
+            <div className="relative w-[280px] h-[360px] md:w-[320px] md:h-[420px] lg:w-[360px] lg:h-[480px] overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl flex items-center justify-center p-6 group select-none tilt-3d-center hover:border-white/20">
               <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#889bb0]/30 flex items-center justify-center p-8">
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full pop-3d-image">
                   <Image
                     src={getProductImage(featured, fallbackJordanImg)}
                     alt={mainProductTitle}
                     fill
                     priority
-                    className="object-contain transition-transform duration-700 group-hover:scale-105"
+                    className="object-contain transition-transform duration-700 drop-shadow-[0_20px_35px_rgba(0,0,0,0.5)]"
                     sizes="(max-w-md) 100vw, 360px"
                   />
                 </div>
@@ -220,15 +211,17 @@ export default function HeroBanner() {
             {/* Side Detail Cards Column */}
             <div className="flex flex-row md:flex-col gap-4">
               {/* Detail Card 1 (Sony Headphones) */}
-              <div className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-2 shadow-xl transition-all duration-300 hover:-translate-y-1 select-none">
+              <div className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-2 shadow-xl select-none tilt-3d-right hover:border-white/20 group">
                 <div className="relative h-2/3 rounded-lg overflow-hidden mb-2 bg-[#889bb0]/20 flex items-center justify-center p-2">
-                  <Image
-                    src={getProductImage(card1, fallbackSonyImg)}
-                    alt={card1 ? card1.title : "Sony Headphones"}
-                    fill
-                    className="object-contain"
-                    sizes="120px"
-                  />
+                  <div className="relative w-full h-full pop-3d-image">
+                    <Image
+                      src={getProductImage(card1, fallbackSonyImg)}
+                      alt={card1 ? card1.title : "Sony Headphones"}
+                      fill
+                      className="object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
+                      sizes="120px"
+                    />
+                  </div>
                 </div>
                 <div className="text-center">
                   <p className="text-[9px] font-black text-white/50 uppercase tracking-widest leading-none">DETAIL 01</p>
@@ -239,15 +232,17 @@ export default function HeroBanner() {
               </div>
 
               {/* Detail Card 2 (Apple iPhone) */}
-              <div className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-2 shadow-xl transition-all duration-300 hover:-translate-y-1 select-none">
+              <div className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-2 shadow-xl select-none tilt-3d-right hover:border-white/20 group">
                 <div className="relative h-2/3 rounded-lg overflow-hidden mb-2 bg-[#889bb0]/20 flex items-center justify-center p-2">
-                  <Image
-                    src={getProductImage(card2, fallbackIphoneImg)}
-                    alt={card2 ? card2.title : "Apple iPhone"}
-                    fill
-                    className="object-contain"
-                    sizes="120px"
-                  />
+                  <div className="relative w-full h-full pop-3d-image">
+                    <Image
+                      src={getProductImage(card2, fallbackIphoneImg)}
+                      alt={card2 ? card2.title : "Apple iPhone"}
+                      fill
+                      className="object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
+                      sizes="120px"
+                    />
+                  </div>
                 </div>
                 <div className="text-center">
                   <p className="text-[9px] font-black text-white/50 uppercase tracking-widest leading-none">DETAIL 02</p>

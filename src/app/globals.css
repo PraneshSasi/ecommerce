@@ -220,3 +220,41 @@ body::after {
   border-radius: 6px;
 }
 
+/* 3D Visual Effects */
+.perspective-3d {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.tilt-3d-left {
+  transform: rotateY(-12deg) rotateX(6deg) translateZ(0px);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, shadow 0.5s ease;
+}
+.tilt-3d-left:hover {
+  transform: rotateY(-3deg) rotateX(2deg) translateZ(15px);
+}
+
+.tilt-3d-right {
+  transform: rotateY(12deg) rotateX(6deg) translateZ(0px);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, shadow 0.5s ease;
+}
+.tilt-3d-right:hover {
+  transform: rotateY(3deg) rotateX(2deg) translateZ(15px);
+}
+
+.tilt-3d-center {
+  transform: rotateY(0deg) rotateX(5deg) translateZ(0px);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, shadow 0.5s ease;
+}
+.tilt-3d-center:hover {
+  transform: rotateY(2deg) rotateX(-2deg) translateZ(20px);
+}
+
+.pop-3d-image {
+  transform: translateZ(20px);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease;
+}
+.group:hover .pop-3d-image {
+  transform: translateZ(45px) scale(1.08);
+}
+

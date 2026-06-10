@@ -7,6 +7,7 @@ import HeroBanner from "@/components/home/HeroBanner";
 import CategoryBar from "@/components/home/CategoryBar";
 import ProductCard from "@/components/home/ProductCard";
 import Spinner from "@/components/ui/Spinner";
+import Image from "next/image";
 import { PackageSearch, SlidersHorizontal, TrendingUp, ArrowUpDown } from "lucide-react";
 
 const SORT_OPTIONS = [
@@ -173,6 +174,100 @@ export default function HomePage() {
               Showing all {products.length} products · WAVE 01 updates live
             </p>
           )}
+        </section>
+
+        {/* WAVE 01 // LOOKBOOK Lifestyle Gallery */}
+        <section className="mt-24 space-y-8">
+          <div>
+            <div className="flex items-center gap-2 mb-1 select-none">
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50">
+                ✦ OUTDOOR SPECIFICATIONS
+              </span>
+            </div>
+            <h2 className="text-3xl font-black text-white sm:text-4xl tracking-tight uppercase">
+              WAVE 01 // LOOKBOOK
+            </h2>
+            <p className="mt-1 text-xs font-bold text-white/40 uppercase tracking-widest">
+              LIFESTYLE AND VISUAL STUDY DEPLOYMENT
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 perspective-3d">
+            {/* Gallery Card 1 - Large Tall Card */}
+            <div className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[450px] md:col-span-2 tilt-3d-left hover:border-white/20 select-none">
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/20 to-transparent opacity-80" />
+              <div className="relative w-full h-full pop-3d-image">
+                <Image
+                  src="https://images.unsplash.com/photo-1551698618-1ffdfe079a23?w=800&q=80"
+                  alt="Snowboarder descent"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-w-768px) 100vw, 50vw"
+                />
+              </div>
+              <div className="absolute bottom-6 left-6 z-20">
+                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/60">01 / ACTIVITY</span>
+                <h3 className="text-lg font-black uppercase tracking-wide text-white mt-1">ALTITUDE DESCENT</h3>
+              </div>
+            </div>
+
+            {/* Gallery Card 2 - Standard Card */}
+            <div className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[450px] md:col-span-1 tilt-3d-center hover:border-white/20 select-none">
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/20 to-transparent opacity-80" />
+              <div className="relative w-full h-full pop-3d-image">
+                <Image
+                  src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80"
+                  alt="Mountain Peaks"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-w-768px) 100vw, 25vw"
+                />
+              </div>
+              <div className="absolute bottom-6 left-6 z-20">
+                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/60">02 / ENVIRONMENT</span>
+                <h3 className="text-lg font-black uppercase tracking-wide text-white mt-1">RIDGE BOUNDARY</h3>
+              </div>
+            </div>
+
+            {/* Right Column: Stack of two cards */}
+            <div className="flex flex-col gap-6 md:col-span-1">
+              {/* Gallery Card 3 */}
+              <div className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[213px] tilt-3d-right hover:border-white/20 select-none">
+                <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/30 to-transparent opacity-80" />
+                <div className="relative w-full h-full pop-3d-image">
+                  <Image
+                    src="https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&q=80"
+                    alt="Winter path"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="25vw"
+                  />
+                </div>
+                <div className="absolute bottom-4 left-4 z-20">
+                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-white/60">03 / TRANSIT</span>
+                  <h3 className="text-sm font-black uppercase tracking-wide text-white mt-0.5">COLD PATHWAY</h3>
+                </div>
+              </div>
+
+              {/* Gallery Card 4 */}
+              <div className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[213px] tilt-3d-right hover:border-white/20 select-none">
+                <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/30 to-transparent opacity-80" />
+                <div className="relative w-full h-full pop-3d-image">
+                  <Image
+                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"
+                    alt="Scenic Ridge"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="25vw"
+                  />
+                </div>
+                <div className="absolute bottom-4 left-4 z-20">
+                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-white/60">04 / LANDSCAPE</span>
+                  <h3 className="text-sm font-black uppercase tracking-wide text-white mt-0.5">VALLEY EXPOSURE</h3>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Bottom Artic Slogan & Mountain Section */}
