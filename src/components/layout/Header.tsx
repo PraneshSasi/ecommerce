@@ -93,8 +93,8 @@ export default function Header() {
         scrolled ? "shadow-md shadow-gray-200/30" : "shadow-none"
       }`}
     >
-      <div ref={headerRef} className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between gap-4">
+      <div ref={headerRef} className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-10">
+        <div className="flex h-24 items-center justify-between gap-6">
 
           {/* Logo */}
           <Link
@@ -102,45 +102,45 @@ export default function Header() {
             onClick={handleLogoClick}
             className="flex shrink-0 items-center gap-2 group select-none"
           >
-            <span className="text-3xl font-black text-black tracking-tighter uppercase font-sans">
+            <span className="text-4xl font-black text-black tracking-tighter uppercase font-sans">
               LOCO
             </span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-8">
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="text-sm font-semibold text-gray-700 hover:text-black transition-colors"
+              className="text-base font-bold text-gray-700 hover:text-black transition-colors"
             >
               Home
             </Link>
             <Link
               href="/cart"
-              className="text-sm font-semibold text-gray-700 hover:text-black transition-colors"
+              className="text-base font-bold text-gray-700 hover:text-black transition-colors"
             >
               Cart
             </Link>
             <Link
               href="/checkout"
-              className="text-sm font-semibold text-gray-700 hover:text-black transition-colors"
+              className="text-base font-bold text-gray-700 hover:text-black transition-colors"
             >
               Checkout
             </Link>
           </nav>
 
           {/* Search bar, heart, and bag */}
-          <div className="flex items-center gap-4 flex-1 max-w-md md:max-w-xs lg:max-w-sm justify-end md:justify-start">
+          <div className="flex items-center gap-4 flex-1 max-w-lg md:max-w-sm lg:max-w-md justify-end md:justify-start">
             <form onSubmit={handleSearch} className="hidden md:block w-full">
               <div className="relative">
-                <Search size={16} className="pointer-events-none absolute left-4.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={18} className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full rounded-full border border-gray-200 bg-gray-50 py-2.5 pl-11 pr-5 text-sm text-black placeholder:text-gray-400 outline-none transition-all focus:border-gray-450 focus:bg-white"
+                  className="w-full rounded-full border border-gray-200 bg-gray-50 py-3 pl-12 pr-6 text-base text-black placeholder:text-gray-400 outline-none transition-all focus:border-gray-450 focus:bg-white"
                 />
               </div>
             </form>
@@ -149,19 +149,19 @@ export default function Header() {
           {/* Actions */}
           <div className="flex items-center gap-3">
             {/* Wishlist Heart Icon (Decorative matching the mockup) */}
-            <button className="hidden sm:inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black hover:text-black transition-all cursor-pointer">
-              <Heart size={18} />
+            <button className="hidden sm:inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black hover:text-black transition-all cursor-pointer">
+              <Heart size={20} />
             </button>
 
             {/* Cart button */}
             <Link
               href="/cart"
-              className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black hover:text-black transition-all"
+              className="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black hover:text-black transition-all"
               aria-label="Cart"
             >
-              <ShoppingCart size={18} />
+              <ShoppingCart size={20} />
               {cartCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1.5 text-[9px] font-black text-white shadow-sm">
+                <span className="absolute -right-1.5 -top-1.5 flex h-5.5 min-w-[22px] items-center justify-center rounded-full bg-black px-1.5 text-[10px] font-black text-white shadow-sm">
                   {cartCount > 9 ? "9+" : cartCount}
                 </span>
               )}
@@ -172,13 +172,13 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setProfileOpen((o) => !o)}
-                  className="inline-flex h-11 items-center gap-2 rounded-full border border-gray-200 bg-transparent pl-1.5 pr-3 text-sm font-semibold text-black hover:border-black transition-all cursor-pointer"
+                  className="inline-flex h-12 items-center gap-2.5 rounded-full border border-gray-200 bg-transparent pl-2 pr-4 text-base font-semibold text-black hover:border-black transition-all cursor-pointer"
                 >
-                  <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-black text-xs font-black text-white">
+                  <div className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-black text-sm font-black text-white">
                     {session.user?.name?.[0]?.toUpperCase() || "U"}
                   </div>
                   <ChevronDown
-                    size={14}
+                    size={15}
                     className="text-gray-500"
                   />
                 </button>
@@ -219,19 +219,19 @@ export default function Header() {
             ) : (
               <Link
                 href="/auth"
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-black px-5 text-sm font-bold text-white transition-all hover:bg-zinc-800"
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-black px-6 text-base font-bold text-white transition-all hover:bg-zinc-800"
               >
-                <User size={15} /> Sign In
+                <User size={16} /> Sign In
               </Link>
             )}
 
             {/* Mobile menu toggle */}
             <button
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black md:hidden"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-transparent text-gray-700 hover:border-black md:hidden"
               onClick={() => setMenuOpen((o) => !o)}
               aria-label="Toggle menu"
             >
-              {menuOpen ? <X size={18} /> : <Menu size={18} />}
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
