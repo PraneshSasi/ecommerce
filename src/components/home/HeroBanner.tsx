@@ -167,18 +167,12 @@ export default function HeroBanner() {
             </h2>
             
             {/* CTA details */}
-            <button 
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="flex flex-col select-none bg-transparent border-none outline-none text-left p-0 cursor-pointer group/arrow text-white"
-            >
-              <span className="text-[10px] font-black tracking-[0.25em] text-white/50 uppercase leading-none transition-colors group-hover/arrow:text-white/80">DISCOVER</span>
-              <span className="text-2xl font-black text-white mt-2 leading-none uppercase tracking-widest border-b border-white/20 group-hover/arrow:border-white transition-colors duration-300 pb-1">
+            <div className="flex flex-col select-none text-white">
+              <span className="text-[10px] font-black tracking-[0.25em] text-white/50 uppercase leading-none">DISCOVER</span>
+              <span className="text-2xl font-black text-white mt-2 leading-none uppercase tracking-widest border-b border-white/20 pb-1">
                 COLLECTION ✦
               </span>
-            </button>
+            </div>
           </div>
 
           {/* Right Column: Central model product image & detail cards */}
