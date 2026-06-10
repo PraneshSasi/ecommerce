@@ -231,27 +231,27 @@ export default function HeroBanner() {
               {/* Design specifications grid */}
               <div className="grid grid-cols-2 gap-4 select-none">
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">RELEASE</span>
-                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">SPECIAL DROP</span>
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">CATALOG</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">500+ DYNAMIC ITEMS</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">DELIVERY</span>
-                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">FREE & EXPRESS</span>
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">CHECKOUT</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">1-CLICK SECURE ORDER</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">RETURNS</span>
-                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">30-DAY WINDOW</span>
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">STATE</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">LIVE CART & WISHLIST</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">GUARANTEE</span>
-                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">100% GENUINE</span>
+                  <span className="text-[9px] font-black tracking-[0.25em] text-white/60 uppercase">ADAPTIVE</span>
+                  <span className="text-sm font-black uppercase text-white tracking-wide mt-1">DESKTOP & MOBILE READY</span>
                 </div>
               </div>
               
               {/* Extra visual metadata badge */}
               <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[9px] font-black uppercase tracking-[0.2em] text-white/70">
-                <span>JOIN THE LOCO CLUB FOR EXTRA PERKS</span>
-                <span>EST. 2026</span>
+                <span>POWERED BY NEXT.JS, PRISMA & TAILWIND</span>
+                <span>VERIFIED SECURE</span>
               </div>
             </div>
           </div>
