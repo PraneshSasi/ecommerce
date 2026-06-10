@@ -109,28 +109,57 @@ export default function CheckoutPage() {
 
     setPlacingOrder(true);
 
-    // Simulate order placement delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    setOrderPlaced(true);
-    toast.success("Order placed successfully! 🎉", {
-      style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
-      iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
-      duration: 5000,
-    });
-
-    // Clear all cart items on server
-    for (const item of cartItems) {
-      await fetch("/api/cart", {
-        method: "DELETE",
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItemId: item.id }),
-      }).catch(() => {});
-    }
+        body: JSON.stringify({
+          total,
+          fullName: address.fullName,
+          phone: address.phone,
+          addressLine: address.addressLine,
+          city: address.city,
+          state: address.state,
+          pincode: address.pincode,
+          payment: selectedPayment,
+          items: cartItems.map(item => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            price: item.product.price
+          }))
+        })
+      });
 
-    // Reset header cart badge to 0
-    setCartCount(0);
-    setPlacingOrder(false);
+      if (!response.ok) {
+        throw new Error("Failed to place order");
+      }
+
+      setOrderPlaced(true);
+      toast.success("Order placed successfully! 🎉", {
+        style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
+        iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
+        duration: 5000,
+      });
+
+      // Clear all cart items on server
+      for (const item of cartItems) {
+        await fetch("/api/cart", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cartItemId: item.id }),
+        }).catch(() => {});
+      }
+
+      // Reset header cart badge to 0
+      setCartCount(0);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to place order. Please try again.", {
+        style: { background: "#ffffff", color: "#ea580c", border: "1px solid #ffedd5" },
+      });
+    } finally {
+      setPlacingOrder(false);
+    }
   };
 
   if (status === "loading" || loading) {

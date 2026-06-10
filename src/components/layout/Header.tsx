@@ -190,7 +190,7 @@ export default function Header() {
 
                     <div className="space-y-0.5">
                       <Link
-                        href="/cart"
+                        href="/orders"
                         onClick={() => setProfileOpen(false)}
                         className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-white/70 hover:bg-white/5 hover:text-white"
                       >
