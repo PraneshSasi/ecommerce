@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { Product } from "@/types";
 
 interface StoreState {
   cartCount: number;
@@ -9,6 +10,9 @@ interface StoreState {
   pendingAction: (() => void) | null;
   openAuthModal: (afterLoginAction?: () => void) => void;
   closeAuthModal: () => void;
+  isCartSidebarOpen: boolean;
+  openCartSidebar: () => void;
+  closeCartSidebar: () => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   selectedCategory: string;
@@ -20,6 +24,11 @@ interface StoreState {
   theme: string;
   setTheme: (theme: string) => void;
   setSelectedCategory: (category: string) => void;
+  quickViewProduct: Product | null;
+  openQuickView: (product: Product) => void;
+  closeQuickView: () => void;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 export const useStore = create<StoreState>((set) => ({
@@ -35,6 +44,10 @@ export const useStore = create<StoreState>((set) => ({
     set({ isAuthModalOpen: true, pendingAction: afterLoginAction ?? null }),
   closeAuthModal: () =>
     set({ isAuthModalOpen: false, pendingAction: null }),
+
+  isCartSidebarOpen: false,
+  openCartSidebar: () => set({ isCartSidebarOpen: true }),
+  closeCartSidebar: () => set({ isCartSidebarOpen: false }),
 
   searchQuery: "",
   setSearchQuery: (query) => set({ searchQuery: query }),
@@ -53,4 +66,20 @@ export const useStore = create<StoreState>((set) => ({
     }
     set({ theme });
   },
+  quickViewProduct: null,
+  openQuickView: (product) => set({ quickViewProduct: product }),
+  closeQuickView: () => set({ quickViewProduct: null }),
+
+  isDarkMode:
+    typeof window !== "undefined"
+      ? localStorage.getItem("shopwave-darkmode") !== "false"
+      : true,
+  toggleDarkMode: () =>
+    set((state) => {
+      const next = !state.isDarkMode;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("shopwave-darkmode", String(next));
+      }
+      return { isDarkMode: next };
+    }),
 }));

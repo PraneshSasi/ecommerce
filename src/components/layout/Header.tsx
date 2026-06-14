@@ -13,6 +13,8 @@ import {
   ChevronDown,
   Home,
   Sparkles,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useStore } from "@/store/useStore";
@@ -26,6 +28,9 @@ export default function Header() {
     searchQuery,
     setSearchQuery,
     setSelectedCategory,
+    openCartSidebar,
+    isDarkMode,
+    toggleDarkMode,
   } = useStore();
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -88,8 +93,8 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-white/10 bg-[#1b222a]/95 backdrop-blur-md transition-shadow duration-200 ${
-        scrolled ? "shadow-lg shadow-black/20" : "shadow-none"
+      className={`sticky top-0 z-50 border-b border-red-950/20 bg-black/95 backdrop-blur-md transition-shadow duration-200 ${
+        scrolled ? "shadow-lg shadow-black/40" : "shadow-none"
       }`}
     >
       <div ref={headerRef} className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-10">
@@ -99,8 +104,9 @@ export default function Header() {
           <Link
             href="/"
             onClick={handleLogoClick}
-            className="flex shrink-0 items-center gap-2 group select-none"
+            className="flex shrink-0 items-center gap-1 group select-none"
           >
+            <span className="text-red-600 font-extrabold text-3xl animate-pulse select-none font-serif leading-none mr-0.5">*</span>
             <span className="text-4xl font-black text-white tracking-tighter uppercase font-sans">
               LOCO
             </span>
@@ -151,19 +157,28 @@ export default function Header() {
           <div className="flex items-center gap-3">
 
 
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/70 hover:border-white hover:text-white transition-all cursor-pointer"
+              aria-label="Toggle Theme"
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+
             {/* Cart button */}
-            <Link
-              href="/cart"
-              className="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/70 hover:border-white hover:text-white transition-all"
+            <button
+              onClick={openCartSidebar}
+              className="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/70 hover:border-white hover:text-white transition-all cursor-pointer"
               aria-label="Cart"
             >
               <ShoppingCart size={20} />
               {cartCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-5.5 min-w-[22px] items-center justify-center rounded-full bg-white px-1.5 text-[10px] font-black text-[#1b222a] shadow-sm">
+                <span className="absolute -right-1.5 -top-1.5 flex h-5.5 min-w-[22px] items-center justify-center rounded-full bg-white px-1.5 text-[10px] font-black text-black shadow-sm">
                   {cartCount > 9 ? "9+" : cartCount}
                 </span>
               )}
-            </Link>
+            </button>
 
             {/* Profile / Login */}
             {session ? (
@@ -172,7 +187,7 @@ export default function Header() {
                   onClick={() => setProfileOpen((o) => !o)}
                   className="inline-flex h-12 items-center gap-2.5 rounded-full border border-white/10 bg-transparent pl-2 pr-4 text-base font-semibold text-white hover:border-white transition-all cursor-pointer"
                 >
-                  <div className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-white text-sm font-black text-[#1b222a]">
+                  <div className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-white text-sm font-black text-black">
                     {session.user?.name?.[0]?.toUpperCase() || "U"}
                   </div>
                   <ChevronDown
@@ -182,7 +197,7 @@ export default function Header() {
                 </button>
 
                 {profileOpen && (
-                  <div className="animate-slide-down absolute right-0 top-full mt-2 w-60 overflow-hidden rounded-2xl border border-white/15 bg-[#222b35] p-1.5 shadow-xl z-50">
+                  <div className="animate-slide-down absolute right-0 top-full mt-2 w-60 overflow-hidden rounded-2xl border border-red-950/20 bg-[#0b0b0e] p-1.5 shadow-xl z-50">
                     <div className="bg-white/5 rounded-xl px-3 py-3 mb-1.5">
                       <p className="truncate text-xs font-black text-white">{session.user?.name}</p>
                       <p className="truncate text-[10px] text-white/50">{session.user?.email}</p>
@@ -217,7 +232,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/auth"
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-base font-bold text-[#1b222a] transition-all hover:bg-slate-200"
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-base font-bold text-black transition-all hover:bg-slate-200"
               >
                 <User size={16} /> Sign In
               </Link>
@@ -237,7 +252,7 @@ export default function Header() {
         {/* Mobile menu */}
         {menuOpen && (
           <div className="animate-slide-down md:hidden pb-4">
-            <div className="rounded-2xl border border-white/10 bg-[#222b35] p-4 shadow-lg animate-fade-in">
+            <div className="rounded-2xl border border-red-950/20 bg-[#0b0b0e] p-4 shadow-lg animate-fade-in">
               {/* Mobile search */}
               <form onSubmit={handleSearch} className="mb-4">
                 <div className="relative">

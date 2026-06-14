@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, ShoppingBag, ShoppingCart, Zap } from "lucide-react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useStore } from "@/store/useStore";
@@ -21,6 +21,26 @@ export default function HeroBanner() {
   const [card2, setCard2] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    
+    // Relative coordinates [-0.5, 0.5]
+    const x = (e.clientX - rect.left) / width - 0.5;
+    const y = (e.clientY - rect.top) / height - 0.5;
+    
+    setParallax({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setParallax({ x: 0, y: 0 });
+  };
 
   useEffect(() => {
     async function loadHeroProducts() {
@@ -139,39 +159,78 @@ export default function HeroBanner() {
       
       {/* Main Artic-themed banner with mountain backdrop, stencil, and technical cards */}
       <section 
-        className="relative overflow-hidden rounded-[32px] border border-white/10 shadow-2xl min-h-[520px] md:min-h-[580px] lg:min-h-[640px] flex items-center bg-cover bg-center"
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="relative overflow-hidden rounded-[32px] border border-red-950/20 shadow-2xl min-h-[520px] md:min-h-[580px] lg:min-h-[640px] flex items-center bg-cover bg-center hud-corner hud-corner-bottom group"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80')" }}
       >
         
         {/* Dark slate overlay to match theme */}
-        <div className="absolute inset-0 bg-[#1b222a]/80 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-red-950/30 via-black/90 to-black/70 backdrop-blur-[2px]" />
 
         {/* Giant stenciled background logo */}
         <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none overflow-hidden z-0">
-          <span className="text-[12rem] sm:text-[18rem] md:text-[24rem] lg:text-[32rem] font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-transparent select-none font-sans stroke-[1.5] stroke-white/15">
+          <span className="text-[12rem] sm:text-[18rem] md:text-[24rem] lg:text-[32rem] font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-b from-white/5 to-transparent select-none font-sans stroke-[1.5] stroke-red-900/10">
             LOCO
           </span>
+        </div>
+
+        {/* Advanced SVG HUD backdrop lines */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
+          <svg className="absolute inset-0 w-full h-full text-red-500/10" xmlns="http://www.w3.org/2000/svg">
+            {/* Center target HUD */}
+            <circle cx="50%" cy="50%" r="280" className="stroke-current stroke-1 animate-rotate-slow fill-none" strokeDasharray="10, 20, 40, 10" />
+            <circle cx="50%" cy="50%" r="200" className="stroke-current stroke-[0.5] animate-rotate-reverse-slow fill-none" strokeDasharray="5, 5" />
+            <circle cx="50%" cy="50%" r="120" className="stroke-current stroke-[1] fill-none" strokeDasharray="30, 270" />
+            {/* Crosshairs */}
+            <line x1="50%" y1="10%" x2="50%" y2="90%" className="stroke-current stroke-[0.5]" strokeDasharray="5, 10" />
+            <line x1="10%" y1="50%" x2="90%" y2="50%" className="stroke-current stroke-[0.5]" strokeDasharray="5, 10" />
+            {/* Corner Bracket Accents */}
+            <path d="M 60 60 L 80 60 L 80 80" className="stroke-current stroke-1 fill-none" />
+            <path d="M 1900 60 L 1880 60 L 1880 80" className="stroke-current stroke-1 fill-none" />
+          </svg>
+          
+          {/* Blinking HUD nodes */}
+          <div className="absolute top-[8%] left-[6%] text-[7px] font-mono text-red-500/40 select-none animate-glow-pulse">LOC_GRID_NET // SHIFT_DETECTED</div>
+          <div className="absolute bottom-[8%] right-[6%] text-[7px] font-mono text-red-500/40 select-none animate-glow-pulse">TELEMETRY_LINK_01 // STABLE // 1.2GBPS</div>
         </div>
         
         <div className="relative mx-auto w-full max-w-screen-2xl px-6 py-12 md:px-12 md:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
           
           {/* Left Column: Headline and circular arrow CTA */}
-          <div className="lg:col-span-6 z-10 flex flex-col justify-center text-white">
-            <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white/10 border border-white/20 px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] mb-4 select-none">
-              ✦ SEASON 01 // WAVE 01
+          <div className="lg:col-span-6 z-10 flex flex-col justify-center text-white p-6 rounded-2xl bg-black/10 border border-white/5 hud-corner backdrop-blur-xs relative overflow-hidden select-none">
+            <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-red-950/15 border border-red-950/30 px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] mb-4 text-red-500 font-mono">
+              ✦ CORE_STORE // CATALOG_ONLINE // SECURE
             </span>
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight uppercase mb-6 max-w-lg font-sans">
-              COLLECTION
+              PREMIUM GEAR
               <br />
-              WAVE 01™
+              WAVE_01 // ARCHIVE™
             </h2>
             
             {/* CTA details */}
-            <div className="flex flex-col select-none text-white">
-              <span className="text-[10px] font-black tracking-[0.25em] text-white/50 uppercase leading-none">DISCOVER</span>
-              <span className="text-2xl font-black text-white mt-2 leading-none uppercase tracking-widest border-b border-white/20 pb-1">
-                COLLECTION ✦
+            <div className="flex flex-col select-none text-white font-mono mt-2">
+              <span className="text-[10px] font-black tracking-[0.25em] text-red-500 uppercase leading-none">RETRIEVING_INVENTORY // GLOBAL_DISPATCH</span>
+              <span className="text-xl font-black text-white mt-2 leading-none uppercase tracking-widest border-b border-red-950/30 pb-1 flex justify-between items-center">
+                SECURE CHECKOUT ✦ <span className="text-xs text-red-500 font-normal">SSL_ENCRYPTED</span>
               </span>
+            </div>
+
+            {/* Unique Tech stats grid added by assistant */}
+            <div className="mt-6 grid grid-cols-3 gap-2 border border-white/5 bg-[#0a0a0c]/60 p-2.5 rounded-lg text-[8px] font-mono text-gray-500 uppercase tracking-wider">
+              <div>
+                <span className="block text-white font-bold">STOCK STATUS</span>
+                <span className="block mt-0.5 truncate text-[7px] text-green-500">AVAILABLE // ACTIVE</span>
+              </div>
+              <div>
+                <span className="block text-white font-bold">SHIPPING</span>
+                <span className="block mt-0.5 text-[7px]">SAME-DAY DISPATCH</span>
+              </div>
+              <div>
+                <span className="block text-white font-bold">PAYMENT</span>
+                <span className="block mt-0.5 text-[7px]">100% SECURE SSL</span>
+              </div>
             </div>
           </div>
 
@@ -179,8 +238,17 @@ export default function HeroBanner() {
           <div className="lg:col-span-6 flex flex-col md:flex-row items-center justify-center gap-6 z-10 w-full mt-8 lg:mt-0 perspective-3d">
             
             {/* Main Product Image Container */}
-            <div className="relative w-[280px] h-[360px] md:w-[320px] md:h-[420px] lg:w-[360px] lg:h-[480px] overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl flex items-center justify-center p-6 group select-none tilt-3d-center hover:border-white/20">
-              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#889bb0]/30 flex items-center justify-center p-8 [transform-style:preserve-3d]">
+            <div 
+              onClick={() => featured && router.push(`/product/${featured.id}`)}
+              className="relative w-[280px] h-[380px] md:w-[320px] md:h-[440px] lg:w-[360px] lg:h-[480px] overflow-hidden rounded-[24px] border border-red-950/30 bg-black/40 backdrop-blur-md shadow-2xl flex flex-col justify-between p-6 group select-none hover:border-red-900/40 hud-corner hud-corner-bottom transition-all duration-300 cursor-pointer"
+              style={{
+                transform: `rotateY(${parallax.x * 20}deg) rotateX(${-parallax.y * 20}deg) translateZ(15px)`,
+                transition: "transform 0.1s ease-out"
+              }}
+            >
+              <div className="relative w-full h-[65%] rounded-2xl overflow-hidden bg-red-950/20 flex items-center justify-center p-8 [transform-style:preserve-3d]">
+                {/* HUD scanline effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-600/5 to-transparent h-1/2 w-full animate-scanline opacity-0 group-hover:opacity-100 pointer-events-none" />
                 <div className="relative w-full h-full animate-3d-nike [transform-style:preserve-3d]">
                   <div className="relative w-full h-full pop-3d-image">
                     <Image
@@ -194,13 +262,44 @@ export default function HeroBanner() {
                   </div>
                 </div>
               </div>
+
+              {/* HUD specs details panel at the bottom of the featured card */}
+              <div className="mt-4 border-t border-white/5 pt-3 font-mono flex flex-col gap-1 text-[9px] text-gray-400">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-white font-black uppercase truncate max-w-[170px] text-xs">{mainProductTitle}</span>
+                  <span className="text-red-500 font-black text-xs">{mainProductPrice}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>PRODUCT INTEGRITY</span>
+                  <span className="text-white select-all">{featured ? featured.id.slice(0, 8) : "N/A"}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>HUD LINK STATUS</span>
+                  <span className="text-green-500 flex items-center gap-1 font-bold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                    SECURE_LINK
+                  </span>
+                </div>
+                {/* Tiny simulated progress loading bar */}
+                <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden mt-1.5">
+                  <div className="bg-red-650 h-full w-[85%] animate-pulse" />
+                </div>
+              </div>
             </div>
 
             {/* Side Detail Cards Column */}
             <div className="flex flex-row md:flex-col gap-4">
               {/* Detail Card 1 (Sony Headphones) */}
-              <div className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-2 shadow-xl select-none tilt-3d-right hover:border-white/20 group">
-                <div className="relative h-2/3 rounded-lg overflow-hidden mb-2 bg-[#889bb0]/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+              <div 
+                onClick={() => card1 && router.push(`/product/${card1.id}`)}
+                className="w-[130px] h-[190px] md:w-[150px] md:h-[225px] overflow-hidden rounded-xl border border-red-950/30 bg-black/40 backdrop-blur-md p-2 shadow-xl select-none hover:border-red-900/40 group cursor-pointer hud-corner hud-corner-bottom transition-all duration-300"
+                style={{
+                  transform: `rotateY(${parallax.x * 32}deg) rotateX(${-parallax.y * 32}deg) translateZ(30px)`,
+                  transition: "transform 0.12s ease-out"
+                }}
+              >
+                <div className="relative h-[55%] rounded-lg overflow-hidden mb-2 bg-red-950/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-600/5 to-transparent h-1/2 w-full animate-scanline opacity-0 group-hover:opacity-100 pointer-events-none" />
                   <div className="relative w-full h-full animate-3d-sony [transform-style:preserve-3d]">
                     <div className="relative w-full h-full pop-3d-image">
                       <Image
@@ -213,17 +312,28 @@ export default function HeroBanner() {
                     </div>
                   </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-[9px] font-black text-white/50 uppercase tracking-widest leading-none">DETAIL 01</p>
+                <div className="text-center font-mono">
+                  <p className="text-[8px] font-black text-white/30 uppercase tracking-widest leading-none">SYS_DVC_01 // HF_AUDIO</p>
                   <p className="text-[10px] font-black text-white uppercase tracking-wider mt-1 truncate px-1">
                     {card1 ? card1.brand : "SONY"}
                   </p>
+                  <p className="text-[9px] font-black text-red-500 mt-1">
+                    {card1 ? `₹${card1.price.toLocaleString("en-IN")}` : "₹24,990"}
+                  </p>
                 </div>
               </div>
-
+ 
               {/* Detail Card 2 (Apple iPhone) */}
-              <div className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-2 shadow-xl select-none tilt-3d-right hover:border-white/20 group">
-                <div className="relative h-2/3 rounded-lg overflow-hidden mb-2 bg-[#889bb0]/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+              <div 
+                onClick={() => card2 && router.push(`/product/${card2.id}`)}
+                className="w-[130px] h-[190px] md:w-[150px] md:h-[225px] overflow-hidden rounded-xl border border-red-950/30 bg-black/40 backdrop-blur-md p-2 shadow-xl select-none hover:border-red-900/40 group cursor-pointer hud-corner hud-corner-bottom transition-all duration-300"
+                style={{
+                  transform: `rotateY(${parallax.x * 32}deg) rotateX(${-parallax.y * 32}deg) translateZ(30px)`,
+                  transition: "transform 0.12s ease-out"
+                }}
+              >
+                <div className="relative h-[55%] rounded-lg overflow-hidden mb-2 bg-red-950/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-600/5 to-transparent h-1/2 w-full animate-scanline opacity-0 group-hover:opacity-100 pointer-events-none" />
                   <div className="relative w-full h-full animate-3d-apple [transform-style:preserve-3d]">
                     <div className="relative w-full h-full pop-3d-image">
                       <Image
@@ -236,10 +346,13 @@ export default function HeroBanner() {
                     </div>
                   </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-[9px] font-black text-white/50 uppercase tracking-widest leading-none">DETAIL 02</p>
+                <div className="text-center font-mono">
+                  <p className="text-[8px] font-black text-white/30 uppercase tracking-widest leading-none">SYS_DVC_02 // MOBILE_LINK</p>
                   <p className="text-[10px] font-black text-white uppercase tracking-wider mt-1 truncate px-1">
                     {card2 ? card2.brand : "APPLE"}
+                  </p>
+                  <p className="text-[9px] font-black text-red-500 mt-1">
+                    {card2 ? `₹${card2.price.toLocaleString("en-IN")}` : "₹1,29,900"}
                   </p>
                 </div>
               </div>

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingCart, Zap, Check } from "lucide-react";
+import { ShoppingCart, Zap, Check, Heart } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/store/useStore";
+import { useWishlist } from "@/store/useWishlist";
 import toast from "react-hot-toast";
 
 interface ActionButtonsProps {
@@ -107,6 +108,8 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
     }
   };
 
+  const { toggleWishlist, isWishlisted } = useWishlist();
+
   const handleAddToCart = () => {
     if (!session) {
       openAuthModal(doAddToCart);
@@ -123,42 +126,65 @@ export default function ActionButtons({ productId, disabled = false }: ActionBut
     doBuyNow();
   };
 
+  const handleWishlistToggle = () => {
+    toggleWishlist(productId);
+    if (isWishlisted(productId)) {
+      toast.success("Removed from wishlist");
+    } else {
+      toast.success("Added to wishlist!");
+    }
+  };
+
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
-      <button
-        onClick={handleAddToCart}
-        disabled={disabled || addingToCart}
-        className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-250 bg-white px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-black transition-all hover:border-black hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer shadow-sm"
-      >
-        {addedToCart ? (
-          <>
-            <Check size={18} className="text-orange-700" /> Added
-          </>
-        ) : addingToCart ? (
-          <>
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-200 border-t-black" /> Adding...
-          </>
-        ) : (
-          <>
-            <ShoppingCart size={18} /> Add to cart
-          </>
-        )}
-      </button>
+    <div className="flex flex-col gap-3">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <button
+          onClick={handleAddToCart}
+          disabled={disabled || addingToCart}
+          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-black/40 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:border-red-950/40 hover:bg-red-950/20 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer shadow-sm font-mono"
+        >
+          {addedToCart ? (
+            <>
+              <Check size={18} className="text-red-500" /> ADDED
+            </>
+          ) : addingToCart ? (
+            <>
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-600 border-t-white" /> ADDING...
+            </>
+          ) : (
+            <>
+              <ShoppingCart size={18} /> ADD TO CART
+            </>
+          )}
+        </button>
+
+        <button
+          onClick={handleBuyNow}
+          disabled={disabled || buyingNow}
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer shadow-lg shadow-red-600/20 hover:shadow-red-600/40 font-mono"
+        >
+          {buyingNow ? (
+            <>
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/25 border-t-white" /> PROCESSING...
+            </>
+          ) : (
+            <>
+              <Zap size={18} /> BUY NOW
+            </>
+          )}
+        </button>
+      </div>
 
       <button
-        onClick={handleBuyNow}
-        disabled={disabled || buyingNow}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer shadow-md shadow-orange-600/20"
+        onClick={handleWishlistToggle}
+        className={`flex w-full items-center justify-center gap-2 rounded-lg border py-3.5 text-sm font-bold uppercase tracking-wider transition-all cursor-pointer font-mono ${
+          isWishlisted(productId)
+            ? "border-red-500 bg-red-950/10 text-red-500 hover:bg-red-950/20"
+            : "border-white/10 bg-transparent text-white/70 hover:border-white hover:text-white"
+        }`}
       >
-        {buyingNow ? (
-          <>
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/25 border-t-white" /> Processing...
-          </>
-        ) : (
-          <>
-            <Zap size={18} /> Buy now
-          </>
-        )}
+        <Heart size={16} className={isWishlisted(productId) ? "fill-red-500" : ""} />
+        {isWishlisted(productId) ? "WISHLISTED" : "ADD TO WISHLIST"}
       </button>
     </div>
   );

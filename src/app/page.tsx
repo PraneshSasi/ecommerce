@@ -6,10 +6,13 @@ import { Product } from "@/types";
 import HeroBanner from "@/components/home/HeroBanner";
 import CategoryBar from "@/components/home/CategoryBar";
 import ProductCard from "@/components/home/ProductCard";
+import OffersSection from "@/components/home/OffersSection";
+import ProductSlider from "@/components/home/ProductSlider";
 import Spinner from "@/components/ui/Spinner";
 import Image from "next/image";
 import Link from "next/link";
 import { PackageSearch, SlidersHorizontal, TrendingUp, ArrowUpDown } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const SORT_OPTIONS = [
   { value: "featured", label: "Featured" },
@@ -27,6 +30,13 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [filterSort, setFilterSort] = useState("featured");
   const { searchQuery, selectedCategory } = useStore();
+
+  const revealHero = useScrollReveal();
+  const revealOffers = useScrollReveal();
+  const revealProducts = useScrollReveal();
+  const revealSlider = useScrollReveal();
+  const revealLookbook = useScrollReveal();
+  const revealSlogan = useScrollReveal();
 
   useEffect(() => {
     async function loadLookbook() {
@@ -105,13 +115,15 @@ export default function HomePage() {
   }, [fetchProducts]);
 
   return (
-    <div className="min-h-screen bg-[#1b222a] text-white">
+    <div className="min-h-screen bg-[#050507] text-white">
       <div className="mx-auto w-full max-w-screen-2xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
         {/* Hero */}
-        <HeroBanner />
+        <div ref={revealHero} className="scroll-reveal">
+          <HeroBanner />
+        </div>
 
         {/* Promo strip */}
-        <div className="mt-8 flex items-center gap-4 overflow-x-auto rounded-xl bg-[#222b35] border border-white/5 px-6 py-3.5 scrollbar-hide text-xs font-black uppercase tracking-widest text-white/70 select-none">
+        <div className="mt-8 flex items-center gap-4 overflow-x-auto rounded-xl bg-[#0a0a0d] border border-red-950/20 px-6 py-3.5 scrollbar-hide text-xs font-black uppercase tracking-widest text-white/70 select-none">
           {[
             "🚀 Free shipping on orders above ₹499",
             "🎉 New arrivals every week",
@@ -119,19 +131,24 @@ export default function HomePage() {
             "↩️  Easy 30-day returns",
             "⚡ Lightning-fast delivery",
           ].map((text) => (
-            <span key={text} className="shrink-0 flex items-center gap-1">
+            <span key={text} className="shrink-0 flex items-center gap-1 font-mono">
               {text}
             </span>
           ))}
         </div>
 
+        {/* Offers Section */}
+        <div ref={revealOffers} className="scroll-reveal">
+          <OffersSection />
+        </div>
+
         {/* Products section */}
-        <section id="products" className="relative z-10 mt-16 space-y-6">
+        <section id="products" ref={revealProducts} className="scroll-reveal relative z-10 mt-16 space-y-6">
           {/* Section header */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1 select-none">
-                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50">
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">
                   ✦ COLLECTION WAVE 01
                 </span>
               </div>
@@ -139,7 +156,7 @@ export default function HomePage() {
                 {searchQuery ? `Search: ${searchQuery}` : "NEW COLLECTION"}
               </h2>
               {!loading && (
-                <p className="mt-1 text-xs font-bold text-white/40 uppercase tracking-widest">
+                <p className="mt-1 text-xs font-bold text-white/40 uppercase tracking-widest font-mono">
                   <span className="text-white">{products.length}</span>{" "}
                   {products.length === 1 ? "item" : "items"} available
                 </p>
@@ -147,13 +164,13 @@ export default function HomePage() {
             </div>
 
             {/* Sort control */}
-            <div className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-[#222b35] px-4 py-2.5 shadow-md">
+            <div className="flex items-center gap-2.5 rounded-xl border border-red-950/20 bg-[#0a0a0d] px-4 py-2.5 shadow-md">
               <label htmlFor="sort-filter" className="sr-only">Sort</label>
               <select
                 id="sort-filter"
                 value={filterSort}
                 onChange={(e) => setFilterSort(e.target.value)}
-                className="bg-transparent text-xs font-black uppercase tracking-wider text-white focus:outline-none cursor-pointer [&>option]:bg-[#222b35] [&>option]:text-white"
+                className="bg-transparent text-xs font-black uppercase tracking-wider text-white focus:outline-none cursor-pointer [&>option]:bg-[#0a0a0d] [&>option]:text-white font-mono"
               >
                 {SORT_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>{o.label}</option>
@@ -168,22 +185,22 @@ export default function HomePage() {
           {/* Filter info pill */}
           {(searchQuery || selectedCategory !== "All" || filterSort !== "featured") && (
             <div className="flex flex-wrap items-center gap-2">
-              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+              <div className="flex items-center gap-1.5 rounded-full border border-red-950/20 bg-white/5 px-3 py-1">
                 <SlidersHorizontal size={12} className="text-white/60" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-white/60">Active filters:</span>
+                <span className="text-[9px] font-black uppercase tracking-widest text-white/60 font-mono">Active filters:</span>
               </div>
               {searchQuery && (
-                <span className="rounded-full bg-white/10 px-3 py-1 text-[9px] font-black text-white border border-white/10 uppercase tracking-widest">
+                <span className="rounded-full bg-white/5 px-3 py-1 text-[9px] font-black text-white border border-red-950/20 uppercase tracking-widest font-mono">
                   Search: {searchQuery}
                 </span>
               )}
               {selectedCategory !== "All" && (
-                <span className="rounded-full bg-white/10 px-3 py-1 text-[9px] font-black text-white border border-white/10 uppercase tracking-widest">
+                <span className="rounded-full bg-white/5 px-3 py-1 text-[9px] font-black text-white border border-red-950/20 uppercase tracking-widest font-mono">
                   {selectedCategory}
                 </span>
               )}
               {filterSort !== "featured" && (
-                <span className="rounded-full bg-white/10 px-3 py-1 text-[9px] font-black text-white border border-white/10 uppercase tracking-widest">
+                <span className="rounded-full bg-white/5 px-3 py-1 text-[9px] font-black text-white border border-red-950/20 uppercase tracking-widest font-mono">
                   {SORT_OPTIONS.find((o) => o.value === filterSort)?.label}
                 </span>
               )}
@@ -192,17 +209,17 @@ export default function HomePage() {
 
           {/* Product grid */}
           {loading ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#222b35] py-32 shadow-xl">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-red-950/20 bg-[#0a0a0d] py-32 shadow-xl">
               <Spinner size={40} />
-              <p className="mt-4 text-xs font-black text-white/50 uppercase tracking-widest">LOADING CATALOG...</p>
+              <p className="mt-4 text-xs font-black text-white/50 uppercase tracking-widest font-mono">LOADING CATALOG...</p>
             </div>
           ) : products.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#222b35] py-32 text-center shadow-xl">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/5 text-white/30 border border-white/10">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-red-950/20 bg-[#0a0a0d] py-32 text-center shadow-xl">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/5 text-white/30 border border-red-950/20">
                 <PackageSearch size={36} />
               </div>
-              <h3 className="mt-5 text-lg font-black text-white uppercase tracking-wider">No items found</h3>
-              <p className="mt-2 max-w-sm text-xs leading-relaxed text-white/45 uppercase tracking-widest">
+              <h3 className="mt-5 text-lg font-black text-white uppercase tracking-wider font-mono">No items found</h3>
+              <p className="mt-2 max-w-sm text-xs leading-relaxed text-white/45 uppercase tracking-widest font-mono">
                 Try a different search term or switch categories to discover.
               </p>
             </div>
@@ -216,14 +233,19 @@ export default function HomePage() {
 
           {/* Bottom padding */}
           {!loading && products.length > 0 && (
-            <p className="pt-4 text-center text-[9px] uppercase tracking-[0.25em] text-white/30 font-black">
+            <p className="pt-4 text-center text-[9px] uppercase tracking-[0.25em] text-white/30 font-black font-mono">
               Showing all {products.length} products · WAVE 01 updates live
             </p>
           )}
         </section>
 
+        {/* Trending Products Slider */}
+        <div ref={revealSlider} className="scroll-reveal">
+          <ProductSlider products={products} />
+        </div>
+
         {/* WAVE 01 // LOOKBOOK Lifestyle Gallery */}
-        <section className="mt-24 space-y-8">
+        <section ref={revealLookbook} className="scroll-reveal mt-24 space-y-8">
           <div>
             <div className="flex items-center gap-2 mb-1 select-none">
               <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50">
@@ -242,9 +264,10 @@ export default function HomePage() {
             {/* Gallery Card 1 - Large Tall Card */}
             <Link 
               href={lookbookItems[0] ? `/product/${lookbookItems[0].id}` : "#"}
-              className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[450px] md:col-span-2 flex flex-col justify-between p-6 select-none tilt-3d-left hover:border-white/20 cursor-pointer block"
+              className="relative group overflow-hidden rounded-[24px] border border-red-950/20 bg-black/40 backdrop-blur-md shadow-xl h-[450px] md:col-span-2 flex flex-col justify-between p-6 select-none tilt-3d-left hover:border-red-900/30 cursor-pointer block hud-corner hud-corner-bottom"
             >
-              <div className="relative w-full h-2/3 rounded-2xl overflow-hidden bg-[#889bb0]/30 flex items-center justify-center p-8 [transform-style:preserve-3d]">
+              <div className="relative w-full h-2/3 rounded-2xl overflow-hidden bg-red-950/20 flex items-center justify-center p-8 [transform-style:preserve-3d]">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-600/5 to-transparent h-1/2 w-full animate-scanline opacity-0 group-hover:opacity-100 pointer-events-none" />
                 <div className="relative w-full h-full animate-3d-nike [transform-style:preserve-3d]">
                   <div className="relative w-full h-full pop-3d-image">
                     <Image
@@ -257,20 +280,25 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <div>
-                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">01 / FEATURED CONCEPT</span>
-                <h3 className="text-lg font-black uppercase tracking-wider text-white mt-1 font-mono">
-                  {lookbookItems[0] ? lookbookItems[0].title.toUpperCase() : "NIKE AIR JORDAN 1"}
-                </h3>
+              <div className="border-t border-white/5 pt-3 font-mono flex flex-col gap-0.5 text-[9px] text-gray-400">
+                <div className="flex justify-between items-center mb-0.5">
+                  <span className="text-white font-black uppercase truncate text-sm">{lookbookItems[0] ? lookbookItems[0].title.toUpperCase() : "NIKE AIR JORDAN 1"}</span>
+                  <span className="text-red-500 font-black text-sm">{lookbookItems[0] ? `₹${lookbookItems[0].price.toLocaleString("en-IN")}` : "₹12,995"}</span>
+                </div>
+                <div className="flex justify-between text-[8px] text-gray-500 mt-1">
+                  <span>SPEC // DVC.WAVE.01</span>
+                  <span>STATUS // ONLINE</span>
+                </div>
               </div>
             </Link>
 
             {/* Gallery Card 2 - Standard Card */}
             <Link 
               href={lookbookItems[1] ? `/product/${lookbookItems[1].id}` : "#"}
-              className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[450px] md:col-span-1 flex flex-col justify-between p-6 select-none tilt-3d-center hover:border-white/20 cursor-pointer block"
+              className="relative group overflow-hidden rounded-[24px] border border-red-950/20 bg-black/40 backdrop-blur-md shadow-xl h-[450px] md:col-span-1 flex flex-col justify-between p-6 select-none tilt-3d-center hover:border-red-900/30 cursor-pointer block hud-corner hud-corner-bottom"
             >
-              <div className="relative w-full h-2/3 rounded-2xl overflow-hidden bg-[#889bb0]/20 flex items-center justify-center p-6 [transform-style:preserve-3d]">
+              <div className="relative w-full h-2/3 rounded-2xl overflow-hidden bg-red-950/20 flex items-center justify-center p-6 [transform-style:preserve-3d]">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-600/5 to-transparent h-1/2 w-full animate-scanline opacity-0 group-hover:opacity-100 pointer-events-none" />
                 <div className="relative w-full h-full animate-3d-sony [transform-style:preserve-3d]">
                   <div className="relative w-full h-full pop-3d-image">
                     <Image
@@ -283,11 +311,15 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <div>
-                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">02 / AUDIO DETAIL</span>
-                <h3 className="text-lg font-black uppercase tracking-wider text-white mt-1 font-mono">
-                  {lookbookItems[1] ? lookbookItems[1].title.toUpperCase() : "SONY WH-1000XM5"}
-                </h3>
+              <div className="border-t border-white/5 pt-3 font-mono flex flex-col gap-0.5 text-[9px] text-gray-400">
+                <div className="flex justify-between items-center mb-0.5">
+                  <span className="text-white font-black uppercase truncate text-sm">{lookbookItems[1] ? lookbookItems[1].title.toUpperCase() : "SONY HEADPHONES"}</span>
+                  <span className="text-red-500 font-black text-sm">{lookbookItems[1] ? `₹${lookbookItems[1].price.toLocaleString("en-IN")}` : "₹24,990"}</span>
+                </div>
+                <div className="flex justify-between text-[8px] text-gray-500 mt-1">
+                  <span>SPEC // DVC.WAVE.02</span>
+                  <span>STATUS // ONLINE</span>
+                </div>
               </div>
             </Link>
 
@@ -296,9 +328,10 @@ export default function HomePage() {
               {/* Gallery Card 3 */}
               <Link 
                 href={lookbookItems[2] ? `/product/${lookbookItems[2].id}` : "#"}
-                className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[213px] flex items-center gap-4 p-4 select-none tilt-3d-right hover:border-white/20 cursor-pointer block"
+                className="relative group overflow-hidden rounded-[24px] border border-red-950/20 bg-black/40 backdrop-blur-md shadow-xl h-[213px] flex items-center gap-4 p-4 select-none tilt-3d-right hover:border-red-900/30 cursor-pointer block hud-corner hud-corner-bottom"
               >
-                <div className="relative w-1/2 h-full rounded-xl overflow-hidden bg-[#889bb0]/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                <div className="relative w-1/2 h-full rounded-xl overflow-hidden bg-red-950/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-600/5 to-transparent h-1/2 w-full animate-scanline opacity-0 group-hover:opacity-100 pointer-events-none" />
                   <div className="relative w-full h-full animate-3d-apple [transform-style:preserve-3d]">
                     <div className="relative w-full h-full pop-3d-image">
                       <Image
@@ -311,21 +344,23 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">03 / DEVICE</span>
-                  <h3 className="text-xs font-black uppercase tracking-wider text-white mt-1 truncate font-mono">
+                <div className="flex-1 min-w-0 font-mono text-[9px] text-gray-400">
+                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-red-500">03 / DEVICE</span>
+                  <h3 className="text-xs font-black uppercase tracking-wider text-white mt-1 truncate">
                     {lookbookItems[2] ? lookbookItems[2].title.toUpperCase() : "IPHONE 15 PRO"}
                   </h3>
-                  <p className="text-[8px] font-black text-white/30 uppercase mt-0.5 tracking-wider font-mono">WAVE 01 LOG</p>
+                  <p className="text-[9px] font-bold text-red-500 mt-1">{lookbookItems[2] ? `₹${lookbookItems[2].price.toLocaleString("en-IN")}` : "₹1,29,900"}</p>
+                  <p className="text-[7px] text-gray-500 mt-1 uppercase tracking-wider">SPEC // DVC.WAVE.03</p>
                 </div>
               </Link>
 
               {/* Gallery Card 4 */}
               <Link 
                 href={lookbookItems[3] ? `/product/${lookbookItems[3].id}` : "#"}
-                className="relative group overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl h-[213px] flex items-center gap-4 p-4 select-none tilt-3d-right hover:border-white/20 cursor-pointer block"
+                className="relative group overflow-hidden rounded-[24px] border border-red-950/20 bg-black/40 backdrop-blur-md shadow-xl h-[213px] flex items-center gap-4 p-4 select-none tilt-3d-right hover:border-red-900/30 cursor-pointer block hud-corner hud-corner-bottom"
               >
-                <div className="relative w-1/2 h-full rounded-xl overflow-hidden bg-[#889bb0]/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                <div className="relative w-1/2 h-full rounded-xl overflow-hidden bg-red-950/20 flex items-center justify-center p-2 [transform-style:preserve-3d]">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-600/5 to-transparent h-1/2 w-full animate-scanline opacity-0 group-hover:opacity-100 pointer-events-none" />
                   <div className="relative w-full h-full animate-3d-sony [transform-style:preserve-3d]">
                     <div className="relative w-full h-full pop-3d-image">
                       <Image
@@ -338,12 +373,13 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-white/40 font-mono">04 / ACCESSORY</span>
-                  <h3 className="text-xs font-black uppercase tracking-wider text-white mt-1 truncate font-mono">
+                <div className="flex-1 min-w-0 font-mono text-[9px] text-gray-400">
+                  <span className="text-[8px] font-black uppercase tracking-[0.25em] text-red-500">04 / ACCESSORY</span>
+                  <h3 className="text-xs font-black uppercase tracking-wider text-white mt-1 truncate">
                     {lookbookItems[3] ? lookbookItems[3].title.toUpperCase() : "SMARTWATCH 4"}
                   </h3>
-                  <p className="text-[8px] font-black text-white/30 uppercase mt-0.5 tracking-wider font-mono">WAVE 01 LOG</p>
+                  <p className="text-[9px] font-bold text-red-500 mt-1">{lookbookItems[3] ? `₹${lookbookItems[3].price.toLocaleString("en-IN")}` : "₹8,990"}</p>
+                  <p className="text-[7px] text-gray-500 mt-1 uppercase tracking-wider">SPEC // DVC.WAVE.04</p>
                 </div>
               </Link>
             </div>
@@ -352,15 +388,52 @@ export default function HomePage() {
 
         {/* Bottom Artic Slogan & Mountain Section */}
         <section 
-          className="relative overflow-hidden rounded-[32px] border border-white/10 shadow-2xl min-h-[400px] flex items-end bg-cover bg-center mt-20 p-8 md:p-12"
+          ref={revealSlogan}
+          className="scroll-reveal relative overflow-hidden rounded-[32px] border border-red-950/35 shadow-2xl min-h-[420px] flex items-end bg-cover bg-center mt-20 p-8 md:p-12 hud-corner group"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486873249359-2731bd6dafc7?w=1600&q=80')" }}
         >
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1b222a] via-[#1b222a]/70 to-transparent" />
+          {/* Dark glowing cyberpunk overlay */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-black via-black/95 to-red-950/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/70 to-transparent opacity-90" />
+
+          {/* SVG HUD Grid Overlay */}
+          <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0 opacity-40 group-hover:opacity-75 transition-opacity duration-500">
+            <svg className="absolute inset-0 w-full h-full text-red-500/20" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="slogan-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="1.5" cy="1.5" r="0.8" fill="currentColor" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#slogan-grid)" />
+              
+              {/* Concentric telemetry circles */}
+              <circle cx="75%" cy="40%" r="200" className="stroke-current stroke-[0.5] fill-none animate-rotate-slow" strokeDasharray="4, 12" />
+              <circle cx="75%" cy="40%" r="140" className="stroke-current stroke-1 fill-none animate-rotate-reverse-slow" strokeDasharray="1, 8" />
+              <circle cx="75%" cy="40%" r="80" className="stroke-current stroke-[0.75] fill-none animate-pulse" />
+              
+              {/* Crosshairs & Scope */}
+              <line x1="75%" y1="0" x2="75%" y2="100%" className="stroke-current stroke-[0.5]" strokeDasharray="2, 8" />
+              <line x1="0" y1="40%" x2="100%" y2="40%" className="stroke-current stroke-[0.5]" strokeDasharray="2, 8" />
+              
+              {/* Scanning sweep */}
+              <line x1="0" y1="0" x2="100%" y2="100%" className="stroke-current stroke-[0.25]" opacity="0.3" />
+            </svg>
+
+            {/* Float details */}
+            <div className="absolute top-[8%] left-[5%] text-[7px] font-mono text-red-500/60 uppercase tracking-widest animate-pulse">
+              [LAT_02 // SYSTEM_ONLINE // COORD: 68.2524° N]
+            </div>
+            <div className="absolute top-[8%] right-[5%] text-[7px] font-mono text-red-500/60 uppercase tracking-widest">
+              SYS // LOC_SCAN_SECTOR: 09_C
+            </div>
+            <div className="absolute bottom-[20%] right-[32%] text-[7px] font-mono text-red-500/40 uppercase tracking-widest animate-glow-pulse">
+              ELEVATION: 2,460M // TEMP: -14°C
+            </div>
+          </div>
 
           {/* Giant stenciled background logo */}
           <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none overflow-hidden z-0">
-            <span className="text-[12rem] sm:text-[18rem] md:text-[24rem] lg:text-[30rem] font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-transparent select-none font-sans stroke-[1.5] stroke-white/15">
+            <span className="text-[12rem] sm:text-[18rem] md:text-[24rem] lg:text-[30rem] font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-b from-white/5 to-transparent select-none font-sans stroke-[1.5] stroke-red-900/10">
               WAVE
             </span>
           </div>
@@ -368,25 +441,30 @@ export default function HomePage() {
           <div className="relative w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-end z-10 text-white">
             {/* Left brand description */}
             <div className="md:col-span-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 leading-relaxed max-w-xs select-none font-mono">
-              <p className="text-white mb-2 tracking-[0.25em] font-black font-mono">✦ THE LOCO ORIGIN</p>
-              LOCO WAS BORN IN
+              <p className="text-white mb-2 tracking-[0.25em] font-black font-mono">✦ PRODUCT DESIGN // ARCHIVE</p>
+              ALL PRODUCTS ARE
               <br />
-              THE MOUNTAINS, NOT
+              FORGED WITH DURABLE,
               <br />
-              AS A TREND, BUT AS
+              WEATHER-RESISTANT FIBERS,
               <br />
-              A RESPONSE.
+              MADE FOR EVERYDAY WEAR.
             </div>
 
             {/* Middle large slogan */}
             <div className="md:col-span-5 flex flex-col justify-end">
               <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase leading-[1.05] tracking-wider font-mono">
-                BUILT FOR COLD
+                CRAFTED FOR PEAKS
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-[#f59e0b]">MADE FOR HEIGHT</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-[#f59e0b]">DESIGNED FOR STREETS</span>
                 <br />
-                FORGED TO LAST
+                SHIPPED WORLDWIDE
               </h3>
+              <div className="mt-4 flex flex-wrap gap-4 text-[8px] font-mono text-gray-500 uppercase tracking-widest">
+                <span>[ SHIPPED // GLOBAL_FAST ]</span>
+                <span>[ SECURE // SSL_VERIFIED ]</span>
+                <span>[ GUARANTEE // 30_DAYS ]</span>
+              </div>
             </div>
 
             {/* Right barcode graphic */}

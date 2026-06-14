@@ -103,46 +103,46 @@ export default function CartPage() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center px-4">
-        <div className="rounded-xl border border-gray-200 bg-gray-50 px-6 py-10 text-center shadow-xs">
+      <div className="flex min-h-[60vh] items-center justify-center px-4 bg-[#050507]">
+        <div className="rounded-xl border border-red-950/20 bg-[#0a0a0c] px-6 py-10 text-center shadow-xs">
           <Spinner size={40} />
-          <p className="mt-4 text-sm text-gray-500 uppercase tracking-wider">Loading your cart...</p>
+          <p className="mt-4 text-sm text-gray-400 uppercase tracking-wider font-mono">Loading your cart...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10 text-black">
+    <div className="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10 bg-[#050507] text-white">
       <div className="mb-8 flex flex-wrap items-center gap-4">
         <button
           onClick={() => router.back()}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-black cursor-pointer"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 transition-colors hover:text-white cursor-pointer font-mono"
         >
-          <ArrowLeft size={16} /> Continue shopping
+          <ArrowLeft size={16} /> CONTINUE SHOPPING
         </button>
-        <div className="h-5 w-px bg-gray-200" />
-        <div className="inline-flex items-center gap-2 text-black">
-          <ShoppingCart size={18} className="text-orange-600" />
-          <h1 className="text-xl font-bold uppercase tracking-wide">
-            My cart <span className="text-gray-500 font-normal">({cartItems.length})</span>
+        <div className="h-5 w-px bg-white/10" />
+        <div className="inline-flex items-center gap-2 text-white">
+          <ShoppingCart size={18} className="text-red-500" />
+          <h1 className="text-xl font-black uppercase tracking-wider font-mono">
+            MY CART <span className="text-gray-500 font-normal">({cartItems.length})</span>
           </h1>
         </div>
       </div>
 
       {cartItems.length === 0 ? (
-        <div className="flex min-h-[56vh] items-center justify-center rounded-xl border border-gray-200 bg-gray-50 px-6 py-12 text-center shadow-xs">
+        <div className="flex min-h-[56vh] items-center justify-center rounded-xl border border-red-950/20 bg-[#0a0a0c] px-6 py-12 text-center shadow-xs">
           <div className="max-w-md">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-red-950/20 bg-black text-red-500">
               <ShoppingBag size={36} />
             </div>
-            <h2 className="mt-5 text-2xl font-black text-black uppercase tracking-tight">Your cart is empty</h2>
-            <p className="mt-3 text-sm leading-6 text-gray-500">Add a few products and they will show up here for review and checkout.</p>
+            <h2 className="mt-5 text-2xl font-black text-white uppercase tracking-tight font-mono">Your cart is empty</h2>
+            <p className="mt-3 text-sm leading-6 text-gray-400 font-mono">Add a few products and they will show up here for review and checkout.</p>
             <Link
               href="/"
-              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-black px-5 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-zinc-800 cursor-pointer shadow-sm"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-red-600 px-5 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-red-700 cursor-pointer shadow-sm font-mono"
             >
-              <ShoppingBag size={16} /> Start shopping
+              <ShoppingBag size={16} /> START SHOPPING
             </Link>
           </div>
         </div>
@@ -154,47 +154,47 @@ export default function CartPage() {
               return (
                 <div
                   key={item.id}
-                  className="flex gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-black shadow-2xs"
+                  className="flex gap-4 rounded-xl border border-white/5 bg-[#0a0a0c] p-4 transition-colors hover:border-red-950/30 shadow-2xs"
                 >
                   <Link href={`/product/${item.productId}`} className="shrink-0">
-                    <div className="relative h-24 w-24 overflow-hidden rounded-lg border border-gray-200 bg-[#f4f4f5]">
+                    <div className="relative h-24 w-24 overflow-hidden rounded-lg border border-red-950/20 bg-red-950/5">
                       <Image src={images[0]} alt={item.product.title} fill className="object-contain p-1" sizes="96px" />
                     </div>
                   </Link>
 
                   <div className="min-w-0 flex-1">
                     <Link href={`/product/${item.productId}`}>
-                      <h3 className="line-clamp-2 text-sm font-semibold leading-6 text-black transition-colors hover:text-orange-700">
+                      <h3 className="line-clamp-2 text-sm font-semibold leading-6 text-white transition-colors hover:text-red-400 font-mono uppercase">
                         {item.product.title}
                       </h3>
                     </Link>
-                    <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-orange-600">{item.product.brand}</p>
+                    <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-red-500 font-mono">{item.product.brand}</p>
 
                     <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                       <div>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-lg font-black text-black">
+                          <span className="text-lg font-black text-white font-mono">
                             ₹{(item.product.price * item.quantity).toLocaleString("en-IN")}
                           </span>
-                          <span className="text-xs text-gray-400 line-through">
+                          <span className="text-xs text-gray-500 line-through font-mono">
                             ₹{(item.product.originalPrice * item.quantity).toLocaleString("en-IN")}
                           </span>
                         </div>
-                        <p className="mt-1 text-xs text-gray-500">Quantity {item.quantity}</p>
+                        <p className="mt-1 text-xs text-gray-400 font-mono">Quantity {item.quantity}</p>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <div className="flex items-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+                        <div className="flex items-center overflow-hidden rounded-lg border border-white/10 bg-[#0c0c0f]">
                           <button
                             onClick={() => updateQty(item.id, item.quantity - 1)}
                             disabled={updatingId === item.id}
-                            className="inline-flex h-8 w-8 items-center justify-center text-gray-500 transition-colors hover:bg-gray-150 hover:text-black disabled:opacity-50 cursor-pointer"
+                            className="inline-flex h-8 w-8 items-center justify-center text-gray-400 transition-colors hover:bg-red-950/20 hover:text-white disabled:opacity-50 cursor-pointer"
                           >
                             <Minus size={14} />
                           </button>
-                          <span className="inline-flex h-8 w-9 items-center justify-center text-sm font-semibold text-black">
+                          <span className="inline-flex h-8 w-9 items-center justify-center text-sm font-semibold text-white font-mono">
                             {updatingId === item.id ? (
-                              <div className="h-3 w-3 animate-spin rounded-full border border-gray-300 border-t-black" />
+                              <div className="h-3 w-3 animate-spin rounded-full border border-gray-600 border-t-white" />
                             ) : (
                               item.quantity
                             )}
@@ -202,7 +202,7 @@ export default function CartPage() {
                           <button
                             onClick={() => updateQty(item.id, item.quantity + 1)}
                             disabled={updatingId === item.id}
-                            className="inline-flex h-8 w-8 items-center justify-center text-gray-500 transition-colors hover:bg-gray-150 hover:text-black disabled:opacity-50 cursor-pointer"
+                            className="inline-flex h-8 w-8 items-center justify-center text-gray-400 transition-colors hover:bg-red-950/20 hover:text-white disabled:opacity-50 cursor-pointer"
                           >
                             <Plus size={14} />
                           </button>
@@ -210,7 +210,7 @@ export default function CartPage() {
                         <button
                           onClick={() => removeItem(item.id)}
                           disabled={updatingId === item.id}
-                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition-colors hover:border-black hover:bg-black/5 hover:text-black disabled:opacity-50 cursor-pointer"
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-colors hover:border-red-600 hover:bg-red-950/20 hover:text-red-500 disabled:opacity-50 cursor-pointer"
                         >
                           <Trash2 size={14} />
                         </button>
@@ -223,49 +223,49 @@ export default function CartPage() {
           </div>
 
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
-              <h2 className="mb-5 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-black">
-                <ShoppingBag size={18} className="text-orange-600" /> Order summary
+            <div className="rounded-xl border border-red-950/20 bg-[#0a0a0c] p-6 shadow-xs">
+              <h2 className="mb-5 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white font-mono">
+                <ShoppingBag size={18} className="text-red-500" /> ORDER SUMMARY
               </h2>
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Subtotal ({cartItems.length} items)</span>
-                  <span className="font-semibold text-black">₹{subtotal.toLocaleString("en-IN")}</span>
+                  <span className="text-gray-400 font-mono">Subtotal ({cartItems.length} items)</span>
+                  <span className="font-semibold text-white font-mono">₹{subtotal.toLocaleString("en-IN")}</span>
                 </div>
                 {savings > 0 && (
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Discount</span>
-                    <span className="font-semibold text-orange-600">-₹{savings.toLocaleString("en-IN")}</span>
+                    <span className="text-gray-400 font-mono">Discount</span>
+                    <span className="font-semibold text-red-500 font-mono">-₹{savings.toLocaleString("en-IN")}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Delivery</span>
-                  <span className={delivery === 0 ? "font-semibold text-orange-600" : "font-semibold text-black"}>
+                  <span className="text-gray-400 font-mono">Delivery</span>
+                  <span className={delivery === 0 ? "font-semibold text-red-500 font-mono" : "font-semibold text-white font-mono"}>
                     {delivery === 0 ? "FREE" : `₹${delivery}`}
                   </span>
                 </div>
-                <div className="border-t border-gray-150 pt-3 flex justify-between">
-                  <span className="font-bold text-black uppercase tracking-wider">Total</span>
-                  <span className="text-xl font-black text-black">₹{total.toLocaleString("en-IN")}</span>
+                <div className="border-t border-white/10 pt-3 flex justify-between">
+                  <span className="font-bold text-white uppercase tracking-wider font-mono">Total</span>
+                  <span className="text-xl font-black text-white font-mono">₹{total.toLocaleString("en-IN")}</span>
                 </div>
               </div>
 
               {savings > 0 && (
-                <div className="mt-5 rounded-lg border border-orange-200 bg-orange-50 px-4 py-3 text-center">
-                  <p className="text-sm font-bold text-orange-600">
-                    You save ₹{savings.toLocaleString("en-IN")} on this order
+                <div className="mt-5 rounded-lg border border-red-950/30 bg-red-950/10 px-4 py-3 text-center">
+                  <p className="text-sm font-bold text-red-500 font-mono">
+                    YOU SAVE ₹{savings.toLocaleString("en-IN")} ON THIS ORDER
                   </p>
                 </div>
               )}
 
               <Link
                 href="/checkout"
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-black px-5 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-zinc-800 cursor-pointer shadow-md shadow-black/10"
+                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-red-700 cursor-pointer shadow-lg shadow-red-600/20 hover:shadow-red-600/40 font-mono"
               >
-                <Zap size={16} /> Proceed to checkout
+                <Zap size={16} /> PROCEED TO CHECKOUT
               </Link>
-              <Link href="/" className="mt-4 block text-center text-sm text-gray-500 transition-colors hover:text-black">
-                Continue shopping
+              <Link href="/" className="mt-4 block text-center text-sm text-gray-400 transition-colors hover:text-white font-mono">
+                CONTINUE SHOPPING
               </Link>
             </div>
           </div>

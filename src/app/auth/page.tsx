@@ -48,14 +48,14 @@ function AuthForm() {
       if (res?.error) {
         setError("Invalid email or password. Try demo@shopwave.com / demo1234");
         toast.error("Invalid email or password.", {
-          style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+          style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
         setTimeout(() => {
           window.location.reload();
         }, 1500);
       } else {
         toast.success("Welcome back!", {
-          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+          style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
         setTimeout(() => {
           router.push(callbackUrl);
@@ -65,7 +65,7 @@ function AuthForm() {
     } catch {
       setError("Something went wrong. Please try again.");
       toast.error("Something went wrong. Please try again.", {
-        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
       });
       setTimeout(() => {
         window.location.reload();
@@ -80,7 +80,7 @@ function AuthForm() {
     if (form.password.length < 6) {
       setError("Password must be at least 6 characters.");
       toast.error("Password must be at least 6 characters.", {
-        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
       });
       setTimeout(() => {
         window.location.reload();
@@ -99,7 +99,7 @@ function AuthForm() {
       if (!res.ok) {
         setError(data.error || "Registration failed.");
         toast.error(data.error || "Registration failed.", {
-          style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+          style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
         setTimeout(() => {
           window.location.reload();
@@ -114,7 +114,7 @@ function AuthForm() {
       });
       if (!signInRes?.error) {
         toast.success("Account created!", {
-          style: { background: "#ffffff", color: "#1f2937", border: "1px solid #e5e7eb" },
+          style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
         setTimeout(() => {
           router.push(callbackUrl);
@@ -130,7 +130,7 @@ function AuthForm() {
     } catch {
       setError("Something went wrong. Please try again.");
       toast.error("Something went wrong. Please try again.", {
-        style: { background: "#ffffff", color: "#ef4444", border: "1px solid #fee2e2" },
+        style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
       });
       setTimeout(() => {
         window.location.reload();
@@ -141,20 +141,20 @@ function AuthForm() {
   };
 
   return (
-    <div className="mx-auto grid min-h-[calc(100vh-5rem)] w-full items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+    <div className="mx-auto grid min-h-[calc(100vh-5rem)] w-full items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 bg-[#050507] text-white">
       <div className="space-y-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gray-500 transition-colors hover:text-black cursor-pointer">
-          <ArrowLeft size={16} /> Back to shop
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gray-400 transition-colors hover:text-white cursor-pointer font-mono">
+          <ArrowLeft size={16} /> BACK TO SHOP
         </Link>
 
         <div className="space-y-5">
-          <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-orange-700">
-            <Zap size={14} /> LOCO account
+          <div className="inline-flex items-center gap-2 rounded-full border border-red-950/30 bg-red-950/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-red-500 font-mono">
+            <Zap size={14} /> LOCO ACCOUNT
           </div>
-          <h1 className="max-w-xl text-4xl font-black uppercase tracking-tight text-gray-900 sm:text-5xl">
-            Sign in faster. Check out faster. Keep everything in one place.
+          <h1 className="max-w-xl text-4xl font-black uppercase tracking-tight text-white sm:text-5xl font-mono">
+            SIGN IN FASTER. CHECK OUT FASTER. KEEP EVERYTHING IN ONE PLACE.
           </h1>
-          <p className="max-w-xl text-base leading-7 text-gray-600">
+          <p className="max-w-xl text-base leading-7 text-gray-400 font-mono uppercase tracking-wide">
             Manage orders, save items to your cart, and move through the store with a consistent experience on every screen.
           </p>
         </div>
@@ -165,43 +165,43 @@ function AuthForm() {
             { icon: Truck, title: "Order tracking", text: "Stay updated" },
             { icon: CreditCard, title: "Quick checkout", text: "Save time at payment" },
           ].map(({ icon: Icon, title, text }) => (
-            <div key={title} className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-50 text-orange-600 border border-orange-100">
+            <div key={title} className="rounded-xl border border-red-950/20 bg-[#0a0a0c] p-4 shadow-2xs">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-950/10 text-red-500 border border-red-950/30">
                 <Icon size={18} />
               </div>
-              <p className="mt-3 text-sm font-bold uppercase tracking-wide text-gray-900">{title}</p>
-              <p className="mt-1 text-sm leading-6 text-gray-500">{text}</p>
+              <p className="mt-3 text-sm font-bold uppercase tracking-wide text-white font-mono">{title}</p>
+              <p className="mt-1 text-sm leading-6 text-gray-400 font-mono">{text}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-md">
-        <div className="h-1.5 rounded-t-2xl bg-black" />
+      <div className="rounded-2xl border border-red-950/20 bg-[#0a0a0c] shadow-md">
+        <div className="h-1.5 rounded-t-2xl bg-red-600" />
         <div className="p-6 sm:p-8">
           <Link href="/" className="mb-8 inline-flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tighter text-black uppercase font-sans">
-              LOCO
+            <span className="text-2xl font-black tracking-tighter text-white uppercase font-sans">
+              * LOCO
             </span>
           </Link>
 
-          <h2 className="text-2xl font-black uppercase tracking-tight text-gray-950">
+          <h2 className="text-2xl font-black uppercase tracking-tight text-white font-mono">
             {tab === "login" ? "Welcome back" : "Create account"}
           </h2>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-gray-400 font-mono uppercase">
             {tab === "login" ? "No account yet? " : "Already have an account? "}
             <button
               onClick={() => {
                 setTab(tab === "login" ? "register" : "login");
                 setError("");
               }}
-              className="font-semibold text-orange-600 transition-colors hover:text-orange-750 cursor-pointer"
+              className="font-semibold text-red-500 transition-colors hover:text-red-400 cursor-pointer font-mono"
             >
               {tab === "login" ? "Sign up" : "Sign in"}
             </button>
           </p>
 
-          <div className="mt-6 flex bg-gray-100 border border-gray-200/50 rounded-xl p-1">
+          <div className="mt-6 flex bg-[#0c0c0f] border border-white/5 rounded-xl p-1">
             {(["login", "register"] as const).map((t) => (
               <button
                 key={t}
@@ -209,19 +209,19 @@ function AuthForm() {
                   setTab(t);
                   setError("");
                 }}
-                className={`flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                className={`flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer font-mono ${
                   tab === t
-                    ? "bg-black text-white shadow-xs"
-                    : "text-gray-500 hover:text-black"
+                    ? "bg-red-600 text-white shadow-xs"
+                    : "text-gray-400 hover:text-white"
                 }`}
               >
-                {t === "login" ? "Sign In" : "Sign Up"}
+                {t === "login" ? "SIGN IN" : "SIGN UP"}
               </button>
             ))}
           </div>
 
           {error && (
-            <div className="mt-4 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-700 font-semibold uppercase tracking-wide">
+            <div className="mt-4 rounded-xl border border-red-950/30 bg-red-950/20 px-4 py-3 text-sm text-red-500 font-semibold uppercase tracking-wide font-mono">
               {error}
             </div>
           )}
@@ -229,7 +229,7 @@ function AuthForm() {
           <form onSubmit={tab === "login" ? handleLogin : handleRegister} className="mt-5 space-y-4">
             {tab === "register" && (
               <div className="relative">
-                <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
                   name="name"
                   type="text"
@@ -237,12 +237,12 @@ function AuthForm() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black focus:ring-1 focus:ring-black transition-colors"
+                  className="w-full bg-[#0c0c0f] border border-white/10 text-white placeholder-gray-650 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors font-mono"
                 />
               </div>
             )}
             <div className="relative">
-              <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
               <input
                 name="email"
                 type="email"
@@ -250,11 +250,11 @@ function AuthForm() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black focus:ring-1 focus:ring-black transition-colors"
+                className="w-full bg-[#0c0c0f] border border-white/10 text-white placeholder-gray-650 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors font-mono"
               />
             </div>
             <div className="relative">
-              <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
               <input
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -262,12 +262,12 @@ function AuthForm() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black focus:ring-1 focus:ring-black transition-colors"
+                className="w-full bg-[#0c0c0f] border border-white/10 text-white placeholder-gray-650 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors font-mono"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-gray-700 cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-550 transition-colors hover:text-white cursor-pointer"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -276,13 +276,13 @@ function AuthForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-black text-white font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-zinc-800 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-md"
+              className="w-full flex items-center justify-center gap-2 bg-red-600 text-white font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-red-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-lg shadow-red-600/20 hover:shadow-red-600/40 font-mono"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  {tab === "login" ? "Sign In" : "Create Account"}
+                  {tab === "login" ? "SIGN IN" : "CREATE ACCOUNT"}
                   <ArrowRight size={18} />
                 </>
               )}
@@ -290,8 +290,8 @@ function AuthForm() {
           </form>
 
           {tab === "login" && (
-            <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-xl">
-              <p className="text-orange-600 text-xs text-center font-medium">
+            <div className="mt-4 p-3 bg-red-950/15 border border-red-950/30 rounded-xl">
+              <p className="text-red-500 text-xs text-center font-medium font-mono">
                 <span className="font-bold">Demo: </span>
                 demo@shopwave.com / demo1234
               </p>
