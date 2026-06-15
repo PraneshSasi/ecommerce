@@ -1765,16 +1765,6 @@ async function main() {
   await prisma.product.deleteMany();
   await prisma.user.deleteMany();
 
-  // Create demo user
-  const hashedPassword = await bcrypt.hash("demo1234", 12);
-  await prisma.user.create({
-    data: {
-      name: "Demo User",
-      email: "demo@shopwave.com",
-      password: hashedPassword,
-    },
-  });
-
   // Generate programmatic products
   const extraProducts = generateMoreProducts();
   const allProducts = [...products, ...extraProducts];
@@ -1785,8 +1775,7 @@ async function main() {
     data: allProducts,
   });
 
-  console.log(`✅ Seeded ${allProducts.length} products and 1 demo user.`);
-  console.log("📧 Demo login: demo@shopwave.com / demo1234");
+  console.log(`✅ Seeded ${allProducts.length} products.`);
 }
 
 main()

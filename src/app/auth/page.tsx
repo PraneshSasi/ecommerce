@@ -46,7 +46,7 @@ function AuthForm() {
         redirect: false,
       });
       if (res?.error) {
-        setError("Invalid email or password. Try demo@shopwave.com / demo1234");
+        setError("Invalid email or password.");
         toast.error("Invalid email or password.", {
           style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
@@ -289,14 +289,7 @@ function AuthForm() {
             </button>
           </form>
 
-          {tab === "login" && (
-            <div className="mt-4 p-3 bg-red-950/15 border border-red-950/30 rounded-xl">
-              <p className="text-red-500 text-xs text-center font-medium font-mono">
-                <span className="font-bold">Demo: </span>
-                demo@shopwave.com / demo1234
-              </p>
-            </div>
-          )}
+
         </div>
       </div>
     </div>

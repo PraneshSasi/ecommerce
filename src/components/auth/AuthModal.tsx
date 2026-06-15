@@ -283,15 +283,6 @@ export default function AuthModal() {
             </button>
           </form>
 
-          {/* Demo credentials hint */}
-          {tab === "login" && (
-            <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-xl">
-              <p className="text-orange-600 text-xs text-center font-medium">
-                <span className="font-bold">Demo: </span>
-                demo@shopwave.com / demo1234
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </div>

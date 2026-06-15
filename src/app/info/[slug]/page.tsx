@@ -112,7 +112,7 @@ const infoData: Record<string, InfoContent> = {
     headline: "Frequently Asked Questions & Support Tickets.",
     paragraphs: [
       "Find quick answers to common checkout, shipment, and login issues.",
-      "Our demo user credentials are: email: 'demo@shopwave.com' and password: 'demo1234'. You can use these credentials to sign in and test the cart checkout functionality."
+      "You can create a new account using the Sign Up option to test the cart and checkout functionality."
     ],
     details: [
       { label: "Support Ticket Email", value: "support@loco.com" },
