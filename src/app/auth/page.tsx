@@ -58,8 +58,7 @@ function AuthForm() {
           style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
         setTimeout(() => {
-          router.push(callbackUrl);
-          setTimeout(() => window.location.reload(), 100);
+          window.location.href = callbackUrl;
         }, 1200);
       }
     } catch {
@@ -117,8 +116,7 @@ function AuthForm() {
           style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
         setTimeout(() => {
-          router.push(callbackUrl);
-          setTimeout(() => window.location.reload(), 100);
+          window.location.href = callbackUrl;
         }, 1200);
       } else {
         setTab("login");
