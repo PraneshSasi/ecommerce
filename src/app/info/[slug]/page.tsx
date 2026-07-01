@@ -112,7 +112,7 @@ const infoData: Record<string, InfoContent> = {
     headline: "Frequently Asked Questions & Support Tickets.",
     paragraphs: [
       "Find quick answers to common checkout, shipment, and login issues.",
-      "You can create a new account using the Sign Up option to test the cart and checkout functionality."
+      "To test the cart and checkout functionality, you can sign in using our demo accounts: 'messi@gmail.com' (password: 'Messi@10') or 'neymarjr@gmail.com' (password: 'Neymar@10'), or create a new account using Sign Up."
     ],
     details: [
       { label: "Support Ticket Email", value: "support@loco.com" },

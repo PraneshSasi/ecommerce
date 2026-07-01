@@ -1,25 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+// Server-side in-memory cache
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let cachedProducts: any[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_TTL = 30 * 1000; // 30 seconds
 
 function matchesToken(text: string, token: string): boolean {
   if (!text) return false;
   const lowerText = text.toLowerCase();
-  
-  // Check 1: original word prefixes (split by non-alphanumeric characters)
+
   const originalWords = lowerText.split(/[^a-z0-9]+/i).filter(Boolean);
-  if (originalWords.some(word => word.startsWith(token))) {
-    return true;
-  }
-  
-  // Check 2: camelCase/PascalCase/number sub-word prefixes
+  if (originalWords.some((word) => word.startsWith(token))) return true;
+
   const splitText = text
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     .replace(/([0-9])([a-zA-Z])/g, "$1 $2")
     .replace(/([a-zA-Z])([0-9])/g, "$1 $2")
     .toLowerCase();
   const splitWords = splitText.split(/[^a-z0-9]+/i).filter(Boolean);
-  
-  return splitWords.some(word => word.startsWith(token));
+  return splitWords.some((word) => word.startsWith(token));
 }
 
 export async function GET(req: NextRequest) {
@@ -30,58 +36,75 @@ export async function GET(req: NextRequest) {
     const sort = searchParams.get("sort") || "featured";
     const priceRange = searchParams.get("priceRange") || "all";
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const dbWhereClause: any = {
-      AND: [],
-    };
+    const now = Date.now();
+    if (!cachedProducts || now - cacheTimestamp > CACHE_TTL) {
+      console.log("⚡ [Products API] Cache miss. Fetching via Supabase REST...");
 
-    // Filter by category if specified
+      const { data, error } = await supabase
+        .from("Product")
+        .select(
+          "id, title, price, originalPrice, discount, rating, category, brand, stock, images, createdAt"
+        );
+
+      if (error) {
+        console.error("Supabase fetch error:", error);
+        return NextResponse.json(
+          { error: "Failed to fetch products" },
+          { status: 500 }
+        );
+      }
+
+      cachedProducts = data ?? [];
+      cacheTimestamp = now;
+    } else {
+      console.log("⚡ [Products API] Cache hit!");
+    }
+
+    let filteredProducts = [...cachedProducts];
+
     if (category && category !== "All") {
-      dbWhereClause.AND.push({ category: { equals: category } });
+      filteredProducts = filteredProducts.filter(
+        (p) => p.category.toLowerCase() === category.toLowerCase()
+      );
     }
 
-    // Apply price range filtering
     if (priceRange === "budget") {
-      dbWhereClause.AND.push({ price: { lt: 1000 } });
+      filteredProducts = filteredProducts.filter((p) => p.price < 1000);
     } else if (priceRange === "mid") {
-      dbWhereClause.AND.push({ price: { gte: 1000, lte: 10000 } });
+      filteredProducts = filteredProducts.filter(
+        (p) => p.price >= 1000 && p.price <= 10000
+      );
     } else if (priceRange === "premium") {
-      dbWhereClause.AND.push({ price: { gt: 10000 } });
+      filteredProducts = filteredProducts.filter((p) => p.price > 10000);
     }
 
-    // Determine sort ordering
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let orderByClause: any = { createdAt: "desc" };
-    if (sort === "price_asc") {
-      orderByClause = { price: "asc" };
-    } else if (sort === "price_desc") {
-      orderByClause = { price: "desc" };
-    } else if (sort === "rating_desc") {
-      orderByClause = { rating: "desc" };
-    }
-
-    const products = await prisma.product.findMany({
-      where: dbWhereClause.AND.length > 0 ? dbWhereClause : {},
-      orderBy: orderByClause,
-    });
-
-    // Apply tokenized prefix search in-memory to ensure precise matching
-    let filteredProducts = products;
     if (query) {
-      const searchTokens = query.toLowerCase().split(/[^a-z0-9]+/i).filter(Boolean);
+      const searchTokens = query
+        .toLowerCase()
+        .split(/[^a-z0-9]+/i)
+        .filter(Boolean);
       if (searchTokens.length > 0) {
-        filteredProducts = products.filter((product) => {
-          const title = product.title || "";
-          const brand = product.brand || "";
-          
-          return searchTokens.every((token) => {
-            return matchesToken(title, token) || matchesToken(brand, token);
-          });
-        });
+        filteredProducts = filteredProducts.filter((p) =>
+          searchTokens.every(
+            (token) => matchesToken(p.title, token) || matchesToken(p.brand, token)
+          )
+        );
       } else {
-        // If query has only special characters, return no results
         filteredProducts = [];
       }
+    }
+
+    if (sort === "price_asc") {
+      filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (sort === "price_desc") {
+      filteredProducts.sort((a, b) => b.price - a.price);
+    } else if (sort === "rating_desc") {
+      filteredProducts.sort((a, b) => b.rating - a.rating);
+    } else {
+      filteredProducts.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
     }
 
     return NextResponse.json(filteredProducts);

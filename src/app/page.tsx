@@ -38,40 +38,6 @@ export default function HomePage() {
   const revealLookbook = useScrollReveal();
   const revealSlogan = useScrollReveal();
 
-  useEffect(() => {
-    async function loadLookbook() {
-      try {
-        const res = await fetch("/api/products");
-        if (res.ok) {
-          const data: Product[] = await res.json();
-          const jordan = data.find(p => p.title.toLowerCase().includes("jordan"));
-          const sony = data.find(p => p.title.toLowerCase().includes("wh-1000xm5") || p.title.toLowerCase().includes("sony"));
-          const iphone = data.find(p => p.title.toLowerCase().includes("iphone"));
-          
-          const filtered = data.filter(p => p.id !== jordan?.id && p.id !== sony?.id && p.id !== iphone?.id);
-          const accessory = filtered[0] || data[3];
-
-          const items: Product[] = [];
-          if (jordan) items.push(jordan);
-          if (sony) items.push(sony);
-          if (iphone) items.push(iphone);
-          if (accessory && items.length < 4) items.push(accessory);
-
-          while (items.length < 4 && data.length > items.length) {
-            const nextItem = data.find(p => !items.includes(p));
-            if (nextItem) items.push(nextItem);
-            else break;
-          }
-
-          setLookbookItems(items);
-        }
-      } catch (err) {
-        console.error("Failed to load lookbook:", err);
-      }
-    }
-    loadLookbook();
-  }, []);
-
   const getLookbookImage = (product: Product | undefined, fallback: string) => {
     if (!product) return fallback;
     try {
@@ -101,13 +67,38 @@ export default function HomePage() {
 
       const res = await fetch(`/api/products?${params.toString()}`);
       const data = await res.json();
-      setProducts(Array.isArray(data) ? data : []);
+      const productList = Array.isArray(data) ? data : [];
+      setProducts(productList);
+
+      // Extract lookbook items from the initial full product list fetch to avoid double fetching
+      if (productList.length > 0 && lookbookItems.length === 0 && !searchQuery && selectedCategory === "All") {
+        const jordan = productList.find(p => p.title.toLowerCase().includes("jordan"));
+        const sony = productList.find(p => p.title.toLowerCase().includes("wh-1000xm5") || p.title.toLowerCase().includes("sony"));
+        const iphone = productList.find(p => p.title.toLowerCase().includes("iphone"));
+        
+        const filtered = productList.filter(p => p.id !== jordan?.id && p.id !== sony?.id && p.id !== iphone?.id);
+        const accessory = filtered[0] || productList[3];
+
+        const items: Product[] = [];
+        if (jordan) items.push(jordan);
+        if (sony) items.push(sony);
+        if (iphone) items.push(iphone);
+        if (accessory && items.length < 4) items.push(accessory);
+
+        while (items.length < 4 && productList.length > items.length) {
+          const nextItem = productList.find(p => !items.includes(p));
+          if (nextItem) items.push(nextItem);
+          else break;
+        }
+
+        setLookbookItems(items);
+      }
     } catch {
       setProducts([]);
     } finally {
       setLoading(false);
     }
-  }, [searchQuery, selectedCategory, filterSort]);
+  }, [searchQuery, selectedCategory, filterSort, lookbookItems.length]);
 
   useEffect(() => {
     const timer = setTimeout(fetchProducts, 300);

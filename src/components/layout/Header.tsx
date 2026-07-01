@@ -205,6 +205,13 @@ export default function Header() {
 
                     <div className="space-y-0.5">
                       <Link
+                        href="/profile"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-white/70 hover:bg-white/5 hover:text-white"
+                      >
+                        <User size={14} className="text-white/50" /> My Profile
+                      </Link>
+                      <Link
                         href="/orders"
                         onClick={() => setProfileOpen(false)}
                         className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-bold text-white/70 hover:bg-white/5 hover:text-white"
@@ -290,6 +297,16 @@ export default function Header() {
                 >
                   <Package size={15} className="text-white/50" /> Products
                 </a>
+
+                {session && (
+                  <Link
+                    href="/profile"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-white/5 hover:text-white"
+                  >
+                    <User size={15} className="text-white/50" /> Profile
+                  </Link>
+                )}
 
                 {!session ? (
                   <Link

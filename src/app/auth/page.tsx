@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import {
@@ -27,8 +27,26 @@ function AuthForm() {
   const [tab, setTab] = useState<"login" | "register">("login");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
   const [error, setError] = useState("");
+
+
+  // Clear credentials if page is loaded from Back-Forward Cache (bfcache)
+  useEffect(() => {
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        setForm({ name: "", email: "", password: "", confirmPassword: "" });
+        setError("");
+        setShowPassword(false);
+        setShowConfirmPassword(false);
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -46,14 +64,15 @@ function AuthForm() {
         redirect: false,
       });
       if (res?.error) {
+        setForm((prev) => ({ ...prev, password: "" }));
         setError("Invalid email or password.");
         toast.error("Invalid email or password.", {
           style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
       } else {
+        setForm({ name: "", email: "", password: "", confirmPassword: "" });
+        setShowPassword(false);
+        setShowConfirmPassword(false);
         toast.success("Welcome back!", {
           style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
@@ -62,13 +81,11 @@ function AuthForm() {
         }, 1200);
       }
     } catch {
+      setForm((prev) => ({ ...prev, password: "" }));
       setError("Something went wrong. Please try again.");
       toast.error("Something went wrong. Please try again.", {
         style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
     } finally {
       setLoading(false);
     }
@@ -81,9 +98,13 @@ function AuthForm() {
       toast.error("Password must be at least 6 characters.", {
         style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1550);
+      return;
+    }
+    if (form.password !== form.confirmPassword) {
+      setError("check ur password and try again");
+      toast.error("check ur password and try again", {
+        style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
+      });
       return;
     }
     setLoading(true);
@@ -96,43 +117,45 @@ function AuthForm() {
       });
       const data = await res.json();
       if (!res.ok) {
+        setForm((prev) => ({ ...prev, password: "", confirmPassword: "" }));
         setError(data.error || "Registration failed.");
         toast.error(data.error || "Registration failed.", {
           style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
         return;
       }
+
+      // Registration successful — Auto-login the user immediately!
+      toast.success("Account created! Logging you in...", {
+        style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(34, 197, 94, 0.3)" },
+      });
 
       const signInRes = await signIn("credentials", {
         email: form.email,
         password: form.password,
         redirect: false,
       });
-      if (!signInRes?.error) {
-        toast.success("Account created!", {
-          style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
+
+      if (signInRes?.error) {
+        setError("Account created, but automatic login failed. Please sign in manually.");
+        setTab("login");
+      } else {
+        setForm({ name: "", email: "", password: "", confirmPassword: "" });
+        setShowPassword(false);
+        setShowConfirmPassword(false);
+        toast.success("Logged in successfully!", {
+          style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(34, 197, 94, 0.3)" },
         });
         setTimeout(() => {
           window.location.href = callbackUrl;
         }, 1200);
-      } else {
-        setTab("login");
-        toast.success("Account created. Please sign in.");
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
       }
     } catch {
+      setForm((prev) => ({ ...prev, password: "", confirmPassword: "" }));
       setError("Something went wrong. Please try again.");
       toast.error("Something went wrong. Please try again.", {
         style: { background: "#0a0a0c", color: "#ffffff", border: "1px solid rgba(220, 38, 38, 0.3)" },
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
     } finally {
       setLoading(false);
     }
@@ -218,6 +241,8 @@ function AuthForm() {
             ))}
           </div>
 
+
+
           {error && (
             <div className="mt-4 rounded-xl border border-red-950/30 bg-red-950/20 px-4 py-3 text-sm text-red-500 font-semibold uppercase tracking-wide font-mono">
               {error}
@@ -227,7 +252,7 @@ function AuthForm() {
           <form onSubmit={tab === "login" ? handleLogin : handleRegister} className="mt-5 space-y-4">
             {tab === "register" && (
               <div className="relative">
-                <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-550" />
                 <input
                   name="name"
                   type="text"
@@ -235,12 +260,13 @@ function AuthForm() {
                   value={form.name}
                   onChange={handleChange}
                   required
+                  autoComplete="off"
                   className="w-full bg-[#0c0c0f] border border-white/10 text-white placeholder-gray-650 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors font-mono"
                 />
               </div>
             )}
             <div className="relative">
-              <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+              <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-550" />
               <input
                 name="email"
                 type="email"
@@ -248,11 +274,12 @@ function AuthForm() {
                 value={form.email}
                 onChange={handleChange}
                 required
+                autoComplete="off"
                 className="w-full bg-[#0c0c0f] border border-white/10 text-white placeholder-gray-650 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors font-mono"
               />
             </div>
             <div className="relative">
-              <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+              <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-550" />
               <input
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -260,16 +287,51 @@ function AuthForm() {
                 value={form.password}
                 onChange={handleChange}
                 required
+                autoComplete="off"
                 className="w-full bg-[#0c0c0f] border border-white/10 text-white placeholder-gray-650 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors font-mono"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-550 transition-colors hover:text-white cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-555 transition-colors hover:text-white cursor-pointer"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
+
+            {tab === "register" && (
+              <div className="relative">
+                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-555" />
+                <input
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Re-enter password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  autoComplete="off"
+                  className="w-full bg-[#0c0c0f] border border-white/10 text-white placeholder-gray-650 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors font-mono"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-555 transition-colors hover:text-white cursor-pointer"
+                >
+                  {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+            )}
+
+            {tab === "login" && (
+              <div className="text-right">
+                <Link
+                  href="/auth/forgot-password"
+                  className="text-xs font-semibold text-red-500 hover:text-red-400 transition-colors font-mono uppercase tracking-wider"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+            )}
 
             <button
               type="submit"
@@ -286,6 +348,8 @@ function AuthForm() {
               )}
             </button>
           </form>
+
+
 
 
         </div>

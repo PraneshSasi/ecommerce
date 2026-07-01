@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -19,6 +19,7 @@ import {
   MapPin,
   ChevronRight,
   Zap,
+  User,
 } from "lucide-react";
 import { CartItem } from "@/types";
 import Spinner from "@/components/ui/Spinner";
@@ -44,6 +45,23 @@ export default function CheckoutPage() {
 
   const { setCartCount } = useStore();
 
+  const [estimatedDelivery, setEstimatedDelivery] = useState({ minDate: "", maxDate: "" });
+
+  useEffect(() => {
+    const now = Date.now();
+    const minDate = new Date(now + 5 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    });
+    const maxDate = new Date(now + 7 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    });
+    setEstimatedDelivery({ minDate, maxDate });
+  }, []);
+
   const [address, setAddress] = useState({
     fullName: "",
     phone: "",
@@ -52,6 +70,8 @@ export default function CheckoutPage() {
     state: "",
     pincode: "",
   });
+
+  const [profileFilled, setProfileFilled] = useState(false);
 
   const fetchCart = useCallback(async () => {
     try {
@@ -65,19 +85,39 @@ export default function CheckoutPage() {
     }
   }, []);
 
+  const fetchAndPrefillProfile = useCallback(async () => {
+    try {
+      const res = await fetch("/api/user/profile");
+      if (res.ok) {
+        const data = await res.json();
+        setAddress({
+          fullName: data.name || "",
+          phone: data.phone || "",
+          addressLine: data.addressLine || "",
+          city: data.city || "",
+          state: data.state || "",
+          pincode: data.pincode || "",
+        });
+        // Mark as profile-filled if at least name or phone exists
+        if (data.name || data.phone || data.addressLine) {
+          setProfileFilled(true);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to prefill profile:", error);
+    }
+  }, []);
+
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/auth?callbackUrl=/checkout");
       return;
     }
     if (status === "authenticated") {
-      // Pre-fill name from session
-      if (session?.user?.name) {
-        setAddress((prev) => ({ ...prev, fullName: prev.fullName || session.user.name || "" }));
-      }
+      void fetchAndPrefillProfile();
       void fetchCart();
     }
-  }, [status, session, fetchCart, router]);
+  }, [status, fetchAndPrefillProfile, fetchCart, router]);
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const savings = cartItems.reduce(
@@ -247,9 +287,20 @@ export default function CheckoutPage() {
         <div className="space-y-6">
           {/* Delivery Address */}
           <div className="rounded-xl border border-red-950/20 bg-[#0a0a0c] p-6 shadow-xs">
-            <h2 className="flex items-center gap-2 text-lg font-bold text-white mb-5 uppercase tracking-wider font-mono">
-              <MapPin size={18} className="text-red-500" /> DELIVERY ADDRESS
-            </h2>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="flex items-center gap-2 text-lg font-bold text-white uppercase tracking-wider font-mono">
+                <MapPin size={18} className="text-red-500" /> DELIVERY ADDRESS
+              </h2>
+              {profileFilled ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-emerald-400 font-mono">
+                  <CheckCircle2 size={10} className="text-emerald-400" /> Auto-filled from profile
+                </span>
+              ) : (
+                <Link href="/profile" className="inline-flex items-center gap-1.5 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-yellow-400 font-mono hover:bg-yellow-500/20 transition-colors">
+                  <User size={10} /> Complete profile to auto-fill
+                </Link>
+              )}
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">Full Name</label>
@@ -450,15 +501,7 @@ export default function CheckoutPage() {
               <div>
                 <p className="text-sm font-bold text-white font-mono">Estimated Delivery</p>
                 <p className="mt-1 text-xs text-gray-400 leading-relaxed font-mono">
-                  {new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                  })} — {new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                  })}
+                  {estimatedDelivery.minDate ? `${estimatedDelivery.minDate} — ${estimatedDelivery.maxDate}` : "Calculating estimated delivery..."}
                 </p>
               </div>
             </div>

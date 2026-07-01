@@ -6,19 +6,36 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id        String     @id @default(cuid())
-  name      String
-  email     String     @unique
-  password  String
-  cartItems CartItem[]
-  orders    Order[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String     @id @default(cuid())
+  supabaseId  String?    @unique  // Supabase Auth UUID — null for legacy bcrypt users
+  name        String
+  email       String     @unique
+  password    String?    // Nullable: new Supabase Auth users don't need a bcrypt hash
+  avatarUrl   String?
+  address     Address?
+  cartItems   CartItem[]
+  orders      Order[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  phone       String?
+  addressLine String?
+  city        String?
+  state       String?
+  pincode     String?
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Product {

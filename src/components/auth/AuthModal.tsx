@@ -1,28 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Mail, Lock, User, Eye, EyeOff, Zap, ArrowRight } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useStore } from "@/store/useStore";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export default function AuthModal() {
   const { isAuthModalOpen, closeAuthModal, pendingAction } = useStore();
   const [tab, setTab] = useState<"login" | "register">("login");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
   const [error, setError] = useState("");
-
-  if (!isAuthModalOpen) return null;
+  const [isEditable, setIsEditable] = useState(false);
+  const { status } = useSession();
 
   const resetForm = () => {
-    setForm({ name: "", email: "", password: "" });
+    setForm({ name: "", email: "", password: "", confirmPassword: "" });
     setError("");
     setTab("login");
     setShowPassword(false);
+    setShowConfirmPassword(false);
     setLoading(false);
+    setIsEditable(false);
   };
+
+  // Reset form when the modal opens
+  useEffect(() => {
+    if (isAuthModalOpen) {
+      resetForm();
+    }
+  }, [isAuthModalOpen]);
+
+  // Reset form when the user logs out
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      resetForm();
+    }
+  }, [status]);
+
+  if (!isAuthModalOpen) return null;
 
   const handleClose = () => {
     resetForm();
@@ -49,9 +69,6 @@ export default function AuthModal() {
         toast.error("Invalid email or password.", {
           style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
       } else {
         toast.success("Welcome back!", {
           style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
@@ -74,9 +91,6 @@ export default function AuthModal() {
       toast.error("Something went wrong. Please try again.", {
         style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
     } finally {
       setLoading(false);
     }
@@ -89,9 +103,13 @@ export default function AuthModal() {
       toast.error("Password must be at least 6 characters.", {
         style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1550);
+      return;
+    }
+    if (form.password !== form.confirmPassword) {
+      setError("check ur password and try again");
+      toast.error("check ur password and try again", {
+        style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
+      });
       return;
     }
     setLoading(true);
@@ -108,35 +126,30 @@ export default function AuthModal() {
         toast.error(data.error || "Registration failed.", {
           style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
         return;
       }
-      // Auto sign-in after registration
+      // Registration successful — Auto-login the user immediately!
+      toast.success("Account created! Logging you in...", {
+        style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
+        iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
+      });
+
       const signInRes = await signIn("credentials", {
         email: form.email,
         password: form.password,
         redirect: false,
       });
+
       if (signInRes?.error) {
-        setError("Account created! Please log in.");
-        toast.success("Account created! Please log in.", {
-          style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
-          iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
-        });
+        setError("Account created, but automatic login failed. Please sign in manually.");
         setTab("login");
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
       } else {
-        toast.success("Account created! Welcome to LOCO 🎉", {
+        toast.success("Logged in successfully!", {
           style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
           iconTheme: { primary: "#ea580c", secondary: "#ffffff" },
         });
         handleClose();
         if (pendingAction) {
-          // Run the pending action — don't reload
           setTimeout(() => pendingAction(), 300);
         } else {
           setTimeout(() => {
@@ -149,9 +162,6 @@ export default function AuthModal() {
       toast.error("Something went wrong. Please try again.", {
         style: { background: "#ffffff", color: "#000000", border: "1px solid #e4e4e7" },
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
     } finally {
       setLoading(false);
     }
@@ -210,6 +220,8 @@ export default function AuthModal() {
             ))}
           </div>
 
+
+
           {/* Error */}
           {error && (
             <div className="bg-orange-50 border border-orange-200 text-orange-600 text-sm px-4 py-3 rounded-xl mb-4 font-semibold uppercase tracking-wide">
@@ -229,6 +241,9 @@ export default function AuthModal() {
                   value={form.name}
                   onChange={handleChange}
                   required
+                  autoComplete="off"
+                  readOnly={!isEditable}
+                  onFocus={() => setIsEditable(true)}
                   className="w-full bg-gray-50 border border-gray-200 text-black placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black transition-colors shadow-2xs"
                 />
               </div>
@@ -243,6 +258,9 @@ export default function AuthModal() {
                 value={form.email}
                 onChange={handleChange}
                 required
+                autoComplete="off"
+                readOnly={!isEditable}
+                onFocus={() => setIsEditable(true)}
                 className="w-full bg-gray-50 border border-gray-200 text-black placeholder-gray-400 pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black transition-colors shadow-2xs"
               />
             </div>
@@ -256,6 +274,9 @@ export default function AuthModal() {
                 value={form.password}
                 onChange={handleChange}
                 required
+                autoComplete="off"
+                readOnly={!isEditable}
+                onFocus={() => setIsEditable(true)}
                 className="w-full bg-gray-50 border border-gray-200 text-black placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black transition-colors shadow-2xs"
               />
               <button
@@ -266,6 +287,43 @@ export default function AuthModal() {
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
+
+            {tab === "register" && (
+              <div className="relative">
+                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Re-enter password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  autoComplete="off"
+                  readOnly={!isEditable}
+                  onFocus={() => setIsEditable(true)}
+                  className="w-full bg-gray-50 border border-gray-200 text-black placeholder-gray-400 pl-11 pr-11 py-3 rounded-xl text-sm focus:outline-hidden focus:border-black transition-colors shadow-2xs"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors cursor-pointer"
+                >
+                  {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+            )}
+
+            {tab === "login" && (
+              <div className="text-right -mt-1">
+                <Link
+                  href="/auth/forgot-password"
+                  onClick={handleClose}
+                  className="text-xs font-semibold text-gray-500 hover:text-black transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            )}
 
             <button
               type="submit"
@@ -282,6 +340,26 @@ export default function AuthModal() {
               )}
             </button>
           </form>
+
+          {tab === "login" && (
+            <div className="mt-6 p-4 rounded-2xl border border-gray-200 bg-gray-50/50 space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <p className="text-black text-[10px] text-center font-black uppercase tracking-[0.2em] font-mono">
+                ✦ DEMO ACCESS ACCOUNTS
+              </p>
+              <div className="grid grid-cols-2 gap-3 text-[10px] text-gray-500 font-mono text-center">
+                <div className="rounded-xl border border-gray-200 bg-white p-2.5 transition-colors hover:border-gray-300">
+                  <span className="block font-black text-black mb-0.5 uppercase tracking-wide">LEO MESSI</span>
+                  messi@gmail.com<br/>
+                  <span className="text-red-600 font-semibold">Messi@10</span>
+                </div>
+                <div className="rounded-xl border border-gray-200 bg-white p-2.5 transition-colors hover:border-gray-300">
+                  <span className="block font-black text-black mb-0.5 uppercase tracking-wide">NEYMAR JR</span>
+                  neymarjr@gmail.com<br/>
+                  <span className="text-red-600 font-semibold">Neymar@10</span>
+                </div>
+              </div>
+            </div>
+          )}
 
         </div>
       </div>

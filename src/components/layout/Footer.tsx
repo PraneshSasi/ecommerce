@@ -89,11 +89,19 @@ export default function Footer() {
         {/* Newsletter Signup */}
         <div className="mt-10 rounded-2xl border border-red-950/20 bg-white/[0.02] p-6">
           {alreadySubscribed || submitted ? (
-            <div className="flex items-center justify-center gap-3 py-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-red-600/20 text-red-500">
+            <div 
+              className="flex items-center justify-center gap-3 py-4 cursor-pointer group"
+              onClick={() => {
+                localStorage.removeItem("shopwave-newsletter-subscribed");
+                setAlreadySubscribed(false);
+                setSubmitted(false);
+              }}
+              title="Click to subscribe another email"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-red-600/20 text-red-500 transition-colors group-hover:bg-red-600 group-hover:text-white">
                 <Check size={18} className="animate-[scale-in_0.3s_ease-out]" />
               </span>
-              <span className="text-sm font-bold uppercase tracking-[0.25em] text-white font-mono">
+              <span className="text-sm font-bold uppercase tracking-[0.25em] text-white font-mono transition-colors group-hover:text-gray-300">
                 ✓ You&apos;re Subscribed
               </span>
             </div>
